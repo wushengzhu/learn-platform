@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UserService } from './modules/user/user.service';
+import { User } from './modules/user/models/user.entity';
 
 @Controller()
 export class AppController {
@@ -25,15 +26,16 @@ export class AppController {
     });
   }
 
+
   @Get('/del')
   async del(): Promise<boolean> {
-    return await this.userService.del('841eb5a7-5322-4ecd-8608-9ebdc280c10b');
+    return await this.userService.del('4cf34f50-b647-4d32-934b-2b837e6b204e');
   }
 
   @Get('/update')
   async update(): Promise<boolean> {
     return await this.userService.update(
-      '7b6764c8-9ca5-4fa7-bca0-33a47b56b1c7',
+      '7bd3aaf3-af02-4618-bacb-70ef3c2ddfe4',
       {
         name: '超级管理员',
         desc: '管理员12344454',
@@ -45,7 +47,7 @@ export class AppController {
   }
 
   @Get('/find')
-  async find(): Promise<boolean> {
-    return await this.userService.find('7b6764c8-9ca5-4fa7-bca0-33a47b56b1c7');
+  async find(): Promise<User> {
+    return await this.userService.find('7bd3aaf3-af02-4618-bacb-70ef3c2ddfe4');
   }
 }

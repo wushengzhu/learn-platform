@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -17,6 +19,10 @@ import { UserModule } from './modules/user/user.module';
       logging: true,
       synchronize: true,
       autoLoadEntities: true,
+    }),
+    GraphQLModule.forRoot({
+      driver:ApolloDriver,
+      autoSchemaFile:true,
     }),
     UserModule,
   ],

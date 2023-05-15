@@ -30,7 +30,6 @@ export class UserService {
    */
   async del(id: string): Promise<boolean> {
     const res = await this.UserRepository.delete(id);
-    console.log(res);
     if (res.affected > 0) {
       return true;
     }
@@ -39,23 +38,18 @@ export class UserService {
 
   async update(id: string, entity: DeepPartial<User>): Promise<boolean> {
     const res = await this.UserRepository.update(id, entity);
-    console.log(res);
     if (res.affected > 0) {
       return true;
     }
     return false;
   }
 
-  async find(id: string): Promise<boolean> {
+  async find(id: string): Promise<User> {
     const res = await this.UserRepository.findOne({
       where: {
         id,
       },
     });
-    console.log(res);
-    if (res) {
-      return true;
-    }
-    return false;
+    return res;
   }
 }
