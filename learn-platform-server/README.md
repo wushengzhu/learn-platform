@@ -68,6 +68,10 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 - Website - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
+## 注意地
+
+> ^0.3.16 版本的 typeorm 会触发自动删除 id，会有一些 bug，暂时未知什么原因
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
