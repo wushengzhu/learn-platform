@@ -20,7 +20,7 @@ type OSSType {
   signature: String!
 
   """key"""
-  accessid: String!
+  accessId: String!
 }
 
 type Query {

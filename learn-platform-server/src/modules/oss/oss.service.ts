@@ -21,7 +21,6 @@ export class OSSService {
       expiration: date.toISOString(), // 请求有效期
       conditions: [
         ['content-length-range', 0, 1048576000], // 设置上传文件的大小限制
-        // { bucket: client.options.bucket } // 限制可上传的bucket
       ],
     };
 
@@ -34,25 +33,18 @@ export class OSSService {
     //签名
     const formData = await client.calculatePostSignature(policy);
     //bucket域名
-    const host = `http://${config.bucket}.${
-      (await client.getBucketLocation()).location
-    }.aliyuncs.com`.toString();
-    // //回调
-    // const callback = {
-    //   callbackUrl: config.callbackUrl,
-    //   callbackBody:
-    //     'filename=${object}&size=${size}&mimeType=${mimeType}&height=${imageInfo.height}&width=${imageInfo.width}',
-    //   callbackBodyType: 'application/x-www-form-urlencoded',
-    // };
+    // const host = `http://${config.bucket}.${
+    //   (await client.getBucketLocation()).location
+    // }.aliyuncs.com`.toString();
 
     //返回参数
     const params = {
       expire: dayjs().add(1, 'days').unix().toString(),
       policy: formData.policy,
       signature: formData.Signature,
-      accessid: formData.OSSAccessKeyId,
-      host,
-      dir: 'images/',
+      accessId: formData.OSSAccessKeyId,
+      // host,
+      // dir: config.dir,
     };
 
     return params;

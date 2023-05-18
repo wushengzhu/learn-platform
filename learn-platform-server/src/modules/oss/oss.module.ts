@@ -5,7 +5,7 @@ import { OSSResolver } from './oss.resolver';
 @Module({
   imports: [],
   controllers: [],
-  providers: [ConsoleLogger, OSSService, OSSResolver],
+  providers: [OSSService, OSSResolver],
   exports: [],
 })
 export class OSSModule {}

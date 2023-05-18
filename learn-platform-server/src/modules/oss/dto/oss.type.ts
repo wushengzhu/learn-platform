@@ -9,5 +9,9 @@ export class OSSType {
   @Field({ description: '签名' })
   signature: string;
   @Field({ description: 'key' })
-  accessid: string;
+  accessId: string;
+  // @Field({ description: '主机' })
+  // host: string;
+  // @Field({ description: '目录' })
+  // dir: string;
 }
