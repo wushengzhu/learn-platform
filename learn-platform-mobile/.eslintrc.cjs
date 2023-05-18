@@ -16,7 +16,10 @@ module.exports = {
     'react/function-component-definition':0,
     'import/prefer-in-jsx-scope':0,
     'import/prefer-default-export':0,
-    'react-hooks/exhaustive-deps':1
+    'react-hooks/exhaustive-deps':1,
+    'react/react-in-jsx-scope':0,
+    '@typescript-eslint/no-unused-vars':0,
+    'import/no-extraneous-dependencies':0
   },
   parserOptions:{
      project:require.resolve('./tsconfig.json')

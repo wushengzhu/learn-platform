@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
+import { OSSModule } from './modules/oss/oss.module';
 
 @Module({
   imports: [
@@ -21,11 +22,12 @@ import { ApolloDriver } from '@nestjs/apollo';
       autoLoadEntities: true,
     }),
     GraphQLModule.forRoot({
-      driver:ApolloDriver,
+      driver: ApolloDriver,
       // autoSchemaFile:true,
-      autoSchemaFile:'./schema.gql'
+      autoSchemaFile: './schema.gql',
     }),
     UserModule,
+    OSSModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -26,7 +26,6 @@ export class AppController {
     });
   }
 
-
   @Get('/del')
   async del(): Promise<boolean> {
     return await this.userService.del('4cf34f50-b647-4d32-934b-2b837e6b204e');
