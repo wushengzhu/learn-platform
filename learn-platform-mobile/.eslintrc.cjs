@@ -20,7 +20,8 @@ module.exports = {
     'react/react-in-jsx-scope':0,
     '@typescript-eslint/no-unused-vars':0,
     'import/no-extraneous-dependencies':0,
-    '@typescript-eslint/comma-dangle':0
+    '@typescript-eslint/comma-dangle':0,
+    'object-curly-newline':0
   },
   parserOptions:{
      project:require.resolve('./tsconfig.json')
