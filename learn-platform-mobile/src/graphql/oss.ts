@@ -6,8 +6,9 @@ export const GET_OSS_INFO = gql`
       expire
       signature
       policy
-      accessid
+      accessId
       host
+      dir
     }
   }
 `;

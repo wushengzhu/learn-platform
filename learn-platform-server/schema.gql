@@ -21,6 +21,12 @@ type OSSType {
 
   """key"""
   accessId: String!
+
+  """主机"""
+  host: String!
+
+  """目录"""
+  dir: String!
 }
 
 type Query {

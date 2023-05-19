@@ -33,9 +33,9 @@ export class OSSService {
     //签名
     const formData = await client.calculatePostSignature(policy);
     //bucket域名
-    // const host = `http://${config.bucket}.${
-    //   (await client.getBucketLocation()).location
-    // }.aliyuncs.com`.toString();
+    const host = `http://${config.bucket}.${
+      (await client.getBucketLocation()).location
+    }.aliyuncs.com`.toString();
 
     //返回参数
     const params = {
@@ -43,8 +43,8 @@ export class OSSService {
       policy: formData.policy,
       signature: formData.Signature,
       accessId: formData.OSSAccessKeyId,
-      // host,
-      // dir: config.dir,
+      host,
+      dir: config.dir,
     };
 
     return params;
