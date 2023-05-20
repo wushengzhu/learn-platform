@@ -15,7 +15,9 @@ import {
 import { message, Space, Tabs } from 'antd';
 import type { CSSProperties } from 'react';
 import { useState } from 'react';
+import { useMutation } from '@apollo/client'
 import './index.less'
+import { SEND_CODE_MSG } from '../../graphql/auth';
 
 type LoginType = 'phone' | 'account';
 
@@ -61,6 +63,7 @@ export default () => {
       },
     ]
   });
+  const [run] = useMutation(SEND_CODE_MSG)
   const [videoFileUrl] = useState('https://learn-platform-assets.oss-cn-guangzhou.aliyuncs.com/videos/login.mp4')
   return (
     <div className='login-container'>
@@ -75,6 +78,7 @@ export default () => {
                 logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
                 title="LearnPlatform"
                 subTitle="兴趣班学习平台"
+                initialValues={{ tel: '15627512936' }}
                 actions={
                   <Space>
                     其他登录方式
@@ -120,7 +124,7 @@ export default () => {
                         size: 'large',
                         prefix: <MobileOutlined className={'prefixIcon'} />,
                       }}
-                      name="mobile"
+                      name="tel"
                       placeholder={'手机号'}
                       rules={rules.phone}
                     />
@@ -139,10 +143,15 @@ export default () => {
                         }
                         return '获取验证码';
                       }}
+                      phoneName="tel"
                       name="captcha"
                       rules={rules.captcha}
-                      onGetCaptcha={async () => {
-                        message.success('获取验证码成功！验证码为：1234');
+                      onGetCaptcha={async (tel: string) => {
+                        run({
+                          variables: {
+                            tel,
+                          }
+                        })
                       }}
                     />
                   </>
