@@ -2,14 +2,15 @@ import { Injectable } from '@nestjs/common';
 import * as OSS from 'ali-oss';
 import * as dayjs from 'dayjs';
 import { OSSType } from './dto/oss.type';
+import { ACCESS_KEY_ID, ACCESS_KEY_SECRET, BUCKET } from 'src/common/constants/aliyun';
 
 @Injectable()
 export class OSSService {
   async getSignture(): Promise<OSSType> {
     const config = {
-      accessKeyId: 'LTAI5tHx2pEgFVS5LTcWwchb',
-      accessKeySecret: '3iPhJVIeswujZppq4Yzd8u5JMNX6G5',
-      bucket: 'learn-platform-assets',
+      accessKeyId: ACCESS_KEY_ID,
+      accessKeySecret: ACCESS_KEY_SECRET,
+      bucket: BUCKET,
       dir: 'images/',
     };
 
