@@ -1,38 +1,65 @@
 import { Injectable } from '@nestjs/common';
-import Dysmsapi20170525, * as $Dysmsapi20170525 from '@alicloud/dysmsapi20170525';
-import OpenApi, * as $OpenApi from '@alicloud/openapi-client';
+import  * as $Dysmsapi20170525 from '@alicloud/dysmsapi20170525';
 import Util, * as $Util from '@alicloud/tea-util';
-import { ACCESS_KEY_ID, ACCESS_KEY_SECRET, SIGN_NAME, TEMPLATE_CODE } from 'src/common/constants/aliyun';
+import {  SIGN_NAME, TEMPLATE_CODE } from 'src/common/constants/aliyun';
 import { getRandomCode } from 'src/shared/utils';
+import { UserService } from '../user/user.service';
+import { msgClient } from 'src/shared/utils/msg';
+import * as dayjs from 'dayjs';
+import { Result } from '@/common/dto/result.type';
+import { CODE_EXPIRE, CODE_NOT_EXPIRE, CODE_SEND_ERROR, SUCCESS, UPDATE_ERROR } from '@/common/constants/code';
 
 @Injectable()
 export class AuthService {
-   async sendCodeMsg(tel:string):Promise<string>{
+  constructor(private readonly userService: UserService) { }
+
+  async sendCodeMsg(tel: string): Promise<Result> {
+    const user = await this.userService.findByTel(tel);
+    if(user){
+      // 判断上一次的验证码是否过期
+      const diffTime = dayjs().diff(dayjs(user.codeCreateTimeAt));
+      if(diffTime<60*1000){
+        return {
+          code:CODE_NOT_EXPIRE,
+          message:'验证码尚未过期！'
+        };
+      }
+    }
+
     const code = getRandomCode()
-    let config = new $OpenApi.Config({
-      // 必填，您的 AccessKey ID
-      accessKeyId: ACCESS_KEY_ID,
-      // 必填，您的 AccessKey Secret
-      accessKeySecret: ACCESS_KEY_SECRET,
-    });
-    // 访问的域名
-    config.endpoint = `dysmsapi.aliyuncs.com`;
-    let client = new Dysmsapi20170525(config);
     let sendSmsRequest = new $Dysmsapi20170525.SendSmsRequest({
       signName: SIGN_NAME,
       templateCode: TEMPLATE_CODE,
       phoneNumbers: tel,
       templateParam: `{"code":${code}}`,
     });
-    let runtime = new $Util.RuntimeOptions({ });
+    let runtime = new $Util.RuntimeOptions({});
     try {
       // 复制代码运行请自行打印 API 的返回值
-      await client.sendSmsWithOptions(sendSmsRequest, runtime);
+      const sendRes = await msgClient.sendSmsWithOptions(sendSmsRequest, runtime);
+      if(sendRes.body.code!=='OK'){
+        return {
+          code: CODE_SEND_ERROR,
+          message: sendRes.body.message,
+        }
+      }
+      if (user) {
+        const result = await this.userService.updateCode(user.id, code);
+        if (result) {
+          return {
+            code: SUCCESS,
+            message: '获取验证码成功！',
+          };
+        }
+        return {
+          code: UPDATE_ERROR,
+          message: '新建账号失败',
+        };
+      }
+      await this.userService.create({tel,code,codeCreateTimeAt:new Date()})
     } catch (error) {
       // 如有需要，请打印 error
-      console.log(error)
       Util.assertAsString(error.message);
     }
-    return code
-   }
+  }
 }

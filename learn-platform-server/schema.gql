@@ -48,7 +48,10 @@ type Mutation {
   del(id: String!): Boolean!
 
   """获取短信服务验证码"""
-  sendCodeMsg(tel: String!): String!
+  sendCodeMsg(tel: String!): Boolean!
+
+  """获取短信服务验证码"""
+  login(tel: String!, code: String!): Boolean!
 }
 
 input UserInput {

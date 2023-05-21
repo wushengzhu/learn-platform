@@ -17,7 +17,7 @@ import type { CSSProperties } from 'react';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client'
 import './index.less'
-import { SEND_CODE_MSG } from '../../graphql/auth';
+import { LOGIN, SEND_CODE_MSG } from '../../graphql/auth';
 
 type LoginType = 'phone' | 'account';
 
@@ -30,6 +30,10 @@ const iconStyles: CSSProperties = {
   cursor: 'pointer',
 };
 
+interface IValue {
+  tel: string;
+  code: string;
+}
 
 export default () => {
   const [loginType, setLoginType] = useState<LoginType>('phone');
@@ -64,7 +68,25 @@ export default () => {
     ]
   });
   const [run] = useMutation(SEND_CODE_MSG)
+  const [login] = useMutation(LOGIN)
   const [videoFileUrl] = useState('https://learn-platform-assets.oss-cn-guangzhou.aliyuncs.com/videos/login.mp4')
+
+  const items = [
+    { label: '账号密码登录', key: 'account' },
+    { label: '手机号登录', key: 'phone' },
+  ]
+
+  const loginHandler = async (values: IValue) => {
+    const res = await login({
+      variables: values
+    });
+    if (res.data.login) {
+      message.success('登录成功！');
+      return;
+    }
+    message.error('登录失败！');
+  }
+
   return (
     <div className='login-container'>
       <div className='form-container'>
@@ -75,6 +97,7 @@ export default () => {
           <ProConfigProvider hashed={false}>
             <div style={{ backgroundColor: 'white' }}>
               <LoginForm
+                onFinish={loginHandler}
                 logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
                 title="LearnPlatform"
                 subTitle="兴趣班学习平台"
@@ -89,11 +112,10 @@ export default () => {
               >
                 <Tabs
                   centered
+                  items={items}
                   activeKey={loginType}
                   onChange={(activeKey) => setLoginType(activeKey as LoginType)}
                 >
-                  <Tabs.TabPane key={'account'} tab={'账号密码登录'} />
-                  <Tabs.TabPane key={'phone'} tab={'手机号登录'} />
                 </Tabs>
                 {loginType === 'account' && (
                   <>
@@ -144,14 +166,19 @@ export default () => {
                         return '获取验证码';
                       }}
                       phoneName="tel"
-                      name="captcha"
+                      name="code"
                       rules={rules.captcha}
                       onGetCaptcha={async (tel: string) => {
-                        run({
+                        const res = await run({
                           variables: {
                             tel,
                           }
                         })
+                        if (res?.data?.sendCodeMsg) {
+                          message.success('获取验证码成功！')
+                        } else {
+                          message.error('获取验证码失败！')
+                        }
                       }}
                     />
                   </>

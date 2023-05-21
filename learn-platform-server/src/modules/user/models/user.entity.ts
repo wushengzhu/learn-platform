@@ -36,4 +36,16 @@ export class User {
     nullable: true,
   })
   account: string;
+
+  @Column({
+    comment: '验证码',
+    nullable: true,
+  })
+  code: string;
+
+  @Column({
+    comment: 'code过期时间',
+    nullable: true,
+  })
+  codeCreateTimeAt: Date;
 }
