@@ -29,6 +29,12 @@ type OSSType {
   dir: String!
 }
 
+type Result {
+  code: Int!
+  message: String
+  data: String
+}
+
 type Query {
   """使用id查询用户"""
   find(id: String!): UserType!
@@ -48,10 +54,10 @@ type Mutation {
   del(id: String!): Boolean!
 
   """获取短信服务验证码"""
-  sendCodeMsg(tel: String!): Boolean!
+  sendCodeMsg(tel: String!): Result!
 
-  """获取短信服务验证码"""
-  login(tel: String!, code: String!): Boolean!
+  """登录"""
+  login(tel: String!, code: String!): Result!
 }
 
 input UserInput {

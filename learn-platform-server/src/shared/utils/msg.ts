@@ -1,7 +1,7 @@
 
 import Dysmsapi20170525 from '@alicloud/dysmsapi20170525';
 import * as $OpenApi from '@alicloud/openapi-client';
-import { ACCESS_KEY_ID, ACCESS_KEY_SECRET, SIGN_NAME, TEMPLATE_CODE } from 'src/common/constants/aliyun';
+import { ACCESS_KEY_ID, ACCESS_KEY_SECRET } from '@/common/constants/aliyun';
 let config = new $OpenApi.Config({
   // 必填，您的 AccessKey ID
   accessKeyId: ACCESS_KEY_ID,

@@ -9,12 +9,13 @@ import { ACCOUNT_NOT_EXIST, CODE_EXPIRE, CODE_NOT_EXIST, LOGIN_ERROR, SUCCESS } 
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService,private readonly userService: UserService) {}
+
   @Mutation(() => Result, { description: '获取短信服务验证码' })
   async sendCodeMsg(@Args('tel') tel:string): Promise<Result> {
     return await this.authService.sendCodeMsg(tel);
   }
 
-  @Mutation(() => Boolean, { description: '获取短信服务验证码' })
+  @Mutation(() => Result, { description: '登录' })
   async login(@Args('tel') tel:string,@Args('code') code:string): Promise<Result> {
     const user = await this.userService.findByTel(tel);
     if(!user){

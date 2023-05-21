@@ -7,7 +7,7 @@ import { UserService } from '../user/user.service';
 import { msgClient } from 'src/shared/utils/msg';
 import * as dayjs from 'dayjs';
 import { Result } from '@/common/dto/result.type';
-import { CODE_EXPIRE, CODE_NOT_EXPIRE, CODE_SEND_ERROR, SUCCESS, UPDATE_ERROR } from '@/common/constants/code';
+import {  CODE_NOT_EXPIRE, CODE_SEND_ERROR, SUCCESS, UPDATE_ERROR } from '@/common/constants/code';
 
 @Injectable()
 export class AuthService {
@@ -48,15 +48,29 @@ export class AuthService {
         if (result) {
           return {
             code: SUCCESS,
-            message: '获取验证码成功！',
+            message: '获取验证码成功',
           };
         }
         return {
           code: UPDATE_ERROR,
-          message: '新建账号失败',
+          message: '更新 code 失败',
         };
       }
-      await this.userService.create({tel,code,codeCreateTimeAt:new Date()})
+      const result = await this.userService.create({
+        tel,
+        code,
+        codeCreateTimeAt: new Date(),
+      });
+      if (result) {
+        return {
+          code: SUCCESS,
+          message: '获取验证码成功',
+        };
+      }
+      return {
+        code: UPDATE_ERROR,
+        message: '新建账号失败',
+      };
     } catch (error) {
       // 如有需要，请打印 error
       Util.assertAsString(error.message);
