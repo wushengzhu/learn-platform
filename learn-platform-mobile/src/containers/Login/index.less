@@ -19,7 +19,7 @@
     #46eefa,
     #5ffbf1
   );
-  @apply flex justify-center items-center;
+  @apply flex justify-center items-center flex-col;
 }
 
 .prefixIcon {
@@ -28,14 +28,19 @@
 
 .login-container {
   .lg;
+  .form-title {
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .register-btn {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+  }
   .form-container {
     position: relative;
     width: 90vw;
     height: 50vh;
     border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
 
@@ -55,6 +60,7 @@
   height: 50px;
   // border: 1px solid #efefef;
   border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .adm-list-default .adm-list-body {

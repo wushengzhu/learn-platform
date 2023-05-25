@@ -29,16 +29,24 @@ export default () => {
   return (
     <>
       <div className="login-container">
+        <div className="w-30">
+          <img src={"https://github.githubassets.com/images/modules/logos_page/Octocat.png"} />
+        </div>
         <Form
           layout="horizontal"
           onFinish={onFinish}
           footer={(
-            <Button block type="submit" color="primary" size="large">
-              提交
-            </Button>
+            <div className="flex justify-center">
+              <Button block size="middle" style={{ backgroundColor: "rgba(0, 0, 0, 0.6)", border: 0, color: 'white' }}>
+                注 册
+              </Button>
+              <Button block type="submit" color="primary" size="middle" className="left-2">
+                登 录
+              </Button>
+            </div>
           )}
         >
-          <Form.Header>LearnPlatform</Form.Header>
+          <Form.Header><span className="form-title">LearnPlatform</span></Form.Header>
           <Form.Item
             name="account"
             rules={rules.username}
