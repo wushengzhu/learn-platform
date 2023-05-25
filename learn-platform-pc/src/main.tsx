@@ -31,7 +31,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-      {/* <App /> */}
     </ApolloProvider>
   </ConfigProvider>
 )

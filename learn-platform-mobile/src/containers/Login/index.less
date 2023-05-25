@@ -1,0 +1,66 @@
+.lg() {
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
+  box-sizing: border-box;
+  /* background-image: linear-gradient(to left,#9c88ff,#3cadeb); */
+  background-image: linear-gradient(
+    to left top,
+    #d16ba5,
+    #c777b9,
+    #ba83ca,
+    #aa8fd8,
+    #9a9ae1,
+    #8aa7ec,
+    #79b3f4,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
+  @apply flex justify-center items-center;
+}
+
+.prefixIcon {
+  width: 16px;
+}
+
+.login-container {
+  .lg;
+  .form-container {
+    position: relative;
+    width: 90vw;
+    height: 50vh;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.adm-list-body {
+  background-color: transparent !important;
+}
+
+.adm-form {
+  width: 80vw;
+}
+
+.adm-list-item-content {
+  border: 0;
+}
+
+.adm-list-item {
+  height: 50px;
+  // border: 1px solid #efefef;
+  border-radius: 25px;
+}
+
+.adm-list-default .adm-list-body {
+  border: 0;
+}
+
+.adm-button {
+  border-radius: 24px;
+}
