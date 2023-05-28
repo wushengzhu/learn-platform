@@ -4,13 +4,14 @@ import {
   Input,
   Button,
 } from 'antd-mobile';
-import './index.less';
+import './index.module.less';
+import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons'
 
 export default () => {
   const onFinish = (values: any) => {
 
   };
-
+  const [visible, setVisible] = useState(false)
   const [rules] = useState({
     username: [
       {
@@ -37,10 +38,10 @@ export default () => {
           onFinish={onFinish}
           footer={(
             <div className="flex justify-center">
-              <Button block size="middle" style={{ backgroundColor: "rgba(0, 0, 0, 0.6)", border: 0, color: 'white' }}>
+              <Button block shape='rounded' size="middle" style={{ backgroundColor: "rgba(0, 0, 0, 0.6)", border: 0, color: 'white' }}>
                 注 册
               </Button>
-              <Button block type="submit" color="primary" size="middle" className="left-2">
+              <Button block shape='rounded' type="submit" color="primary" size="middle" className="left-2">
                 登 录
               </Button>
             </div>
@@ -54,8 +55,16 @@ export default () => {
           >
             <Input placeholder="请输入账号" />
           </Form.Item>
-          <Form.Item name="password" rules={rules.password} className="form-item mt-2">
-            <Input placeholder="请输入密码" clearable type="password" />
+          <Form.Item name="password" rules={rules.password} className="form-item mt-4 mb-4" extra={
+            <div className='eve'>
+              {!visible ? (
+                <EyeInvisibleOutline onClick={() => setVisible(true)} />
+              ) : (
+                <EyeOutline onClick={() => setVisible(false)} />
+              )}
+            </div>
+          }>
+            <Input type={visible ? 'text' : 'password'} placeholder="请输入密码" clearable />
           </Form.Item>
         </Form>
       </div>
