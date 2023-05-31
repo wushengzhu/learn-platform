@@ -1,6 +1,7 @@
-import { Avatar, Button, Form, Input } from 'antd-mobile';
+import { Avatar, Button, Form, Input, Space } from 'antd-mobile';
 import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default () => {
   const [avatarImages] = useState('');
@@ -90,6 +91,12 @@ export default () => {
           />
         </Form.Item>
       </Form>
+      <div>
+        <Space>
+          有账号了？去
+          <Link to="/login">登录</Link>
+        </Space>
+      </div>
     </div>
   );
 };
