@@ -29,10 +29,56 @@ type OSSType {
   dir: String!
 }
 
+type Page {
+  total: Int!
+  pageNum: Int!
+  pageSize: Int!
+}
+
 type Result {
   code: Int!
   message: String
   data: String
+}
+
+type StudentType {
+  id: String!
+  createdAt: DateTime!
+  createdBy: String
+  updatedAt: DateTime
+  updatedBy: String
+  deletedAt: DateTime
+  deletedBy: String
+
+  """昵称"""
+  name: String
+
+  """手机号"""
+  tel: String
+
+  """头像"""
+  avatar: String
+
+  """账号"""
+  account: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type StudentResult {
+  code: Int!
+  message: String!
+  data: StudentType
+}
+
+type StudentResults {
+  code: Int!
+  message: String
+  data: [StudentType!]
+  page: Page
 }
 
 type Query {
@@ -41,6 +87,13 @@ type Query {
 
   """获取OSS相关信息"""
   getOSSInfo: OSSType!
+  getStudentInfo: StudentResult!
+  getStudents(page: PageInput!): StudentResults!
+}
+
+input PageInput {
+  pageNum: Float!
+  pageSize: Float!
 }
 
 type Mutation {
@@ -52,6 +105,7 @@ type Mutation {
 
   """删除用户"""
   del(id: String!): Boolean!
+  commitStudentInfo(params: StudentInput!): StudentResult!
 
   """获取短信服务验证码"""
   sendCodeMsg(tel: String!): Result!
@@ -62,4 +116,15 @@ type Mutation {
 
 input UserInput {
   name: String!
+}
+
+input StudentInput {
+  """昵称"""
+  name: String!
+
+  """手机号"""
+  tel: String!
+
+  """头像"""
+  avatar: String!
 }

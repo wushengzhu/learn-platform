@@ -30,7 +30,7 @@ export const ROUTE_CONFIG = [
   },
   {
     key: '404',
-    path: '/404',
+    path: '*',
     element: PageNotFound,
     title: '404',
   },
