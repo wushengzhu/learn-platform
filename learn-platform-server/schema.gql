@@ -61,6 +61,9 @@ type StudentType {
 
   """账号"""
   account: String
+
+  """openid"""
+  openid: String
 }
 
 """
@@ -105,6 +108,7 @@ type Mutation {
 
   """删除用户"""
   del(id: String!): Boolean!
+  studentRegister(params: StudentRegisterInput!): StudentResult!
   commitStudentInfo(params: StudentInput!): StudentResult!
 
   """获取短信服务验证码"""
@@ -116,6 +120,20 @@ type Mutation {
 
 input UserInput {
   name: String!
+}
+
+input StudentRegisterInput {
+  """账号"""
+  account: String!
+
+  """手机号"""
+  tel: String!
+
+  """头像"""
+  avatar: String!
+
+  """密码"""
+  password: String!
 }
 
 input StudentInput {

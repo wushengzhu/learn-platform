@@ -2,13 +2,18 @@ import { Result } from '@/common/dto/result.type';
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '@/common/guards/auth.guard';
-import { SUCCESS, STUDENT_NOT_EXIST } from '@/common/constants/code';
+import {
+  SUCCESS,
+  STUDENT_NOT_EXIST,
+  REGISTER_ERROR,
+} from '@/common/constants/code';
 import { StudentResult, StudentResults } from './dto/result-student.output';
 import { StudentInput } from './dto/student.input';
 import { StudentType } from './dto/student.type';
 import { StudentService } from './student.service';
 import { CurUserId } from '@/common/decorators/current-user.decorator';
 import { PageInput } from '@/common/dto/page.input';
+import { StudentRegisterInput } from './dto/register.input';
 
 @Resolver(() => StudentType)
 @UseGuards(GqlAuthGuard)
@@ -28,6 +33,25 @@ export class StudentResolver {
     return {
       code: STUDENT_NOT_EXIST,
       message: '用户信息不存在',
+    };
+  }
+
+  @Mutation(() => StudentResult)
+  async studentRegister(
+    @Args('params') params: StudentRegisterInput,
+  ): Promise<any> {
+    const result = await this.studentService.create(params);
+    if (result) {
+      return {
+        code: SUCCESS,
+        data: result,
+        message: '注册成功',
+      };
+    }
+    return {
+      code: REGISTER_ERROR,
+      data: result,
+      message: '注册失败',
     };
   }
 

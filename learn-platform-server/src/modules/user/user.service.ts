@@ -64,8 +64,11 @@ export class UserService {
   }
 
   // 更新一个用户的验证码
-  async updateCode(id: string, code: string,): Promise<boolean> {
-    const res = await this.UserRepository.update(id, {code,codeCreateTimeAt:new Date()});
+  async updateCode(id: string, code: string): Promise<boolean> {
+    const res = await this.UserRepository.update(id, {
+      code,
+      codeCreateTimeAt: new Date(),
+    });
     if (res.affected > 0) {
       return true;
     }
