@@ -1,4 +1,4 @@
-import { Result } from '@/common/dto/result.type';
+import { createResult, Result } from '@/common/dto/result.type';
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '@/common/guards/auth.guard';
@@ -13,7 +13,6 @@ import { StudentType } from './dto/student.type';
 import { StudentService } from './student.service';
 import { CurUserId } from '@/common/decorators/current-user.decorator';
 import { PageInput } from '@/common/dto/page.input';
-import { StudentRegisterInput } from './dto/register.input';
 
 @Resolver(() => StudentType)
 @UseGuards(GqlAuthGuard)
@@ -36,11 +35,19 @@ export class StudentResolver {
     };
   }
 
-  @Mutation(() => StudentResult)
+  @Mutation(() => Result)
   async studentRegister(
-    @Args('params') params: StudentRegisterInput,
-  ): Promise<any> {
-    const result = await this.studentService.create(params);
+    @Args('avatar') avatar: string,
+    @Args('tel') tel: string,
+    @Args('account') account: string,
+    @Args('password') password: string,
+  ): Promise<Result> {
+    const result = await this.studentService.create({
+      avatar,
+      tel,
+      account,
+      password,
+    });
     if (result) {
       return {
         code: SUCCESS,

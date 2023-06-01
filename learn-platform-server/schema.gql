@@ -108,7 +108,7 @@ type Mutation {
 
   """删除用户"""
   del(id: String!): Boolean!
-  studentRegister(params: StudentRegisterInput!): StudentResult!
+  studentRegister(avatar: String!, tel: String!, account: String!, password: String!): Result!
   commitStudentInfo(params: StudentInput!): StudentResult!
 
   """获取短信服务验证码"""
@@ -120,20 +120,12 @@ type Mutation {
 
 input UserInput {
   name: String!
-}
 
-input StudentRegisterInput {
-  """账号"""
-  account: String!
-
-  """手机号"""
-  tel: String!
+  """简介"""
+  desc: String!
 
   """头像"""
   avatar: String!
-
-  """密码"""
-  password: String!
 }
 
 input StudentInput {

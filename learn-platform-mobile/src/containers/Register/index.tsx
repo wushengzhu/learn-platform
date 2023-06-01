@@ -7,7 +7,7 @@ export default () => {
   const [avatarImages] = useState('');
   const [visible, setVisible] = useState(false);
   const [rules] = useState({
-    username: [
+    account: [
       {
         required: true,
         message: '用户名不能为空',
@@ -64,7 +64,7 @@ export default () => {
           </div>
         }
       >
-        <Form.Item label="用户名" name="username" rules={rules.username}>
+        <Form.Item label="用户名" name="account" rules={rules.account}>
           <Input placeholder="请输入用户名" clearable />
         </Form.Item>
         <Form.Item label="电话" name="tel" rules={rules.tel}>
@@ -91,7 +91,7 @@ export default () => {
           />
         </Form.Item>
       </Form>
-      <div>
+      <div className="flex justify-center">
         <Space>
           有账号了？去
           <Link to="/login">登录</Link>

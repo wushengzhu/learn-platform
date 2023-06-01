@@ -4,4 +4,8 @@ import { Field, InputType } from '@nestjs/graphql';
 export class UserInput {
   @Field()
   name: string;
+  @Field({ description: '简介' })
+  desc: string;
+  @Field({ description: '头像' })
+  avatar: string;
 }

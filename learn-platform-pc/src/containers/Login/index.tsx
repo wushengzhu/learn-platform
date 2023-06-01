@@ -19,7 +19,7 @@ import { useMutation } from "@apollo/client";
 import "./index.less";
 import { LOGIN, SEND_CODE_MSG } from "../../graphql/auth";
 import { AUTH_TOKEN } from "../../utils/constants";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type LoginType = "phone" | "account";
 

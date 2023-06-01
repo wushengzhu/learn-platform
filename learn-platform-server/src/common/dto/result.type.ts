@@ -1,6 +1,6 @@
-import { Page } from "./page.type";
-import { ClassType } from 'type-graphql'
-import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { Page } from './page.type';
+import { ClassType } from 'type-graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 export interface IResult<T> {
   code: number;
@@ -12,7 +12,7 @@ export interface IResults<T> {
   code: number;
   message: string;
   data?: T[];
-  page?: Page
+  page?: Page;
 }
 
 export function createResult<T>(ItemType: ClassType<T>): ClassType<IResult<T>> {
@@ -29,8 +29,8 @@ export function createResult<T>(ItemType: ClassType<T>): ClassType<IResult<T>> {
 }
 
 export function createResults<T>(
-  ItemTypes: ClassType<T>
-  ): ClassType<IResults<T>> {
+  ItemTypes: ClassType<T>,
+): ClassType<IResults<T>> {
   @ObjectType()
   class Results {
     @Field(() => Int)
@@ -40,17 +40,17 @@ export function createResults<T>(
     @Field(() => [ItemTypes], { nullable: true })
     data?: T[];
     @Field(() => Page, { nullable: true })
-    page?:Page
+    page?: Page;
   }
-  return Results
+  return Results;
 }
 
 @ObjectType()
-export class Result{
+export class Result {
   @Field(() => Int)
   code: number;
   @Field(() => String, { nullable: true })
   message: string;
   @Field(() => String, { nullable: true })
-  data?: string;
+  data?: string | boolean;
 }
