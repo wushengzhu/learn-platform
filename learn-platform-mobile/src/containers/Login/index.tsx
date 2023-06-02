@@ -32,7 +32,6 @@ export default (props: any) => {
       },
     ],
   });
-  console.log('props', props);
   return (
     <>
       <div className={styles['login-container']}>

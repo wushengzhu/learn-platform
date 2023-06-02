@@ -50,7 +50,7 @@ export class Result {
   @Field(() => Int)
   code: number;
   @Field(() => String, { nullable: true })
-  message: string;
+  message?: string;
   @Field(() => String, { nullable: true })
   data?: string | boolean;
 }

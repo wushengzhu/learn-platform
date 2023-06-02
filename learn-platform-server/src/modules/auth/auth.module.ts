@@ -7,6 +7,8 @@ import { User } from '../user/models/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_SECRET } from '@/common/constants/aliyun';
 import { JwtStrategy } from './jwt.strategy';
+import { StudentService } from '../student/student.service';
+import { Student } from '../student/models/student.entity';
 
 @Module({
   imports: [
@@ -16,10 +18,16 @@ import { JwtStrategy } from './jwt.strategy';
         expiresIn: '60s',
       },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Student]),
   ],
   controllers: [],
-  providers: [JwtStrategy, AuthService, AuthResolver, UserService],
+  providers: [
+    JwtStrategy,
+    AuthService,
+    AuthResolver,
+    UserService,
+    StudentService,
+  ],
   exports: [],
 })
 export class AuthModule {}

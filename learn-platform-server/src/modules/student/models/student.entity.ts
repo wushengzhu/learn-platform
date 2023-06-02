@@ -27,16 +27,19 @@ export class Student extends CommonEntity {
 
   @Column({
     comment: '密码',
+    nullable: true,
   })
   password: string;
 
   @Column({
     comment: '账户',
+    nullable: true,
   })
   account: string;
 
   @Column({
     comment: 'openid',
+    nullable: true,
   })
   openid: string;
 }

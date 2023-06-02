@@ -34,5 +34,5 @@ export class StudentType extends CommonType {
     description: 'openid',
     nullable: true,
   })
-  openid: string;
+  openid?: string;
 }
