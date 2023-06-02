@@ -31,7 +31,7 @@ export class AuthResolver {
     return await this.authService.sendCodeMsg(tel);
   }
 
-  @Mutation(() => Result, { description: '登录' })
+  @Mutation(() => Result, { description: '电话登录' })
   async login(
     @Args('tel') tel: string,
     @Args('code') code: string,

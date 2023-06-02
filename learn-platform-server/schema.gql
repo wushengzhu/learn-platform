@@ -113,7 +113,7 @@ type Mutation {
   """获取短信服务验证码"""
   sendCodeMsg(tel: String!): Result!
 
-  """登录"""
+  """电话登录"""
   login(tel: String!, code: String!): Result!
 
   """学员登录"""

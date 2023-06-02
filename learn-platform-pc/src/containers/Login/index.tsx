@@ -17,7 +17,12 @@ import type { CSSProperties } from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import "./index.less";
-import { LOGIN, SEND_CODE_MSG } from "../../graphql/auth";
+import {
+  ACCOUNT_LOGIN,
+  LOGIN,
+  SEND_CODE_MSG,
+  TEL_LOGIN,
+} from "../../graphql/auth";
 import { AUTH_TOKEN } from "../../utils/constants";
 import { useNavigate } from "react-router-dom";
 
@@ -32,9 +37,15 @@ const iconStyles: CSSProperties = {
   cursor: "pointer",
 };
 
-interface IValue {
+interface IValueT {
   tel: string;
   code: string;
+  autoLogin: boolean;
+}
+
+interface IValueA {
+  account: string;
+  password: string;
   autoLogin: boolean;
 }
 
@@ -72,7 +83,10 @@ export default () => {
     ],
   });
   const [run] = useMutation(SEND_CODE_MSG);
-  const [login] = useMutation(LOGIN);
+  const [login] =
+    loginType === "account"
+      ? useMutation(ACCOUNT_LOGIN)
+      : useMutation(TEL_LOGIN);
   const [videoFileUrl] = useState(
     "https://learn-platform-assets.oss-cn-guangzhou.aliyuncs.com/videos/login.mp4"
   );
@@ -82,7 +96,8 @@ export default () => {
     { label: "手机号登录", key: "phone" },
   ];
 
-  const loginHandler = async (values: IValue) => {
+  const loginHandler = async (values: IValueA) => {
+    console.log(values);
     const res = await login({
       variables: values,
     });
