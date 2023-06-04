@@ -4,9 +4,18 @@
 
 type UserType {
   id: String!
+
+  """昵称"""
   name: String!
+
+  """简介"""
   desc: String!
-  account: String!
+
+  """tel"""
+  tel: String!
+
+  """头像"""
+  avatar: String
 }
 
 type OSSType {
@@ -87,6 +96,9 @@ type StudentResults {
 type Query {
   """使用id查询用户"""
   find(id: String!): UserType!
+
+  """使用id查询用户"""
+  getUserInfo: UserType!
 
   """获取OSS相关信息"""
   getOSSInfo: OSSType!

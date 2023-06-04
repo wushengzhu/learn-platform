@@ -25,10 +25,7 @@ export const accountAndPwdValidate = (
       message: '账号或者密码不能为空',
     };
   }
-  if (
-    !/^[a-z0-9]{6,10}$/.test(account) &&
-    account !== 'admin'
-  ) {
+  if (!/^[a-z0-9]{6,10}$/.test(account) && account !== 'admin') {
     return {
       code: VALIDATE_ERROR,
       message: '账号校验失败，请重新输入账号',

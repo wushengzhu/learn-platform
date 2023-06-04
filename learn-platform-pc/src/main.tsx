@@ -13,14 +13,16 @@ import 'virtual:windi.css';
 
 import { ROUTE_CONFIG } from './routes/index.ts';
 import PageNotFound from './containers/PageNotFound/index.tsx';
+import UserInfo from './components/UserInfo';
 
 dayjs.locale('zh-cn');
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ConfigProvider locale={zhCN}>
-    <ApolloProvider client={client}>
-      <BrowserRouter>
+    <ApolloProvider client={client}><BrowserRouter>
+      <UserInfo>
+
         <Routes>
-          {ROUTE_CONFIG.map((item) => (
+          {ROUTE_CONFIG.map((item: any) => (
             <Route
               key={item.key}
               path={item.path}
@@ -30,7 +32,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             path="*"
             element={<PageNotFound />} />
         </Routes>
-      </BrowserRouter>
+      </UserInfo>
+    </BrowserRouter>
     </ApolloProvider>
   </ConfigProvider>
 )

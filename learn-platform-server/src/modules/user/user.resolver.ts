@@ -1,9 +1,12 @@
-import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query, Context } from '@nestjs/graphql';
 import { UserService } from './user.service';
-import { UserInput } from './user-input.type';
-import { UserType } from './user.type';
+import { UserInput } from './dto/user-input.type';
+import { UserType } from './dto/user.type';
+import { GqlAuthGuard } from '@/common/guards/auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver()
+@UseGuards(GqlAuthGuard)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
@@ -14,6 +17,12 @@ export class UserResolver {
 
   @Query(() => UserType, { description: '使用id查询用户' })
   async find(@Args('id') id: string): Promise<UserType> {
+    return await this.userService.find(id);
+  }
+
+  @Query(() => UserType, { description: '使用id查询用户' })
+  async getUserInfo(@Context() cxt: any): Promise<UserType> {
+    const id = cxt.req.user.id;
     return await this.userService.find(id);
   }
 
