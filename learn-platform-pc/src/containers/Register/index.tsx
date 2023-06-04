@@ -1,6 +1,6 @@
 import { LoadingOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from "@apollo/client";
-import { Button, Col, Form, Input, Row, Upload, UploadProps } from "antd";
+import { Button, Col, Form, Input, message, Row, Upload, UploadProps } from "antd";
 import { useEffect, useState } from "react";
 import { STUDENT_REGISTER } from "../../graphql/auth";
 import * as md5 from 'md5'
@@ -50,11 +50,14 @@ const Register = ({ setIsRegistered }: any) => {
 
   const [register] = useMutation(STUDENT_REGISTER)
   const onFinish = async (values: IValue) => {
-    // console.log(values)
     const res = await register({
       variables: Object.assign({}, { ...values }, { avatar: imageUrl, password: md5(values.password) })
     })
-    console.log(res)
+    if (res.data.studentRegister.code === 200) {
+      message.success('注册成功！');
+    } else {
+      message.error('注册失败！')
+    }
   }
 
   const onFinishFailed = () => {

@@ -1,11 +1,22 @@
-import useUploadOSS from '@/hooks/useUploadOSS';
-import { Avatar, Button, Form, ImageUploader, Input, Space } from 'antd-mobile';
+import { Avatar, Button, Form, ImageUploader, Input, Space, Toast } from 'antd-mobile';
 import { EyeInvisibleOutline, EyeOutline, PictureOutline } from 'antd-mobile-icons';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useUploadOSS from '@/hooks/useUploadOSS';
+import * as md5 from 'md5'
+import { useMutation } from '@apollo/client';
+import { STUDENT_REGISTER } from '@/graphql/user';
+import toast from '@/utils/toast';
+
+interface IValue {
+  account: string;
+  password: string;
+  tel: string;
+  avatar?: string;
+}
 
 export default () => {
-  const [avatarImages] = useState('');
+  const [avatarImage, setAvatarImage] = useState('');
   const [visible, setVisible] = useState(false);
   const [rules] = useState({
     account: [
@@ -14,7 +25,7 @@ export default () => {
         message: '用户名不能为空',
       },
       {
-        pattern: /^(?![0-9]+$)(?![a-z]+$)[a-z0-9]{6,10}$/,
+        pattern: /^[a-z0-9]{6,10}$/,
         message: '只能包含小写字母和数字，长度大于 6，小于 10',
       },
     ],
@@ -40,12 +51,30 @@ export default () => {
     ],
   });
   const uploadHandler = useUploadOSS();
+  const onChange = async (values: any) => {
+    if (values && values?.length > 0) {
+      setAvatarImage(values[0].url)
+    }
+  }
+  const [register] = useMutation(STUDENT_REGISTER)
+  const [form] = Form.useForm()
+  const onSubmit = async () => {
+    const values = form.getFieldsValue()
+    const formValues = Object.assign({}, { ...values }, { avatar: avatarImage, password: md5(values.password) })
+    const res = await register({
+      variables: formValues
+    })
+    if (res.data.studentRegister.code === 200) {
+      toast.success('注册成功！')
+    } else {
+      toast.fail('注册失败！')
+    }
+  }
   return (
     <div>
       <div className="flex flex-col justify-center items-center mt-4 mb-4">
-        <div className="mb-4">手机注册</div>
-        <Avatar src={avatarImages} style={{ '--size': '64px' }} />
-        <ImageUploader upload={uploadHandler}>
+        {/* <div className="mb-4">手机注册</div> */}
+        <ImageUploader upload={uploadHandler} maxCount={1} onChange={onChange}>
           <div
             style={{
               width: 80,
@@ -63,6 +92,7 @@ export default () => {
         </ImageUploader>
       </div>
       <Form
+        form={form}
         layout="horizontal"
         footer={
           <div>
@@ -76,6 +106,7 @@ export default () => {
               color="primary"
               size="middle"
               className="mt-10"
+              onClick={onSubmit}
             >
               注 册
             </Button>

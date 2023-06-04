@@ -22,7 +22,6 @@ const useUploadOSS = () => {
       method: 'POST',
       body: formData,
     });
-    console.log('res', res);
     return { url: res.url + key };
   };
   return uploadHandler;
