@@ -19,7 +19,6 @@ export const useGetUser = () => {
   const location = useLocation();
   const { loading, refetch } = useQuery<{ getUserInfo: IUser }>(GET_USER, {
     onCompleted: (data) => {
-      console.log(data)
       if (data.getUserInfo) {
         const {
           id, name, tel, desc, avatar,

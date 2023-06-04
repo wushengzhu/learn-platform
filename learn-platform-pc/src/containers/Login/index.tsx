@@ -103,10 +103,10 @@ export default () => {
     }) : await telLoginRequest({
       variables: values as IValueT,
     });
-    if (res.data.studentLogin.code === 200) {
+    if (res.data.login.code === 200) {
       if (values.autoLogin) {
         // 是否勾选了自动登录
-        localStorage.setItem(AUTH_TOKEN, res.data.studentLogin.data);
+        localStorage.setItem(AUTH_TOKEN, res.data.login.data);
       }
       message.success("登录成功！");
       nav("/");

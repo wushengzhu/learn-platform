@@ -5,8 +5,6 @@ query getUserInfo {
   getUserInfo {
     id
     tel
-    desc
-    name
   }
 }
 `
