@@ -5,11 +5,11 @@ import styles from './index.module.less';
 import { Link, Route } from 'react-router-dom';
 
 export default (props: any) => {
-  const onFinish = (values: any) => {};
+  const onFinish = (values: any) => { };
 
   const [visible, setVisible] = useState(false);
   const [rules] = useState({
-    username: [
+    account: [
       {
         required: true,
         message: '用户名不能为空!',
@@ -65,7 +65,7 @@ export default (props: any) => {
           </Form.Header>
           <Form.Item
             name="account"
-            rules={rules.username}
+            rules={rules.account}
             className={styles['form-item']}
           >
             <Input placeholder="请输入账号" />

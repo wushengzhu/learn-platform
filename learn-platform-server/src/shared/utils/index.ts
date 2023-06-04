@@ -26,7 +26,7 @@ export const accountAndPwdValidate = (
     };
   }
   if (
-    !/^(?![0-9]+$)(?![a-z]+$)[a-z0-9]{6,10}$/.test(account) &&
+    !/^[a-z0-9]{6,10}$/.test(account) &&
     account !== 'admin'
   ) {
     return {

@@ -1,5 +1,6 @@
-import { Avatar, Button, Form, Input, Space } from 'antd-mobile';
-import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons';
+import useUploadOSS from '@/hooks/useUploadOSS';
+import { Avatar, Button, Form, ImageUploader, Input, Space } from 'antd-mobile';
+import { EyeInvisibleOutline, EyeOutline, PictureOutline } from 'antd-mobile-icons';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -38,11 +39,28 @@ export default () => {
       },
     ],
   });
+  const uploadHandler = useUploadOSS();
   return (
     <div>
       <div className="flex flex-col justify-center items-center mt-4 mb-4">
         <div className="mb-4">手机注册</div>
         <Avatar src={avatarImages} style={{ '--size': '64px' }} />
+        <ImageUploader upload={uploadHandler}>
+          <div
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: 40,
+              backgroundColor: '#f5f5f5',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: '#999999',
+            }}
+          >
+            <PictureOutline style={{ fontSize: 32 }} />
+          </div>
+        </ImageUploader>
       </div>
       <Form
         layout="horizontal"

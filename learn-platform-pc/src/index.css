@@ -12,10 +12,6 @@ svg {
   height: 1.5em;
 }
 
-svg {
-  margin: 0;
-  padding: 0;
-}
 
 /* 这样写不会解析为唯一hash值 */
 :global(body) {

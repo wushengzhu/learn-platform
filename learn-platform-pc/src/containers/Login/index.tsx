@@ -12,7 +12,7 @@ import {
   ProFormText,
   ProConfigProvider,
 } from "@ant-design/pro-components";
-import { message, Space, Tabs } from "antd";
+import { Button, message, Space, Tabs } from "antd";
 import type { CSSProperties } from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
@@ -24,7 +24,8 @@ import {
   TEL_LOGIN,
 } from "../../graphql/auth";
 import { AUTH_TOKEN } from "../../utils/constants";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Register from "../Register";
 
 type LoginType = "phone" | "account";
 
@@ -50,8 +51,9 @@ interface IValueA {
 }
 
 export default () => {
-  const [loginType, setLoginType] = useState<LoginType>("phone");
+  const [loginType, setLoginType] = useState<LoginType>("account");
   const nav = useNavigate();
+  const [isRegistered, setIsRegistered] = useState(false)
   const [rules] = useState({
     account: [
       {
@@ -83,10 +85,8 @@ export default () => {
     ],
   });
   const [run] = useMutation(SEND_CODE_MSG);
-  const [login] =
-    loginType === "account"
-      ? useMutation(ACCOUNT_LOGIN)
-      : useMutation(TEL_LOGIN);
+  const [accountLoginRequest] = useMutation(ACCOUNT_LOGIN);
+  const [telLoginRequest] = useMutation(TEL_LOGIN);
   const [videoFileUrl] = useState(
     "https://learn-platform-assets.oss-cn-guangzhou.aliyuncs.com/videos/login.mp4"
   );
@@ -96,22 +96,24 @@ export default () => {
     { label: "手机号登录", key: "phone" },
   ];
 
-  const loginHandler = async (values: IValueA) => {
-    console.log(values);
-    const res = await login({
-      variables: values,
+
+  const loginHandler = async (values: any) => {
+    const res = loginType === 'account' ? await accountLoginRequest({
+      variables: values as IValueA,
+    }) : await telLoginRequest({
+      variables: values as IValueT,
     });
-    if (res.data.login.code === 200) {
+    if (res.data.studentLogin.code === 200) {
       if (values.autoLogin) {
         // 是否勾选了自动登录
-        localStorage.setItem(AUTH_TOKEN, res.data.login.token);
+        localStorage.setItem(AUTH_TOKEN, res.data.studentLogin.data);
       }
       message.success("登录成功！");
       nav("/");
       return;
     }
     message.error("登录失败！");
-  };
+  }
 
   return (
     <div className="login-container">
@@ -120,113 +122,121 @@ export default () => {
           <video src={videoFileUrl} muted loop autoPlay></video>
         </div>
         <div className="right">
-          <ProConfigProvider hashed={false}>
-            <div style={{ backgroundColor: "white" }}>
-              <LoginForm
-                onFinish={loginHandler}
-                logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-                title="LearnPlatform"
-                subTitle="兴趣班学习平台"
-                initialValues={{ tel: "15627512936" }}
-                actions={
-                  <Space>
-                    其他登录方式
-                    <WechatOutlined style={iconStyles} />
-                    <QqOutlined style={iconStyles} />
-                  </Space>
-                }
-              >
-                <Tabs
-                  centered
-                  items={items}
-                  activeKey={loginType}
-                  onChange={(activeKey) => setLoginType(activeKey as LoginType)}
-                ></Tabs>
-                {loginType === "account" && (
-                  <>
-                    <ProFormText
-                      name="account"
-                      fieldProps={{
-                        size: "large",
-                        prefix: <UserOutlined className={"prefixIcon"} />,
-                      }}
-                      placeholder={"用户名"}
-                      rules={rules.account}
-                    />
-                    <ProFormText.Password
-                      name="password"
-                      fieldProps={{
-                        size: "large",
-                        prefix: <LockOutlined className={"prefixIcon"} />,
-                      }}
-                      placeholder={"密码"}
-                      rules={rules.password}
-                    />
-                  </>
-                )}
-                {loginType === "phone" && (
-                  <>
-                    <ProFormText
-                      fieldProps={{
-                        size: "large",
-                        prefix: <MobileOutlined className={"prefixIcon"} />,
-                      }}
-                      name="tel"
-                      placeholder={"手机号"}
-                      rules={rules.phone}
-                    />
-                    <ProFormCaptcha
-                      fieldProps={{
-                        size: "large",
-                        prefix: <LockOutlined className={"prefixIcon"} />,
-                      }}
-                      captchaProps={{
-                        size: "large",
-                      }}
-                      placeholder={"请输入验证码"}
-                      captchaTextRender={(timing, count) => {
-                        if (timing) {
-                          return `${count} ${"获取验证码"}`;
-                        }
-                        return "获取验证码";
-                      }}
-                      phoneName="tel"
-                      name="code"
-                      rules={rules.captcha}
-                      onGetCaptcha={async (tel: string) => {
-                        const res = await run({
-                          variables: {
-                            tel,
-                          },
-                        });
-                        if (res?.data?.sendCodeMsg.code === 200) {
-                          message.success("获取验证码成功！");
-                        } else {
-                          message.error("获取验证码失败！");
-                        }
-                      }}
-                    />
-                  </>
-                )}
-                <div
-                  style={{
-                    marginBlockEnd: 24,
-                  }}
+          {isRegistered && (<Register setIsRegistered={setIsRegistered}></Register>)}
+          {!isRegistered && (
+            <ProConfigProvider hashed={false}>
+              <div style={{ backgroundColor: "white" }}>
+                <LoginForm
+                  onFinish={loginHandler}
+                  logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
+                  title="LearnPlatform"
+                  subTitle="兴趣班学习平台"
+                  initialValues={{ tel: "15627512936" }}
+                  actions={
+                    <div>
+                      <div className="flex justify-center items-center mb-2">
+                        没有账号？去<Button type="link" onClick={() => setIsRegistered(true)}>注册</Button>
+                      </div>
+                      <Space>
+                        其他登录方式
+                        <WechatOutlined style={iconStyles} rev={undefined} />
+                        <QqOutlined style={iconStyles} rev={undefined} />
+                      </Space>
+                    </div>
+                  }
                 >
-                  <ProFormCheckbox noStyle name="autoLogin">
-                    自动登录
-                  </ProFormCheckbox>
-                  <a
+                  <Tabs
+                    centered
+                    items={items}
+                    activeKey={loginType}
+                    onChange={(activeKey) => setLoginType(activeKey as LoginType)}
+                  ></Tabs>
+                  {loginType === "account" && (
+                    <>
+                      <ProFormText
+                        name="account"
+                        fieldProps={{
+                          size: "large",
+                          prefix: <UserOutlined className={"prefixIcon"} rev={undefined} />,
+                        }}
+                        placeholder={"用户名"}
+                        rules={rules.account}
+                      />
+                      <ProFormText.Password
+                        name="password"
+                        fieldProps={{
+                          size: "large",
+                          prefix: <LockOutlined className={"prefixIcon"} rev={undefined} />,
+                        }}
+                        placeholder={"密码"}
+                        rules={rules.password}
+                      />
+                    </>
+                  )}
+                  {loginType === "phone" && (
+                    <>
+                      <ProFormText
+                        fieldProps={{
+                          size: "large",
+                          prefix: <MobileOutlined className={"prefixIcon"} rev={undefined} />,
+                        }}
+                        name="tel"
+                        placeholder={"手机号"}
+                        rules={rules.phone}
+                      />
+                      <ProFormCaptcha
+                        fieldProps={{
+                          size: "large",
+                          prefix: <LockOutlined className={"prefixIcon"} rev={undefined} />,
+                        }}
+                        captchaProps={{
+                          size: "large",
+                        }}
+                        placeholder={"请输入验证码"}
+                        captchaTextRender={(timing, count) => {
+                          if (timing) {
+                            return `${count} ${"获取验证码"}`;
+                          }
+                          return "获取验证码";
+                        }}
+                        phoneName="tel"
+                        name="code"
+                        rules={rules.captcha}
+                        onGetCaptcha={async (tel: string) => {
+                          const res = await run({
+                            variables: {
+                              tel,
+                            },
+                          });
+                          if (res?.data?.sendCodeMsg.code === 200) {
+                            message.success("获取验证码成功！");
+                          } else {
+                            message.error("获取验证码失败！");
+                          }
+                        }}
+                      />
+                    </>
+                  )}
+                  <div
                     style={{
-                      float: "right",
+                      marginBlockEnd: 24,
                     }}
                   >
-                    忘记密码
-                  </a>
-                </div>
-              </LoginForm>
-            </div>
-          </ProConfigProvider>
+                    <ProFormCheckbox noStyle name="autoLogin">
+                      自动登录
+                    </ProFormCheckbox>
+                    <a
+                      style={{
+                        float: "right",
+                      }}
+                    >
+                      忘记密码
+                    </a>
+                  </div>
+                </LoginForm>
+              </div>
+            </ProConfigProvider>
+          )}
         </div>
       </div>
     </div>
