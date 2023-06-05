@@ -2,7 +2,7 @@ import { LoadingOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons
 import { useMutation, useQuery } from "@apollo/client";
 import { Button, Col, Form, Input, message, Row, Upload, UploadProps } from "antd";
 import { useEffect, useState } from "react";
-import { STUDENT_REGISTER } from "../../graphql/auth";
+import { STUDENT_REGISTER } from "@/graphql/auth";
 import * as md5 from 'md5'
 
 interface IValue {

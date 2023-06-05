@@ -22,10 +22,11 @@ import {
   LOGIN,
   SEND_CODE_MSG,
   TEL_LOGIN,
-} from "../../graphql/auth";
-import { AUTH_TOKEN } from "../../utils/constants";
+} from "@/graphql/auth";
+import { AUTH_TOKEN } from "@/utils/constants";
 import { Link, useNavigate } from "react-router-dom";
 import Register from "../Register";
+import { useTitle } from "@/hooks/useTitle";
 
 type LoginType = "phone" | "account";
 
@@ -51,6 +52,7 @@ interface IValueA {
 }
 
 export default () => {
+  useTitle('登录');
   const [loginType, setLoginType] = useState<LoginType>("account");
   const nav = useNavigate();
   const [isRegistered, setIsRegistered] = useState(false)
@@ -105,8 +107,12 @@ export default () => {
     });
     if (res.data.login.code === 200) {
       if (values.autoLogin) {
+        sessionStorage.setItem(AUTH_TOKEN, '')
         // 是否勾选了自动登录
         localStorage.setItem(AUTH_TOKEN, res.data.login.data);
+      } else {
+        localStorage.setItem(AUTH_TOKEN, '');
+        sessionStorage.setItem(AUTH_TOKEN, res.data.login.data)
       }
       message.success("登录成功！");
       nav("/");
