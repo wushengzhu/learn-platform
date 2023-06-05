@@ -102,7 +102,10 @@ type Query {
 
   """获取OSS相关信息"""
   getOSSInfo: OSSType!
-  getStudentInfo: StudentResult!
+  getStudentInfoById: StudentResult!
+
+  """使用id查询用户"""
+  getStudentInfoByGuard: StudentType!
   getStudents(page: PageInput!): StudentResults!
 }
 

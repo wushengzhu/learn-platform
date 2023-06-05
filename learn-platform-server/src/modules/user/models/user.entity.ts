@@ -38,6 +38,12 @@ export class User {
   account: string;
 
   @Column({
+    comment: '头像',
+    nullable: true,
+  })
+  avatar: string;
+
+  @Column({
     comment: '验证码',
     nullable: true,
   })

@@ -1,5 +1,5 @@
 import { Result } from '@/common/dto/result.type';
-import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query, Context } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '@/common/guards/auth.guard';
 import { SUCCESS, STUDENT_NOT_EXIST } from '@/common/constants/code';
@@ -16,7 +16,7 @@ export class StudentResolver {
   constructor(private readonly studentService: StudentService) {}
 
   @Query(() => StudentResult)
-  async getStudentInfo(@CurUserId() id: string): Promise<StudentResult> {
+  async getStudentInfoById(@CurUserId() id: string): Promise<StudentResult> {
     const result = await this.studentService.findById(id);
     if (result) {
       return {
@@ -29,6 +29,12 @@ export class StudentResolver {
       code: STUDENT_NOT_EXIST,
       message: '用户信息不存在',
     };
+  }
+
+  @Query(() => StudentType, { description: '使用id查询用户' })
+  async getStudentInfoByGuard(@Context() cxt: any): Promise<StudentType> {
+    const id = cxt.req.user.id;
+    return await this.studentService.findById(id);
   }
 
   @Mutation(() => StudentResult)
