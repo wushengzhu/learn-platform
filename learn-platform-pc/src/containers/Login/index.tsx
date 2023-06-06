@@ -17,12 +17,7 @@ import type { CSSProperties } from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import "./index.less";
-import {
-  ACCOUNT_LOGIN,
-  LOGIN,
-  SEND_CODE_MSG,
-  TEL_LOGIN,
-} from "@/graphql/auth";
+import { ACCOUNT_LOGIN, LOGIN, SEND_CODE_MSG, TEL_LOGIN } from "@/graphql/auth";
 import { AUTH_TOKEN } from "@/utils/constants";
 import { Link, useNavigate } from "react-router-dom";
 import Register from "../Register";
@@ -52,10 +47,10 @@ interface IValueA {
 }
 
 export default () => {
-  useTitle('登录');
+  useTitle("登录");
   const [loginType, setLoginType] = useState<LoginType>("account");
   const nav = useNavigate();
-  const [isRegistered, setIsRegistered] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(false);
   const [rules] = useState({
     account: [
       {
@@ -98,28 +93,33 @@ export default () => {
     { label: "手机号登录", key: "phone" },
   ];
 
-
   const loginHandler = async (values: any) => {
-    const res = loginType === 'account' ? await accountLoginRequest({
-      variables: values as IValueA,
-    }) : await telLoginRequest({
-      variables: values as IValueT,
-    });
-    if (res.data.login.code === 200) {
+    const res =
+      loginType === "account"
+        ? await accountLoginRequest({
+            variables: values as IValueA,
+          })
+        : await telLoginRequest({
+            variables: values as IValueT,
+          });
+    if (res.data?.login?.code === 200 || res.data?.studentLogin?.code === 200) {
+      const token = res.data?.login?.data
+        ? res.data?.login?.data
+        : res.data?.studentLogin?.data;
       if (values.autoLogin) {
-        sessionStorage.setItem(AUTH_TOKEN, '')
+        sessionStorage.setItem(AUTH_TOKEN, "");
         // 是否勾选了自动登录
-        localStorage.setItem(AUTH_TOKEN, res.data.login.data);
+        localStorage.setItem(AUTH_TOKEN, token);
       } else {
-        localStorage.setItem(AUTH_TOKEN, '');
-        sessionStorage.setItem(AUTH_TOKEN, res.data.login.data)
+        localStorage.setItem(AUTH_TOKEN, "");
+        sessionStorage.setItem(AUTH_TOKEN, token);
       }
       message.success("登录成功！");
       nav("/");
       return;
     }
     message.error("登录失败！");
-  }
+  };
 
   return (
     <div className="login-container">
@@ -128,7 +128,9 @@ export default () => {
           <video src={videoFileUrl} muted loop autoPlay></video>
         </div>
         <div className="right">
-          {isRegistered && (<Register setIsRegistered={setIsRegistered}></Register>)}
+          {isRegistered && (
+            <Register setIsRegistered={setIsRegistered}></Register>
+          )}
           {!isRegistered && (
             <ProConfigProvider hashed={false}>
               <div style={{ backgroundColor: "white" }}>
@@ -141,7 +143,13 @@ export default () => {
                   actions={
                     <div>
                       <div className="flex justify-center items-center mb-2">
-                        没有账号？去<Button type="link" onClick={() => setIsRegistered(true)}>注册</Button>
+                        没有账号？去
+                        <Button
+                          type="link"
+                          onClick={() => setIsRegistered(true)}
+                        >
+                          注册
+                        </Button>
                       </div>
                       <Space>
                         其他登录方式
@@ -155,7 +163,9 @@ export default () => {
                     centered
                     items={items}
                     activeKey={loginType}
-                    onChange={(activeKey) => setLoginType(activeKey as LoginType)}
+                    onChange={(activeKey) =>
+                      setLoginType(activeKey as LoginType)
+                    }
                   ></Tabs>
                   {loginType === "account" && (
                     <>
@@ -163,7 +173,12 @@ export default () => {
                         name="account"
                         fieldProps={{
                           size: "large",
-                          prefix: <UserOutlined className={"prefixIcon"} rev={undefined} />,
+                          prefix: (
+                            <UserOutlined
+                              className={"prefixIcon"}
+                              rev={undefined}
+                            />
+                          ),
                         }}
                         placeholder={"用户名"}
                         rules={rules.account}
@@ -172,7 +187,12 @@ export default () => {
                         name="password"
                         fieldProps={{
                           size: "large",
-                          prefix: <LockOutlined className={"prefixIcon"} rev={undefined} />,
+                          prefix: (
+                            <LockOutlined
+                              className={"prefixIcon"}
+                              rev={undefined}
+                            />
+                          ),
                         }}
                         placeholder={"密码"}
                         rules={rules.password}
@@ -184,7 +204,12 @@ export default () => {
                       <ProFormText
                         fieldProps={{
                           size: "large",
-                          prefix: <MobileOutlined className={"prefixIcon"} rev={undefined} />,
+                          prefix: (
+                            <MobileOutlined
+                              className={"prefixIcon"}
+                              rev={undefined}
+                            />
+                          ),
                         }}
                         name="tel"
                         placeholder={"手机号"}
@@ -193,7 +218,12 @@ export default () => {
                       <ProFormCaptcha
                         fieldProps={{
                           size: "large",
-                          prefix: <LockOutlined className={"prefixIcon"} rev={undefined} />,
+                          prefix: (
+                            <LockOutlined
+                              className={"prefixIcon"}
+                              rev={undefined}
+                            />
+                          ),
                         }}
                         captchaProps={{
                           size: "large",
