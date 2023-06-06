@@ -1,6 +1,6 @@
-import { getRouteKey, routes } from "./../routes/index";
 import { matchPath, useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
+import { getRouteKey, routes } from "@/routes/menu";
 
 /**
  * 页面跳转
@@ -40,7 +40,7 @@ export const useGoTo = () => {
 export const useMatchedRoute = () => {
   const r = useLocation();
   const route = useMemo(
-    () => routes.find((item) => matchPath(item.path, r.pathname)),
+    () => routes.find((item: any) => matchPath(item.path, r.pathname)),
     [r.pathname]
   );
   return route;

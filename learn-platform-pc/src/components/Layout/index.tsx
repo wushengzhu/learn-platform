@@ -1,5 +1,5 @@
 import { useUserContext } from "@/hooks/useHooks";
-import { ROUTE_CONFIG } from "@/routes";
+import { routes } from "@/routes/menu";
 import {
   MenuDataItem,
   PageContainer,
@@ -54,7 +54,7 @@ const Layout = () => {
         }}
         route={{
           path: "/",
-          routes: ROUTE_CONFIG,
+          routes: routes,
         }}
         onMenuHeaderClick={() => nav("/")}
         logo={
