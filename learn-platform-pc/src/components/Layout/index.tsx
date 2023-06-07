@@ -21,7 +21,7 @@ const Layout = () => {
   const nav = useNavigate();
 
   return (
-    <div className={style["layout-container"]}>
+    <div>
       <ProLayout
         layout="mix"
         siderWidth={150}

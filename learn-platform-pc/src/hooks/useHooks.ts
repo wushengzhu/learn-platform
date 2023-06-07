@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppContext, connectFactory } from "../utils/contextFactory";
 import { GET_USER } from "../graphql/user";
 import { IUser } from "../utils/types";
+import { AUTH_TOKEN } from "@/utils/constants";
 
 const KEY = "userInfo";
 const DEFAULT_VALUE = {};
@@ -15,6 +16,7 @@ export const useGetUser = () => {
   const { setStore } = useUserContext();
   const nav = useNavigate();
   const location = useLocation();
+  const token = localStorage.getItem(AUTH_TOKEN);
   const { loading, refetch } = useQuery<{ getUserInfo: IUser }>(GET_USER, {
     onCompleted: (data) => {
       if (data.getUserInfo) {
@@ -34,8 +36,11 @@ export const useGetUser = () => {
       }
       setStore({ refetchHandler: refetch });
       // 如果不在登录页面，但是目前没有登录，那就直接跳到登录页面
-      if (location.pathname !== "/login") {
+      if (!token && location.pathname !== "/login") {
         nav(`/login?orgUrl=${location.pathname}`);
+      }
+      if (token) {
+        nav(`/${location.pathname}`);
       }
     },
     onError: () => {

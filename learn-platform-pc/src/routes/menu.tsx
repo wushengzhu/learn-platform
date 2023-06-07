@@ -1,7 +1,5 @@
-import PageNotFound from "@/containers/PageNotFound";
 import { HomeOutlined } from "@ant-design/icons";
 import * as React from "react";
-import Home from "../containers/Home";
 
 interface IRoute {
   path: string;
@@ -18,12 +16,12 @@ export const ROUTE_KEY = {
 
 export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.HOME]: {
-    path: "/",
+    path: "home",
     name: "首页",
     icon: <HomeOutlined rev={undefined} />,
   },
   [ROUTE_KEY.MY]: {
-    path: "/my",
+    path: "my",
     name: "个人信息",
     icon: <HomeOutlined rev={undefined} />,
   },
@@ -39,4 +37,4 @@ export const routes = Object.values(ROUTE_CONFIG).map((key: any) => ({
   key,
 }));
 
-export const getRouteKey = (pageKey: string) => ROUTE_CONFIG[pageKey];
+export const getRouteKey = (key: string) => ROUTE_CONFIG[key];
