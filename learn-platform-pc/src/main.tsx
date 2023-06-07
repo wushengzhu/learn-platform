@@ -19,27 +19,27 @@ import "virtual:windi.css";
 
 dayjs.locale("zh-cn");
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  // <ConfigProvider locale={zhCN}>
-  <ApolloProvider client={client}>
-    <BrowserRouter>
-      <UserInfo>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Layout />}>
-            {routes.map((item: any) => {
-              const Component = ROUTE_COMPONENT[item.key];
-              return (
-                <Route
-                  key={item.key}
-                  path={item.path}
-                  element={<Component />}
-                />
-              );
-            })}
-          </Route>
-        </Routes>
-      </UserInfo>
-    </BrowserRouter>
-  </ApolloProvider>
-  // </ConfigProvider>
+  <ConfigProvider locale={zhCN}>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <UserInfo>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Layout />}>
+              {routes.map((item: any) => {
+                const Component = ROUTE_COMPONENT[item.key];
+                return (
+                  <Route
+                    key={item.key}
+                    path={item.path}
+                    element={<Component />}
+                  />
+                );
+              })}
+            </Route>
+          </Routes>
+        </UserInfo>
+      </BrowserRouter>
+    </ApolloProvider>
+  </ConfigProvider>
 );

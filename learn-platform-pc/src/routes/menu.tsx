@@ -6,6 +6,7 @@ interface IRoute {
   name: string;
   icon?: React.ReactNode;
   hideInMenu?: boolean;
+  emoji?: string;
 }
 
 export const ROUTE_KEY = {
@@ -17,12 +18,13 @@ export const ROUTE_KEY = {
 export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.HOME]: {
     path: "home",
-    name: "首页",
+    name: " 首页",
     icon: <HomeOutlined rev={undefined} />,
   },
   [ROUTE_KEY.MY]: {
     path: "my",
     name: "个人信息",
+    hideInMenu: true,
     icon: <HomeOutlined rev={undefined} />,
   },
   [ROUTE_KEY.PAGE_404]: {
@@ -32,9 +34,6 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
   },
 };
 
-export const routes = Object.values(ROUTE_CONFIG).map((key: any) => ({
-  ...ROUTE_CONFIG[key],
-  key,
-}));
+export const routes = Object.keys(ROUTE_CONFIG).map((key: any) => ({ ...ROUTE_CONFIG[key], key }));
 
 export const getRouteKey = (key: string) => ROUTE_CONFIG[key];
