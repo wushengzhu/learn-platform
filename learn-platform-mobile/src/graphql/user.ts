@@ -20,6 +20,26 @@ export const STUDENT_REGISTER = gql`
   }
 `;
 
+export const USER_REGISTER = gql`
+  mutation userRegister(
+    $account: String!
+    $password: String!
+    $tel: String!
+    $avatar: String!
+  ) {
+    userRegister(
+      account: $account
+      password: $password
+      tel: $tel
+      avatar: $avatar
+    ) {
+      code
+      data
+      message
+    }
+  }
+`;
+
 export const STUDENT_LOGIN = gql`
   mutation studentLogin($account: String!, $password: String!) {
     studentLogin(account: $account, password: $password) {

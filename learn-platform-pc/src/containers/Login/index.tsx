@@ -17,11 +17,12 @@ import type { CSSProperties } from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import "./index.less";
-import { ACCOUNT_LOGIN, LOGIN, SEND_CODE_MSG, TEL_LOGIN } from "@/graphql/auth";
+import { SEND_CODE_MSG, TEL_LOGIN, USER_LOGIN } from "@/graphql/auth";
 import { AUTH_TOKEN } from "@/utils/constants";
 import { Link, useNavigate } from "react-router-dom";
 import Register from "../Register";
 import { useTitle } from "@/hooks/useTitle";
+import * as md5 from "md5";
 
 type LoginType = "phone" | "account";
 
@@ -82,7 +83,7 @@ export default () => {
     ],
   });
   const [run] = useMutation(SEND_CODE_MSG);
-  const [accountLoginRequest] = useMutation(ACCOUNT_LOGIN);
+  const [accountLoginRequest] = useMutation(USER_LOGIN);
   const [telLoginRequest] = useMutation(TEL_LOGIN);
   const [videoFileUrl] = useState(
     "https://learn-platform-assets.oss-cn-guangzhou.aliyuncs.com/videos/login.mp4"
@@ -97,7 +98,11 @@ export default () => {
     const res =
       loginType === "account"
         ? await accountLoginRequest({
-            variables: values as IValueA,
+            variables: Object.assign(
+              {},
+              { ...values },
+              { password: md5(values.password) }
+            ) as IValueA,
           })
         : await telLoginRequest({
             variables: values as IValueT,
@@ -105,7 +110,7 @@ export default () => {
     if (res.data?.login?.code === 200 || res.data?.studentLogin?.code === 200) {
       const token = res.data?.login?.data
         ? res.data?.login?.data
-        : res.data?.studentLogin?.data;
+        : res.data?.userLogin?.data;
       if (values.autoLogin) {
         sessionStorage.setItem(AUTH_TOKEN, "");
         // 是否勾选了自动登录

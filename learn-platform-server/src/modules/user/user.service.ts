@@ -63,6 +63,15 @@ export class UserService {
     return res;
   }
 
+  // 查询一个用户通过账号
+  async findByAccount(account: string): Promise<User> {
+    return this.UserRepository.findOne({
+      where: {
+        account,
+      },
+    });
+  }
+
   // 更新一个用户的验证码
   async updateCode(id: string, code: string): Promise<boolean> {
     const res = await this.UserRepository.update(id, {

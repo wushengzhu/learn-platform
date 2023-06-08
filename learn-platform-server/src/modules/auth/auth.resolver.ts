@@ -137,4 +137,73 @@ export class AuthResolver {
       message: '注册失败',
     };
   }
+
+  @Mutation(() => Result, { description: '用户登录' })
+  async userLogin(
+    @Args('account') account: string,
+    @Args('password') password: string,
+  ): Promise<Result> {
+    const result = accountAndPwdValidate(account, password);
+    if (result.code !== SUCCESS) {
+      return result;
+    }
+    const user = await this.userService.findByAccount(account);
+    if (!user) {
+      return {
+        code: ACCOUNT_NOT_EXIST,
+        message: '账号不存在',
+      };
+    }
+    // 需要对密码进行 md5 加密
+    if (user.password === md5(password)) {
+      const token = this.jwtSvc.sign({
+        id: user.id,
+      });
+      return {
+        code: SUCCESS,
+        message: '登录成功',
+        data: token,
+      };
+    }
+    return {
+      code: LOGIN_ERROR,
+      message: '登录失败，账号或者密码不对',
+    };
+  }
+
+  @Mutation(() => Result, { description: '用户注册' })
+  async userRegister(
+    @Args('account') account: string,
+    @Args('password') password: string,
+    @Args('avatar') avatar: string,
+    @Args('tel') tel: string,
+  ): Promise<Result> {
+    const result = accountAndPwdValidate(account, password);
+    if (result.code !== SUCCESS) {
+      return result;
+    }
+    const user = await this.userService.findByAccount(account);
+    if (user) {
+      return {
+        code: ACCOUNT_EXIST,
+        message: '账号已经存在，请使用其他账号',
+      };
+    }
+    const res = await this.userService.create({
+      account,
+      password: md5(password),
+      avatar,
+      tel,
+    });
+    if (res) {
+      return {
+        code: SUCCESS,
+        message: '注册成功',
+      };
+    }
+    return {
+      code: REGISTER_ERROR,
+      message: '注册失败',
+    };
+  }
 }

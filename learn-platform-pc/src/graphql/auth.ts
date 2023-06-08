@@ -18,7 +18,17 @@ export const TEL_LOGIN = gql`
   }
 `;
 
-export const ACCOUNT_LOGIN = gql`
+export const USER_LOGIN = gql`
+  mutation userLogin($account: String!, $password: String!) {
+    userLogin(account: $account, password: $password) {
+      code
+      message
+      data
+    }
+  }
+`;
+
+export const STUDENT_LOGIN = gql`
   mutation studentLogin($account: String!, $password: String!) {
     studentLogin(account: $account, password: $password) {
       code
@@ -36,6 +46,26 @@ export const STUDENT_REGISTER = gql`
     $avatar: String!
   ) {
     studentRegister(
+      account: $account
+      password: $password
+      tel: $tel
+      avatar: $avatar
+    ) {
+      code
+      data
+      message
+    }
+  }
+`;
+
+export const USER_REGISTER = gql`
+  mutation userRegister(
+    $account: String!
+    $password: String!
+    $tel: String!
+    $avatar: String!
+  ) {
+    userRegister(
       account: $account
       password: $password
       tel: $tel

@@ -5,7 +5,9 @@ import styles from './index.module.less';
 import { Link, Route } from 'react-router-dom';
 
 export default (props: any) => {
-  const onFinish = (values: any) => { };
+  const onFinish = (values: any) => {
+    console.log(values);
+  };
 
   const [visible, setVisible] = useState(false);
   const [rules] = useState({

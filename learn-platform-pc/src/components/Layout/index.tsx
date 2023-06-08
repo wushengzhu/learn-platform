@@ -23,18 +23,13 @@ const Layout = () => {
       <ProLayout
         layout="mix"
         siderWidth={150}
-        token={{
-          header: {
-            colorBgHeader: "#292f33",
-            colorHeaderTitle: "#fff",
-            colorTextMenu: "#dfdfdf",
-            colorTextMenuSecondary: "#dfdfdf",
-            colorTextMenuSelected: "#fff",
-            colorBgMenuItemSelected: "#fff",
-            colorTextMenuActive: "#fff",
-            colorTextRightActionsItem: "#fff",
-          }
-        }}
+        // token={{
+        //   header: {
+        //     colorBgHeader: "#292f33",
+        //     colorHeaderTitle: "#fff",
+        //     colorTextRightActionsItem: "#fff",
+        //   },
+        // }}
         avatarProps={{
           src: "",
           title: "张无忌",

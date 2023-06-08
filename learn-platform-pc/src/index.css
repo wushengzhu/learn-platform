@@ -7,10 +7,10 @@
 }
 
 
-svg {
+/* svg {
   width: 1.5em;
   height: 1.5em;
-}
+} */
 
 
 /* 这样写不会解析为唯一hash值 */

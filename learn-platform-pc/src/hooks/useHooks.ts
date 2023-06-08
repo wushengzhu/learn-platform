@@ -12,20 +12,31 @@ export const useUserContext = () => useAppContext<IUser>(KEY);
 
 export const connect = connectFactory(KEY, DEFAULT_VALUE);
 
+const token = localStorage.getItem(AUTH_TOKEN);
+
 export const useGetUser = () => {
   const { setStore } = useUserContext();
   const nav = useNavigate();
   const location = useLocation();
-  const token = localStorage.getItem(AUTH_TOKEN);
+  const checkRoute = () => {
+    // 如果不在登录页面，但是目前没有登录，那就直接跳到登录页面
+    if (location.pathname !== "/login") {
+      if (token) {
+        nav(`/`);
+      } else {
+        nav(`/login?orgUrl=${location.pathname}`);
+      }
+    }
+  };
   const { loading, refetch } = useQuery<{ getUserInfo: IUser }>(GET_USER, {
     onCompleted: (data) => {
+      console.log(data);
       if (data.getUserInfo) {
-        const { id, name, tel, desc, avatar } = data.getUserInfo;
+        const { id, name, tel, avatar } = data.getUserInfo;
         setStore({
           id,
           name,
           tel,
-          desc,
           avatar,
         });
         // 当前在登录页面，且已经登录了，那就直接跳到首页
@@ -35,20 +46,12 @@ export const useGetUser = () => {
         return;
       }
       setStore({ refetchHandler: refetch });
-      // 如果不在登录页面，但是目前没有登录，那就直接跳到登录页面
-      if (!token && location.pathname !== "/login") {
-        nav(`/login?orgUrl=${location.pathname}`);
-      }
-      if (token) {
-        nav(`/${location.pathname}`);
-      }
+      checkRoute();
     },
     onError: () => {
       setStore({ refetchHandler: refetch });
       // 如果不在登录页面，但是目前登录异常，那就直接跳到登录页面
-      if (location.pathname !== "/login") {
-        nav(`/login?orgUrl=${location.pathname}`);
-      }
+      checkRoute();
     },
   });
   return { loading };

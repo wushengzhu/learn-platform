@@ -1,11 +1,23 @@
-import { Avatar, Button, Form, ImageUploader, Input, Space, Toast } from 'antd-mobile';
-import { EyeInvisibleOutline, EyeOutline, PictureOutline } from 'antd-mobile-icons';
+import {
+  Avatar,
+  Button,
+  Form,
+  ImageUploader,
+  Input,
+  Space,
+  Toast,
+} from 'antd-mobile';
+import {
+  EyeInvisibleOutline,
+  EyeOutline,
+  PictureOutline,
+} from 'antd-mobile-icons';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useUploadOSS from '@/hooks/useUploadOSS';
-import * as md5 from 'md5'
+import * as md5 from 'md5';
 import { useMutation } from '@apollo/client';
-import { STUDENT_REGISTER } from '@/graphql/user';
+import { USER_REGISTER } from '@/graphql/user';
 import toast from '@/utils/toast';
 
 interface IValue {
@@ -53,23 +65,27 @@ export default () => {
   const uploadHandler = useUploadOSS();
   const onChange = async (values: any) => {
     if (values && values?.length > 0) {
-      setAvatarImage(values[0].url)
+      setAvatarImage(values[0].url);
     }
-  }
-  const [register] = useMutation(STUDENT_REGISTER)
-  const [form] = Form.useForm()
+  };
+  const [register] = useMutation(USER_REGISTER);
+  const [form] = Form.useForm();
   const onSubmit = async () => {
-    const values = form.getFieldsValue()
-    const formValues = Object.assign({}, { ...values }, { avatar: avatarImage, password: md5(values.password) })
+    const values = form.getFieldsValue();
+    const formValues = Object.assign(
+      {},
+      { ...values },
+      { avatar: avatarImage, password: md5(values.password) },
+    );
     const res = await register({
-      variables: formValues
-    })
-    if (res.data.studentRegister.code === 200) {
-      toast.success('注册成功！')
+      variables: formValues,
+    });
+    if (res.data.userRegister.code === 200) {
+      toast.success('注册成功！');
     } else {
-      toast.fail('注册失败！')
+      toast.fail('注册失败！');
     }
-  }
+  };
   return (
     <div>
       <div className="flex flex-col justify-center items-center mt-4 mb-4">
