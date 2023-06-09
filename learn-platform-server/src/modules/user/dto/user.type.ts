@@ -7,7 +7,7 @@ export class UserType {
   @Field({ description: '昵称' })
   name?: string;
   @Field({ description: '简介' })
-  desc: string;
+  desc?: string;
   @Field({ description: '账号' })
   account?: string;
   @Field({ description: '密码' })
