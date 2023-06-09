@@ -11,6 +11,12 @@ type UserType {
   """简介"""
   desc: String!
 
+  """账号"""
+  account: String!
+
+  """密码"""
+  password: String!
+
   """tel"""
   tel: String!
 
@@ -117,6 +123,9 @@ input PageInput {
 type Mutation {
   """新增用户"""
   create(params: UserInput!): Boolean!
+
+  """使用账号获取用户"""
+  getUserByAccount(account: String!): UserType!
 
   """更新用户"""
   update(id: String!, params: UserInput!): Boolean!

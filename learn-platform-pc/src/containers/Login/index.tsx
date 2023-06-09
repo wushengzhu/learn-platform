@@ -107,7 +107,7 @@ export default () => {
         : await telLoginRequest({
             variables: values as IValueT,
           });
-    if (res.data?.login?.code === 200 || res.data?.studentLogin?.code === 200) {
+    if (res.data?.login?.code === 200 || res.data?.userLogin?.code === 200) {
       const token = res.data?.login?.data
         ? res.data?.login?.data
         : res.data?.userLogin?.data;

@@ -8,8 +8,12 @@ export class UserType {
   name?: string;
   @Field({ description: '简介' })
   desc: string;
+  @Field({ description: '账号' })
+  account?: string;
+  @Field({ description: '密码' })
+  password?: string;
   @Field({ description: 'tel' })
-  tel: string;
+  tel?: string;
   @Field({ description: '头像', nullable: true })
   avatar?: string;
 }

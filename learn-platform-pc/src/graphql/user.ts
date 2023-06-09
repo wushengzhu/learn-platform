@@ -10,3 +10,13 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const GET_USER_ACCOUNT = gql`
+  mutation getUserByAccount($account: String!) {
+    getUserByAccount(account: $account) {
+      id
+      account
+      password
+    }
+  }
+`;

@@ -10,9 +10,15 @@ dependencies:
   '@apollo/client':
     specifier: ^3.7.14
     version: registry.npmmirror.com/@apollo/client@3.7.14(graphql@16.6.0)(react-dom@18.2.0)(react@18.2.0)
+  '@types/bcryptjs':
+    specifier: ^2.4.2
+    version: registry.npmmirror.com/@types/bcryptjs@2.4.2
   antd:
     specifier: ^5.5.0
     version: registry.npmmirror.com/antd@5.5.0(react-dom@18.2.0)(react@18.2.0)
+  bcryptjs:
+    specifier: ^2.4.3
+    version: registry.npmmirror.com/bcryptjs@2.4.3
   dayjs:
     specifier: ^1.11.7
     version: registry.npmmirror.com/dayjs@1.11.7
@@ -1344,6 +1350,12 @@ packages:
       picomatch: registry.npmmirror.com/picomatch@2.3.1
     dev: true
 
+  registry.npmmirror.com/@types/bcryptjs@2.4.2:
+    resolution: {integrity: sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/bcryptjs/-/bcryptjs-2.4.2.tgz}
+    name: '@types/bcryptjs'
+    version: 2.4.2
+    dev: false
+
   registry.npmmirror.com/@types/eslint@8.37.0:
     resolution: {integrity: sha512-Piet7dG2JBuDIfohBngQ3rCt7MgO9xCO4xIMKxBThCq5PNRB91IjlJ10eJVwfoNtvTErmxLzwBZ7rHZtbOMmFQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/eslint/-/eslint-8.37.0.tgz}
     name: '@types/eslint'
@@ -1812,6 +1824,12 @@ packages:
     name: balanced-match
     version: 1.0.2
     dev: true
+
+  registry.npmmirror.com/bcryptjs@2.4.3:
+    resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bcryptjs/-/bcryptjs-2.4.3.tgz}
+    name: bcryptjs
+    version: 2.4.3
+    dev: false
 
   registry.npmmirror.com/brace-expansion@1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/brace-expansion/-/brace-expansion-1.1.11.tgz}

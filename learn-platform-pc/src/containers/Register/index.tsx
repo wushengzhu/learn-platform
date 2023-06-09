@@ -13,6 +13,16 @@ interface IValue {
   avatar?: string;
 }
 
+/**
+ * 加密方案1：前端md5密码加密
+ * 加密方案2：安装bcryptjs @types/bcryptjs
+ * const salt = bcryptjs.genSaltSync();
+ * const hash = bcryptjs.hashSync("123456", salt);
+ * bcryptjs.compareSync("123456", hash)//输入密码与加密后的比较
+ * @param param0
+ * @returns
+ */
+
 const Register = ({ setIsRegistered }: any) => {
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);

@@ -26,6 +26,11 @@ export class UserResolver {
     return await this.userService.find(id);
   }
 
+  @Mutation(() => UserType, { description: '使用账号获取用户' })
+  async getUserByAccount(@Args('account') account: string): Promise<UserType> {
+    return await this.userService.findByAccount(account);
+  }
+
   @Mutation(() => Boolean, { description: '更新用户' })
   async update(
     @Args('id') id: string,

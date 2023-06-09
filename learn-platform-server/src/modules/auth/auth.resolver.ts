@@ -86,7 +86,7 @@ export class AuthResolver {
       };
     }
     // 需要对密码进行 md5 加密
-    if (student.password === md5(password)) {
+    if (student.password === password) {
       const token = this.jwtSvc.sign({
         id: student.id,
       });
@@ -107,7 +107,7 @@ export class AuthResolver {
     @Args('account') account: string,
     @Args('password') password: string,
     @Args('avatar') avatar: string,
-    @Args('tel') tel: string,
+    @Args('tel') tel?: string,
   ): Promise<Result> {
     const result = accountAndPwdValidate(account, password);
     if (result.code !== SUCCESS) {
@@ -122,7 +122,7 @@ export class AuthResolver {
     }
     const res = await this.studentService.create({
       account,
-      password: md5(password),
+      password: password,
       avatar,
       tel,
     });
@@ -155,7 +155,7 @@ export class AuthResolver {
       };
     }
     // 需要对密码进行 md5 加密
-    if (user.password === md5(password)) {
+    if (user.password === password) {
       const token = this.jwtSvc.sign({
         id: user.id,
       });
@@ -176,7 +176,7 @@ export class AuthResolver {
     @Args('account') account: string,
     @Args('password') password: string,
     @Args('avatar') avatar: string,
-    @Args('tel') tel: string,
+    @Args('tel') tel?: string,
   ): Promise<Result> {
     const result = accountAndPwdValidate(account, password);
     if (result.code !== SUCCESS) {
@@ -191,7 +191,7 @@ export class AuthResolver {
     }
     const res = await this.userService.create({
       account,
-      password: md5(password),
+      password: password,
       avatar,
       tel,
     });
