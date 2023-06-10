@@ -1,4 +1,4 @@
-import { HomeOutlined } from "@ant-design/icons";
+import { AlertOutlined, FileExclamationOutlined, HomeOutlined, ReadOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
 import * as React from "react";
 
 interface IRoute {
@@ -13,6 +13,10 @@ export const ROUTE_KEY = {
   HOME: "home",
   MY: "my",
   PAGE_404: "404",
+  DICTIONARY: "dict",
+  MONITOR: "monitor",
+  SETTING: "setting",
+  LOG: "log",
 };
 
 export const ROUTE_CONFIG: Record<string, IRoute> = {
@@ -24,8 +28,27 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.MY]: {
     path: "my",
     name: "个人信息",
-    hideInMenu: true,
-    icon: <HomeOutlined rev={undefined} />,
+    icon: <UserOutlined rev={undefined} />,
+  },
+  [ROUTE_KEY.DICTIONARY]: {
+    path: "dict",
+    name: "字典管理",
+    icon: <ReadOutlined rev={undefined} />,
+  },
+  [ROUTE_KEY.MONITOR]: {
+    path: "monitor",
+    name: "系统监控",
+    icon: <AlertOutlined rev={undefined} />,
+  },
+  [ROUTE_KEY.LOG]: {
+    path: "log",
+    name: "系统日志",
+    icon: <FileExclamationOutlined rev={undefined} />,
+  },
+  [ROUTE_KEY.SETTING]: {
+    path: "setting",
+    name: "系统配置",
+    icon: <SettingOutlined rev={undefined} />,
   },
   [ROUTE_KEY.PAGE_404]: {
     path: "*",

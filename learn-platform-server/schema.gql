@@ -17,11 +17,26 @@ type UserType {
   """密码"""
   password: String!
 
+  """性别"""
+  gender: Boolean!
+
   """tel"""
   tel: String!
 
   """头像"""
   avatar: String
+}
+
+type Page {
+  total: Int!
+  pageNum: Int!
+  pageSize: Int!
+}
+
+type Result {
+  code: Int!
+  message: String
+  data: String
 }
 
 type OSSType {
@@ -42,18 +57,6 @@ type OSSType {
 
   """目录"""
   dir: String!
-}
-
-type Page {
-  total: Int!
-  pageNum: Int!
-  pageSize: Int!
-}
-
-type Result {
-  code: Int!
-  message: String
-  data: String
 }
 
 type StudentType {
@@ -128,7 +131,7 @@ type Mutation {
   getUserByAccount(account: String!): UserType!
 
   """更新用户"""
-  update(id: String!, params: UserInput!): Boolean!
+  updateUserInfo(id: String!, params: UserInput!): Result!
 
   """删除用户"""
   del(id: String!): Boolean!
@@ -158,6 +161,9 @@ input UserInput {
 
   """简介"""
   desc: String!
+
+  """性别"""
+  gender: Boolean!
 
   """头像"""
   avatar: String!

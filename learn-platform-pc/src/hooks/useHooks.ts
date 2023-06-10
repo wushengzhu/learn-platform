@@ -30,14 +30,16 @@ export const useGetUser = () => {
   };
   const { loading, refetch } = useQuery<{ getUserInfo: IUser }>(GET_USER, {
     onCompleted: (data) => {
-      console.log(data);
       if (data.getUserInfo) {
-        const { id, name, tel, avatar } = data.getUserInfo;
+        const { id, name, tel, avatar,account,gender,desc } = data.getUserInfo;
         setStore({
           id,
           name,
           tel,
           avatar,
+          account,
+          gender,
+          desc
         });
         // 当前在登录页面，且已经登录了，那就直接跳到首页
         if (location.pathname === "/login") {

@@ -6,9 +6,11 @@ export interface IUser {
   id: string;
   tel: string;
   name: string;
+  gender?:boolean;
+  account?:string;
   desc?: string;
   avatar: string;
-  refetchHandler?: () => void;
+  refetchHandler: () => void;
   currentOrg?: string;
 }
 export interface IPage {

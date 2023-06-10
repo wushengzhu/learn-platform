@@ -12,6 +12,8 @@ export class UserType {
   account?: string;
   @Field({ description: '密码' })
   password?: string;
+  @Field({ description: '性别' })
+  gender?: boolean;
   @Field({ description: 'tel' })
   tel?: string;
   @Field({ description: '头像', nullable: true })

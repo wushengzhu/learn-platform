@@ -38,6 +38,12 @@ export class User {
   account: string;
 
   @Column({
+    comment: '性别',
+    nullable: true,
+  })
+  gender: boolean;
+
+  @Column({
     comment: '头像',
     nullable: true,
   })

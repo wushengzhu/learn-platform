@@ -6,7 +6,10 @@ export const GET_USER = gql`
       id
       tel
       avatar
+      desc
       name
+      account
+      gender
     }
   }
 `;
@@ -17,6 +20,15 @@ export const GET_USER_ACCOUNT = gql`
       id
       account
       password
+    }
+  }
+`;
+
+export const UPDATE_USER = gql`
+  mutation updateUserInfo($id: String!,$params:UserInput!) {
+    updateUserInfo(id: $id,params:$params) {
+      code
+      message
     }
   }
 `;

@@ -6,10 +6,41 @@
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>学习平台</title>
+  <style>
+    /* 浏览器滚动条样式 */
+    /* width */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 4px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: rgb(255, 255, 255);
+      border-radius: 8px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: rgb(201, 201, 202);
+      border-radius: 8px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgb(162, 162, 163);
+    }
+  </style>
 </head>
 
 <body>
   <div id="root"></div>
+  <script src="https://whois.pconline.com.cn/ipJson.jsp?callback=getIp"></script>
+  <script>
+    function getIp (ipInfo) {
+      localStorage.setItem('ipInfo', JSON.stringify(ipInfo));
+    }
+  </script>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 

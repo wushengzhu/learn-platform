@@ -75,7 +75,7 @@ const Register = ({ setIsRegistered }: any) => {
     }
   };
 
-  const onFinishFailed = () => {};
+  const onFinishFailed = () => { };
 
   const getBase64 = (img: RcFile, callback: (url: string) => void) => {
     const reader = new FileReader();
@@ -106,7 +106,6 @@ const Register = ({ setIsRegistered }: any) => {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
-        console.log(url);
         setImageUrl(url);
       });
     }
