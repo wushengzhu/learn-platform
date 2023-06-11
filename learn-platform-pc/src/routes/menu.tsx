@@ -1,4 +1,4 @@
-import { AlertOutlined, FileExclamationOutlined, HomeOutlined, ReadOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
+import { AlertOutlined, FileExclamationOutlined, HomeOutlined, ReadOutlined, SettingOutlined, ShopOutlined, UserOutlined } from "@ant-design/icons";
 import * as React from "react";
 
 interface IRoute {
@@ -11,6 +11,8 @@ interface IRoute {
 
 export const ROUTE_KEY = {
   HOME: "home",
+  SHOP: "shop",
+  USER: "user",
   MY: "my",
   PAGE_404: "404",
   DICTIONARY: "dict",
@@ -28,6 +30,17 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.MY]: {
     path: "my",
     name: "个人信息",
+    hideInMenu: true,
+    icon: <UserOutlined rev={undefined} />,
+  },
+  [ROUTE_KEY.SHOP]: {
+    path: "shop",
+    name: "门店管理",
+    icon: <ShopOutlined rev={undefined} />,
+  },
+  [ROUTE_KEY.USER]: {
+    path: "user",
+    name: "用户管理",
     icon: <UserOutlined rev={undefined} />,
   },
   [ROUTE_KEY.DICTIONARY]: {

@@ -11,7 +11,7 @@ export interface IUser {
   desc?: string;
   avatar: string;
   refetchHandler: () => void;
-  currentOrg?: string;
+  currentShop?: string;
 }
 export interface IPage {
   pageNum: number;
@@ -26,11 +26,11 @@ export interface IMedia {
 /**
  * 门店
  */
-export interface IOrganization {
+export interface IShop {
   id: string;
-  orgFrontImg?: IMedia[];
-  orgRoomImg?: IMedia[];
-  orgOtherImg?: IMedia[];
+ shopFrontImg?: IMedia[];
+ shopRoomImg?: IMedia[];
+ shopOtherImg?: IMedia[];
   name: string;
   logo: string;
   tags?: string;
@@ -44,11 +44,11 @@ export interface IOrganization {
   businessLicense:string
 }
 
-export type TBaseOrganization = Partial<IOrganization>;
+export type TBaseShop = Partial<IShop>;
 
-export type TOrgsQuery = { [key: string]: { __typename?: 'Query', data: IOrganization[], page: IPage } };
+export type TShopsQuery = { [key: string]: { __typename?: 'Query', data: IShop[], page: IPage } };
 
-export type TOrgQuery = { [key: string]: { __typename?: 'Query', data: IOrganization } };
+export type TShopQuery = { [key: string]: { __typename?: 'Query', data: IShop } };
 
 export interface IStudent {
   name: string;

@@ -141,7 +141,7 @@ const Layout = () => {
           </Space>,
         ]}
         route={{
-          path: "/",
+          path: "/home",
           routes,
         }}
         onMenuHeaderClick={() => nav("/")}
