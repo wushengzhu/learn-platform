@@ -1,7 +1,6 @@
 import { UPDATE_USER } from "@/graphql/user";
 import { useUserContext } from "@/hooks/useHooks";
 import { useTitle } from "@/hooks/useTitle";
-import { AntDesignOutlined, ManOutlined, WomanOutlined } from "@ant-design/icons";
 import { FooterToolbar, ProForm, ProFormInstance, ProFormRadio, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
 import { useMutation } from "@apollo/client";
 import { Avatar, Button, Col, Divider, Form, message, Row, Space, Tag, Timeline } from "antd";
@@ -14,21 +13,22 @@ const My = () => {
   const { store } = useUserContext();
   const formRef = useRef<ProFormInstance>();
   const [updateUser] = useMutation(UPDATE_USER);
-  const [avatarUrl, setAvatarUrl] = useState('')
+
   useEffect(() => {
     if (!store.account) {
       return;
     }
+    console.log(store)
     formRef.current?.setFieldsValue({
       tel: store.tel,
       name: store.name,
       account: store.account,
       desc: store.desc,
       gender: store.gender,
+      avatar: {
+        url: store.avatar
+      }
     })
-    if (store.avatar) {
-      setAvatarUrl(store.avatar)
-    }
   }, [store])
   const formItemLayout = {
     labelCol: { span: 5 },
@@ -80,7 +80,7 @@ const My = () => {
                   name: values.name,
                   desc: values.desc,
                   gender: values.gender,
-                  avatar: avatarUrl
+                  avatar: values.avatar?.url || ''
                 }
               }
             })
@@ -98,10 +98,8 @@ const My = () => {
             wrapperCol={{ span: 13 }}
             className="flex justify-center"
           >
+            {/* value={[{ name: 'ad', uid: '112', url: store.avatar }]} */}
             <ImageUpload label="更改头像" />
-            {/* <div className="mt-1 flex justify-center">
-              <Tag color="#f50">超级管理员</Tag>
-            </div> */}
           </ProForm.Item>
           <ProFormText
             width="md"

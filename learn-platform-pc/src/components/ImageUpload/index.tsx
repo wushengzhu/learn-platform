@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import { Button, Form, message, Upload } from 'antd';
+import { Upload } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { useQuery } from '@apollo/client';
 import { GET_OSS_INFO } from '@/graphql/oss';
@@ -39,7 +37,7 @@ const ImageUpload = ({
       ...f,
       url: f.url || getKey(f).url,
     }));
-    onChange?.(files);
+    // console.log(files)
     onChange?.(files);
   };
 
@@ -70,14 +68,12 @@ const ImageUpload = ({
 
   return (
     <ImgCrop rotationSlider aspect={imgCropAspect}>
+      {/* ImgCrop实现在上传前，先对图片进行裁切，然后上传裁切后的图片 */}
       <Upload
         name='file'
         maxCount={maxCount}
         listType="picture-circle"
         fileList={value}
-        headers={{
-          "Access-Control-Allow-Origin": "*",
-        }}
         action={OSSData?.host}
         onChange={handleChange}
         data={getExtraData}
@@ -86,7 +82,6 @@ const ImageUpload = ({
         {label}
       </Upload>
     </ImgCrop>
-
   );
 };
 
