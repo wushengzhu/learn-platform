@@ -1,9 +1,11 @@
 import type { UploadProps } from 'antd';
 import { Upload } from 'antd';
-import type { UploadFile } from 'antd/es/upload/interface';
+import type { UploadFile, UploadListType } from 'antd/es/upload/interface';
 import { useQuery } from '@apollo/client';
 import { GET_OSS_INFO } from '@/graphql/oss';
 import ImgCrop from 'antd-img-crop';
+import { ProFormUploadButton } from '@ant-design/pro-components';
+import { PlusOutlined } from '@ant-design/icons';
 
 interface OSSDataType {
   dir: string;
@@ -17,6 +19,7 @@ interface OSSDataType {
 interface OSSUploadProps {
   value?: UploadFile[];
   label?: string;
+  listType?: UploadListType;
   maxCount?: number;
   imgCropAspect?: number;
   onChange?: (file?: UploadFile[]) => void;
@@ -24,6 +27,7 @@ interface OSSUploadProps {
 
 const ImageUpload = ({
   label,
+  listType,
   maxCount,
   imgCropAspect,
   value,
@@ -37,7 +41,6 @@ const ImageUpload = ({
       ...f,
       url: f.url || getKey(f).url,
     }));
-    // console.log(files)
     onChange?.(files);
   };
 
@@ -72,14 +75,14 @@ const ImageUpload = ({
       <Upload
         name='file'
         maxCount={maxCount}
-        listType="picture-circle"
+        listType={listType}
         fileList={value}
         action={OSSData?.host}
         onChange={handleChange}
         data={getExtraData}
         beforeUpload={beforeUpload}
       >
-        {label}
+        {maxCount !== value?.length ? <PlusOutlined rev={undefined} /> : ''}
       </Upload>
     </ImgCrop>
   );
@@ -91,6 +94,7 @@ ImageUpload.defaultProps = {
   label: '上传图片',
   value: null,
   onChange: () => { },
+  listType: "picture-circle",// picture-card picture text
   maxCount: 1,
   imgCropAspect: 1 / 1,
 };

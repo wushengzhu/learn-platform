@@ -1,10 +1,10 @@
 import { UPDATE_USER } from "@/graphql/user";
 import { useUserContext } from "@/hooks/useHooks";
 import { useTitle } from "@/hooks/useTitle";
-import { FooterToolbar, ProForm, ProFormInstance, ProFormRadio, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
+import { ProFormUploadButton, FooterToolbar, ProForm, ProFormInstance, ProFormRadio, ProFormText, ProFormTextArea } from "@ant-design/pro-components";
 import { useMutation } from "@apollo/client";
-import { Avatar, Button, Col, Divider, Form, message, Row, Space, Tag, Timeline } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { Divider, Form, message, Timeline } from "antd";
+import { useEffect, useRef } from "react";
 import ImageUpload from "../ImageUpload";
 import style from './index.module.less'
 
@@ -18,16 +18,15 @@ const My = () => {
     if (!store.account) {
       return;
     }
-    console.log(store)
     formRef.current?.setFieldsValue({
       tel: store.tel,
       name: store.name,
       account: store.account,
       desc: store.desc,
       gender: store.gender,
-      avatar: {
-        url: store.avatar
-      }
+      avatar: [{
+        url: store.avatar || ''
+      }] || []
     })
   }, [store])
   const formItemLayout = {
@@ -80,10 +79,11 @@ const My = () => {
                   name: values.name,
                   desc: values.desc,
                   gender: values.gender,
-                  avatar: values.avatar?.url || ''
+                  avatar: values.avatar[0]?.url || ''
                 }
               }
             })
+            console.log(res)
             if (res.data.updateUserInfo.code === 200) {
               store.refetchHandler();
               message.success('更新成功！');
@@ -92,15 +92,15 @@ const My = () => {
             message.error(res.data.updateUserInfo.message);
           }}
         >
-          <ProForm.Item
+          {/* 方案一：利用ProForm本身的组件上传 <ProFormUploadButton name="avatar" listType="picture-circle" /> */}
+          <Form.Item
             name="avatar"
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 13 }}
             className="flex justify-center"
           >
-            {/* value={[{ name: 'ad', uid: '112', url: store.avatar }]} */}
-            <ImageUpload label="更改头像" />
-          </ProForm.Item>
+            <ImageUpload />
+          </Form.Item>
           <ProFormText
             width="md"
             name="account"

@@ -13,7 +13,6 @@ import { ROUTE_COMPONENT } from "./routes/index";
 
 import "dayjs/locale/zh-cn";
 import zhCN from "antd/locale/zh_CN";
-import "antd/dist/reset.css";
 import "./index.css";
 import "virtual:windi.css";
 

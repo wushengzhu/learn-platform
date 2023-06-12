@@ -12,6 +12,9 @@
   height: 1.5em;
 } */
 
+#root {
+  height: 100%;
+}
 
 /* 这样写不会解析为唯一hash值 */
 :global(body) {

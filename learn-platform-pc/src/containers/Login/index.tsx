@@ -23,6 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Register from "../Register";
 import { useTitle } from "@/hooks/useTitle";
 import * as md5 from "md5";
+import { useUserContext } from "@/hooks/useHooks";
 
 type LoginType = "phone" | "account";
 
@@ -49,6 +50,7 @@ interface IValueA {
 
 export default () => {
   useTitle("登录");
+  const { store } = useUserContext();
   const [loginType, setLoginType] = useState<LoginType>("account");
   const nav = useNavigate();
   const [isRegistered, setIsRegistered] = useState(false);
@@ -98,16 +100,17 @@ export default () => {
     const res =
       loginType === "account"
         ? await accountLoginRequest({
-            variables: Object.assign(
-              {},
-              { ...values },
-              { password: md5(values.password) }
-            ) as IValueA,
-          })
+          variables: Object.assign(
+            {},
+            { ...values },
+            { password: md5(values.password) }
+          ) as IValueA,
+        })
         : await telLoginRequest({
-            variables: values as IValueT,
-          });
+          variables: values as IValueT,
+        });
     if (res.data?.login?.code === 200 || res.data?.userLogin?.code === 200) {
+      store.refetchHandler();
       const token = res.data?.login?.data
         ? res.data?.login?.data
         : res.data?.userLogin?.data;
