@@ -1,7 +1,7 @@
 import { CommonEntity } from '@/common/entities/common.entity';
 import { ShopImage } from '@/modules/shop-image/models/shop-image.entity';
 import { IsNotEmpty } from 'class-validator';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 /**
  * 组件
@@ -15,15 +15,23 @@ export class Shop extends CommonEntity {
   businessLicense: string;
 
   @Column({
-    comment: '法人身份证正面',
+    comment: '法人',
+    nullable: true,
   })
-  @IsNotEmpty()
+  representative: string;
+
+  @Column({
+    comment: '法人身份证正面',
+    nullable: true,
+  })
+  // @IsNotEmpty()
   identityCardFrontImg: string;
 
   @Column({
     comment: '法人身份证反面',
+    nullable: true,
   })
-  @IsNotEmpty()
+  // @IsNotEmpty()
   identityCardBackImg: string;
 
   @Column({
@@ -41,7 +49,7 @@ export class Shop extends CommonEntity {
   description: string;
 
   @Column({
-    comment: '机构名',
+    comment: '门店名',
     nullable: true,
     default: '',
   })
@@ -76,6 +84,13 @@ export class Shop extends CommonEntity {
     nullable: true,
   })
   tel: string;
+
+  @Column({
+    comment: '成立日期',
+    type: 'timestamp',
+    nullable: true,
+  })
+  establishmentDate: Date;
 
   @OneToMany(() => ShopImage, (shopImage) => shopImage.shopIdForFront, {
     cascade: true,

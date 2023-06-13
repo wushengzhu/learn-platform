@@ -6,8 +6,8 @@ export interface IUser {
   id: string;
   tel: string;
   name: string;
-  gender?:boolean;
-  account?:string;
+  gender?: boolean;
+  account?: string;
   desc?: string;
   avatar: string;
   refetchHandler: () => void;
@@ -28,27 +28,33 @@ export interface IMedia {
  */
 export interface IShop {
   id: string;
- shopFrontImg?: IMedia[];
- shopRoomImg?: IMedia[];
- shopOtherImg?: IMedia[];
+  shopFrontImg?: IMedia[];
+  shopRoomImg?: IMedia[];
+  shopOtherImg?: IMedia[];
   name: string;
   logo: string;
   tags?: string;
+  representative?: string;
+  establishmentDate: Date;
   description?: string;
   address?: string;
   tel?: string;
   longitude?: string;
   latitude?: string;
-  identityCardBackImg:string
-  identityCardFrontImg:string
-  businessLicense:string
+  identityCardBackImg: string;
+  identityCardFrontImg: string;
+  businessLicense: string;
 }
 
 export type TBaseShop = Partial<IShop>;
 
-export type TShopsQuery = { [key: string]: { __typename?: 'Query', data: IShop[], page: IPage } };
+export type TShopsQuery = {
+  [key: string]: { __typename?: "Query"; data: IShop[]; page: IPage };
+};
 
-export type TShopQuery = { [key: string]: { __typename?: 'Query', data: IShop } };
+export type TShopQuery = {
+  [key: string]: { __typename?: "Query"; data: IShop };
+};
 
 export interface IStudent {
   name: string;
@@ -58,7 +64,9 @@ export interface IStudent {
   account: string;
 }
 
-export type TStudentQuery = { [key: string]: { __typename?: 'Query', data: IStudent[], page: IPage } };
+export type TStudentQuery = {
+  [key: string]: { __typename?: "Query"; data: IStudent[]; page: IPage };
+};
 
 export interface IOrderTime {
   startTime: string;
@@ -66,7 +74,14 @@ export interface IOrderTime {
   key: number;
 }
 
-export type TWeek = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+export type TWeek =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";
 
 export interface IWeekCourse {
   week: TWeek;
@@ -87,9 +102,13 @@ export interface ICourse {
   reducibleTime: IWeekCourse[];
 }
 
-export type TCoursesQuery = { [key: string]: { __typename?: 'Query', data: ICourse[], page: IPage } };
+export type TCoursesQuery = {
+  [key: string]: { __typename?: "Query"; data: ICourse[]; page: IPage };
+};
 
-export type TCourseQuery = { [key: string]: { __typename?: 'Query', data: ICourse, page: IPage } };
+export type TCourseQuery = {
+  [key: string]: { __typename?: "Query"; data: ICourse; page: IPage };
+};
 
 export type TBaseCourse = Partial<ICourse>;
 
@@ -102,7 +121,9 @@ export interface ICard {
   course: ICourse;
 }
 
-export type TCardsQuery = { [key: string]: { __typename?: 'Query', data: ICard[], page: IPage } };
+export type TCardsQuery = {
+  [key: string]: { __typename?: "Query"; data: ICard[]; page: IPage };
+};
 
 /**
  * 商品类型
@@ -120,9 +141,13 @@ export interface IProduct {
   cards: ICard[];
 }
 
-export type TProductsQuery = { [key: string]: { __typename?: 'Query', data: IProduct[], page: IPage } };
+export type TProductsQuery = {
+  [key: string]: { __typename?: "Query"; data: IProduct[]; page: IPage };
+};
 
-export type TProductQuery = { [key: string]: { __typename?: 'Query', data: IProduct } };
+export type TProductQuery = {
+  [key: string]: { __typename?: "Query"; data: IProduct };
+};
 
 export type TBaseProduct = Partial<IProduct>;
 
@@ -139,5 +164,9 @@ export interface ITeacher {
 }
 
 export type TBaseTeacher = Partial<ITeacher>;
-export type TTeachersQuery = { [key: string]: { __typename?: 'Query', data: ITeacher[], page: IPage } };
-export type TTeacherQuery = { [key: string]: { __typename?: 'Query', data: ITeacher } };
+export type TTeachersQuery = {
+  [key: string]: { __typename?: "Query"; data: ITeacher[]; page: IPage };
+};
+export type TTeacherQuery = {
+  [key: string]: { __typename?: "Query"; data: ITeacher };
+};

@@ -6,10 +6,10 @@ type UserType {
   id: String!
 
   """昵称"""
-  name: String!
+  name: String
 
   """简介"""
-  desc: String!
+  desc: String
 
   """账号"""
   account: String!
@@ -18,10 +18,10 @@ type UserType {
   password: String!
 
   """性别"""
-  gender: Boolean!
+  gender: Boolean
 
   """tel"""
-  tel: String!
+  tel: String
 
   """头像"""
   avatar: String
@@ -102,6 +102,83 @@ type StudentResults {
   page: Page
 }
 
+type ShopImageType {
+  id: String
+  url: String!
+  remark: String
+}
+
+type ShopType {
+  id: String!
+  createdAt: DateTime!
+  createdBy: String
+  updatedAt: DateTime
+  updatedBy: String
+  deletedAt: DateTime
+  deletedBy: String
+
+  """营业执照"""
+  businessLicense: String!
+
+  """法人身份证正面"""
+  identityCardFrontImg: String
+
+  """法人身份证反面"""
+  identityCardBackImg: String
+
+  """标签 以，隔开"""
+  tags: String
+
+  """简介"""
+  description: String
+
+  """机构名"""
+  name: String
+
+  """logo"""
+  logo: String
+
+  """成立日期"""
+  establishmentDate: DateTime
+
+  """法定代表人"""
+  representative: String
+
+  """经度"""
+  longitude: String
+
+  """纬度"""
+  latitude: String
+
+  """地址"""
+  address: String
+
+  """电话"""
+  tel: String
+
+  """封面图"""
+  shopFrontImg: [ShopImageType!]
+
+  """室内图"""
+  shopRoomImg: [ShopImageType!]
+
+  """其他图"""
+  shopOtherImg: [ShopImageType!]
+}
+
+type ShopResult {
+  code: Int!
+  message: String!
+  data: ShopType
+}
+
+type ShopResults {
+  code: Int!
+  message: String
+  data: [ShopType!]
+  page: Page
+}
+
 type Query {
   """使用id查询用户"""
   find(id: String!): UserType!
@@ -116,6 +193,8 @@ type Query {
   """使用id查询用户"""
   getStudentInfoByGuard: StudentType!
   getStudents(page: PageInput!): StudentResults!
+  getShopInfoById(id: String!): ShopResult!
+  getShops(page: PageInput!, name: String): ShopResults!
 }
 
 input PageInput {
@@ -136,6 +215,8 @@ type Mutation {
   """删除用户"""
   del(id: String!): Boolean!
   commitStudentInfo(params: StudentInput!): StudentResult!
+  commitShop(params: ShopInput!, id: String): ShopResult!
+  deleteShop(id: String!): Result!
 
   """获取短信服务验证码"""
   sendCodeMsg(tel: String!): Result!
@@ -178,4 +259,60 @@ input StudentInput {
 
   """头像"""
   avatar: String!
+}
+
+input ShopInput {
+  """名称"""
+  name: String!
+
+  """logo"""
+  logo: String!
+
+  """手机号"""
+  tel: String
+
+  """法人"""
+  representative: String
+
+  """成立日期"""
+  establishmentDate: DateTime!
+
+  """tags"""
+  tags: String
+
+  """longitude"""
+  longitude: String
+
+  """latitude"""
+  latitude: String
+
+  """latitude"""
+  address: String
+
+  """营业执照"""
+  businessLicense: String!
+
+  """简介"""
+  description: String
+
+  """法人身份证正面"""
+  identityCardFrontImg: String
+
+  """法人身份证反面"""
+  identityCardBackImg: String
+
+  """机构门面照片"""
+  shopFrontImg: [ShopImageInput!]
+
+  """机构环境照片"""
+  shopRoomImg: [ShopImageInput!]
+
+  """机构环境照片"""
+  shopOtherImg: [ShopImageInput!]
+}
+
+input ShopImageInput {
+  id: String
+  url: String!
+  remark: String
 }

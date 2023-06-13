@@ -1,103 +1,90 @@
 import ShopEdit from '@/components/ShopEdit';
-import { useShops } from '@/services/shop';
+import { useDeleteShop, useShops } from '@/services/shop';
 import { DEFAULT_PAGE_SIZE } from '@/utils/constants';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   ProList,
 } from '@ant-design/pro-components';
-import { Button, Progress, Tag } from 'antd';
+import { Button, Popconfirm, Progress, Tag } from 'antd';
 import { useState } from 'react';
 
 
 const Shop = () => {
   const { loading, data, page, refetch } = useShops();
-  const [cardActionProps, setCardActionProps] = useState<'actions' | 'extra'>(
-    'extra',
-  );
+  const [delHandler, delLoading] = useDeleteShop();
   const [showEdit, setShowEdit] = useState(false);
   const [shopId, setShopId] = useState('');
-  const onPageChangeHandler = () => { }
   const addInfoHandler = () => {
     setShowEdit(true)
     setShopId('')
   }
   const editInfoHandler = (id: string) => {
-    setShowEdit(true)
     setShopId(id)
+    setShowEdit(true)
   }
   const onCloseHander = () => {
     setShowEdit(false);
     refetch();
   }
-  const [ghost, setGhost] = useState<boolean>(false);
-  const dataSource = [
-    '语雀的天空',
-    'Ant Design',
-    '蚂蚁金服体验科技',
-    'TechUI',
-    'TechUI 2.0',
-    'Bigfish',
-    'Umi',
-    'Ant Design Pro',
-  ].map((item) => ({
-    title: item,
-    subTitle: <Tag color="#5BD8A6">语雀专栏</Tag>,
+  
+  const onPageChangeHandler = (pageNum: number, pageSize: number) => {
+    refetch({
+      page: {
+        pageNum,
+        pageSize,
+      },
+    });
+  };
+  const delInfoHandler = async (id: string) => {
+    delHandler(id, refetch);
+  };
+  const dataSource =data?.map((item) => ({
+    ...item,
+    key: item.id,
+    subTitle: <div>{item.tags?.split(',').map((tag) => (<Tag key={tag} color="#5BD8A6">{tag}</Tag>))}</div>,
     actions: [
-      <a key="run">编辑</a>,
-      <a key="delete">删除</a>],
+      <Button type="link" onClick={() => editInfoHandler(item.id)}>编辑</Button>,
+      <Popconfirm
+        title="提醒"
+        okButtonProps={{
+          loading: delLoading,
+        }}
+        description={`确定要删除 ${item.name} 吗？`}
+        onConfirm={() => delInfoHandler(item.id)}
+      >
+        <Button type="link">删除</Button>
+      </Popconfirm>,
+    ],
     avatar:
       'https://gw.alipayobjects.com/zos/antfincdn/UCSiy1j6jx/xingzhuang.svg',
-    content: (
-      <div
-        style={{
-          flex: 1,
-        }}
-      >
-        <div
-          style={{
-            width: 200,
-          }}
-        >
-          <div>发布中</div>
-          <Progress percent={80} />
-        </div>
-      </div>
-    ),
+    content: item.address,
   }));
   return (
     <div>
       <ProList<any>
-        ghost={ghost}
-        itemCardProps={{
-          ghost,
-        }}
         pagination={{
           defaultPageSize: DEFAULT_PAGE_SIZE,
           showSizeChanger: false,
-          total: data?.length,
+          total: page?.total,
           onChange: onPageChangeHandler
         }}
         showActions="hover"
-        rowSelection={{}}
+        rowSelection={false}
         grid={{ gutter: 10, column: 2 }}
-        onItem={(record: any) => {
-          return {
-            onMouseEnter: () => {
-              console.log(record);
-            },
-            onClick: () => {
-              console.log(record);
-            },
-          };
-        }}
         metas={{
-          title: {},
+          title: {
+            dataIndex: 'name',
+          },
           subTitle: {},
           type: {},
-          avatar: {},
-          content: {},
+          avatar: {
+            dataIndex: 'logo',
+          },
+          content: {
+            dataIndex: 'address',
+          },
           actions: {
-            cardActionProps,
+            cardActionProps: 'extra',
           },
         }}
         dataSource={dataSource}

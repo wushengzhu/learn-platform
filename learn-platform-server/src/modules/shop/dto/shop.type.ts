@@ -14,11 +14,13 @@ export class ShopType extends CommonType {
 
   @Field({
     description: '法人身份证正面',
+    nullable: true,
   })
   identityCardFrontImg: string;
 
   @Field({
     description: '法人身份证反面',
+    nullable: true,
   })
   identityCardBackImg: string;
 
@@ -45,6 +47,18 @@ export class ShopType extends CommonType {
     nullable: true,
   })
   logo: string;
+
+  @Field({
+    description: '成立日期',
+    nullable: true,
+  })
+  establishmentDate: Date;
+
+  @Field({
+    description: '法定代表人',
+    nullable: true,
+  })
+  representative: string;
 
   @Field({
     description: '经度',

@@ -1,16 +1,17 @@
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { useMutation } from "@apollo/client";
-import { Button, Form, Input, message, Row, Upload, UploadProps } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { useState } from "react";
 import { USER_REGISTER } from "@/graphql/auth";
 import * as md5 from "md5";
-import { RcFile, UploadChangeParam, UploadFile } from "antd/es/upload";
+import ImageUpload from "@/components/ImageUpload";
 
 interface IValue {
   account: string;
   password: string;
   tel: string;
-  avatar?: string;
+  avatar?: Array<{
+    url: string
+  }>;
 }
 
 /**
@@ -24,8 +25,6 @@ interface IValue {
  */
 
 const Register = ({ setIsRegistered }: any) => {
-  const [imageUrl, setImageUrl] = useState("");
-  const [loading, setLoading] = useState(false);
   const [rules] = useState({
     account: [
       {
@@ -65,7 +64,7 @@ const Register = ({ setIsRegistered }: any) => {
       variables: Object.assign(
         {},
         { ...values },
-        { avatar: imageUrl, password: md5(values.password) }
+        { avatar: values?.avatar?values?.avatar[0]?.url:'', password: md5(values.password) }
       ),
     });
     if (res.data.userRegister.code === 200) {
@@ -75,96 +74,26 @@ const Register = ({ setIsRegistered }: any) => {
     }
   };
 
-  const onFinishFailed = () => { };
-
-  const getBase64 = (img: RcFile, callback: (url: string) => void) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result as string));
-    reader.readAsDataURL(img);
-  };
-
-  const beforeUpload = (file: RcFile) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
-    }
-    return isJpgOrPng && isLt2M;
-  };
-
-  const handleChange: UploadProps["onChange"] = (
-    info: UploadChangeParam<UploadFile>
-  ) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-      });
-    }
-  };
-
-  const props: UploadProps = {
-    beforeUpload: beforeUpload,
-    onChange: handleChange,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-    maxCount: 1,
-    listType: "picture-circle",
-    action:
-      "http://learn-platform-assets.oss-cn-guangzhou.aliyuncs.com/images/",
-    showUploadList: false,
-  };
-
-  const uploadButton = (
-    <div>
-      {loading ? (
-        <LoadingOutlined rev={undefined} />
-      ) : (
-        <PlusOutlined rev={undefined} />
-      )}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
-
   return (
     <div>
       <Form
-        name="basic"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
         style={{ maxWidth: 500 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item
           label="头像"
           name="avatar"
-          rules={[]}
           style={{ textAlign: "center" }}
         >
-          <Upload {...props}>
-            {imageUrl ? (
-              <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-            ) : (
-              uploadButton
-            )}
-          </Upload>
+         <ImageUpload />
         </Form.Item>
         <Form.Item label="账号" name="account" rules={rules.account}>
           <Input />
         </Form.Item>
-
         <Form.Item label="电话" name="tel" rules={rules.tel}>
           <Input />
         </Form.Item>

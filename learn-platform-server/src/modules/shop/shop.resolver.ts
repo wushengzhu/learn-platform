@@ -27,7 +27,7 @@ export class ShopResolver {
   ) {}
 
   @Query(() => ShopResult)
-  async getShopInfoById(@Args() id: string): Promise<ShopResult> {
+  async getShopInfoById(@Args('id') id: string): Promise<ShopResult> {
     const result = await this.shopService.findById(id);
     if (result) {
       return {
@@ -43,11 +43,11 @@ export class ShopResolver {
   }
 
   @Mutation(() => ShopResult)
-  async commitShopInfo(
+  async commitShop(
     @Args('params') params: ShopInput,
     @CurUserId() userId: string,
     @Args('id', { nullable: true }) id?: string,
-  ): Promise<Result> {
+  ): Promise<ShopResult> {
     if (id) {
       const shop = await this.shopService.findById(userId);
       if (!shop) {
@@ -120,7 +120,7 @@ export class ShopResolver {
   }
 
   @Mutation(() => Result)
-  async deleteOrganization(
+  async deleteShop(
     @Args('id') id: string,
     @CurUserId() userId: string,
   ): Promise<Result> {
