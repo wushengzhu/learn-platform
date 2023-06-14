@@ -83,7 +83,6 @@ const My = () => {
                 }
               }
             })
-            console.log(res)
             if (res.data.updateUserInfo.code === 200) {
               store.refetchHandler();
               message.success('更新成功！');

@@ -4,9 +4,9 @@ import { IsNotEmpty } from 'class-validator';
 import { Column, Entity, OneToMany } from 'typeorm';
 
 /**
- * 组件
+ * 组件，创建entity对象名不要出现大写，会出现重复创建表格错误
  */
-@Entity('Shop')
+@Entity('shop')
 export class Shop extends CommonEntity {
   @Column({
     comment: '营业执照',

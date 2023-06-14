@@ -5,13 +5,14 @@ import PageNotFound from "@/containers/PageNotFound";
 import Shop from "@/containers/Shop";
 import User from "@/containers/User";
 import { ROUTE_KEY } from "./menu";
+import DataDict from "@/components/DataDict";
 
 export const ROUTE_COMPONENT = {
   [ROUTE_KEY.HOME]: Home,
   [ROUTE_KEY.SHOP]: Shop,
   [ROUTE_KEY.USER]: User,
   [ROUTE_KEY.MY]: My,
-  [ROUTE_KEY.DICTIONARY]: Home,
+  [ROUTE_KEY.DICTIONARY]: DataDict,
   [ROUTE_KEY.MONITOR]: SystemMonitor,
   [ROUTE_KEY.LOG]: SystemMonitor,
   [ROUTE_KEY.SETTING]: SystemMonitor,

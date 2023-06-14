@@ -179,6 +179,38 @@ type ShopResults {
   page: Page
 }
 
+type DictType {
+  id: String!
+
+  """字典名称"""
+  dictName: String!
+
+  """字典编码"""
+  dictCode: String!
+
+  """模块编码"""
+  modCode: String!
+
+  """父节点"""
+  parentId: String
+
+  """是否启用"""
+  isCanUse: Boolean
+}
+
+type DictResult {
+  code: Int!
+  message: String!
+  data: DictType
+}
+
+type DictResults {
+  code: Int!
+  message: String
+  data: [DictType!]
+  page: Page
+}
+
 type Query {
   """使用id查询用户"""
   find(id: String!): UserType!
@@ -195,6 +227,8 @@ type Query {
   getStudents(page: PageInput!): StudentResults!
   getShopInfoById(id: String!): ShopResult!
   getShops(page: PageInput!, name: String): ShopResults!
+  getDictInfoById(id: String!): DictResult!
+  getDicts(page: PageInput!, name: String): DictResults!
 }
 
 input PageInput {
@@ -235,6 +269,8 @@ type Mutation {
 
   """用户注册"""
   userRegister(account: String!, password: String!, avatar: String!, tel: String!): Result!
+  commitDict(params: DictInput!, id: String, dictName: String): DictResult!
+  deleteDict(id: String!): Result!
 }
 
 input UserInput {
@@ -315,4 +351,21 @@ input ShopImageInput {
   id: String
   url: String!
   remark: String
+}
+
+input DictInput {
+  """字典名称"""
+  dictName: String!
+
+  """字典编码"""
+  dictCode: String!
+
+  """模块编码"""
+  modCode: String!
+
+  """父节点"""
+  parentId: String
+
+  """是否启用"""
+  isCanUse: Boolean
 }

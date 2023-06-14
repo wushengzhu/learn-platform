@@ -4,7 +4,6 @@ import TextArea from "antd/es/input/TextArea";
 import { useEffect, useMemo } from "react";
 import ImageUpload from "../ImageUpload";
 import { IShop } from "@/utils/types";
-import locale from "antd/es/date-picker/locale/en_US";
 import dayjs from "dayjs";
 
 interface IProp {

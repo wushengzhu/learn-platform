@@ -9,6 +9,7 @@ import { OSSModule } from './modules/oss/oss.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { StudentModule } from './modules/student/student.module';
 import { ShopModule } from './modules/shop/shop.module';
+import { DictModule } from './modules/dict/dict.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { ShopModule } from './modules/shop/shop.module';
     StudentModule,
     ShopModule,
     AuthModule,
+    DictModule,
   ],
   controllers: [AppController],
   providers: [AppService],
