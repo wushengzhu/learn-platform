@@ -37,7 +37,7 @@ export const useShop = (id: string) => {
 export const useEditInfo = (): [handleEdit: Function, loading: boolean] => {
   const [edit, { loading }] = useMutation(COMMIT_SHOP);
 
-  const handleEdit = async (id: number, params: TBaseShop) => {
+  const handleEdit = async (id: string, params: TBaseShop) => {
     const res = await edit({
       variables: {
         id,

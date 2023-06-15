@@ -56,6 +56,24 @@ export type TShopQuery = {
   [key: string]: { __typename?: "Query"; data: IShop };
 };
 
+export interface IDict {
+  id: string;
+  dictName: string;
+  dictCode: string;
+  parentId: string;
+  modCode: string;
+}
+
+export type TBaseDict = Partial<IDict>;
+
+export type TDictsQuery = {
+  [key: string]: { __typename?: "Query"; data: IDict[]; page: IPage };
+};
+
+export type TDictQuery = {
+  [key: string]: { __typename?: "Query"; data: IDict };
+};
+
 export interface IStudent {
   name: string;
   id: string;

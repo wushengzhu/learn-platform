@@ -269,7 +269,7 @@ type Mutation {
 
   """用户注册"""
   userRegister(account: String!, password: String!, avatar: String!, tel: String!): Result!
-  commitDict(params: DictInput!, id: String, dictName: String): DictResult!
+  commitDict(params: DictInput!, id: String): DictResult!
   deleteDict(id: String!): Result!
 }
 

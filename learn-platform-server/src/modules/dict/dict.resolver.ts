@@ -43,10 +43,9 @@ export class DictResolver {
   async commitDict(
     @Args('params') params: DictInput,
     @Args('id', { nullable: true }) id?: string,
-    @Args('dictName', { nullable: true }) dictName?: string,
   ): Promise<DictResult> {
-    if (dictName) {
-      const dict = await this.dictService.findByName(dictName);
+    if (params?.dictName) {
+      const dict = await this.dictService.findByName(params?.dictName);
       if (dict) {
         return {
           code: DICT_REPEAT,

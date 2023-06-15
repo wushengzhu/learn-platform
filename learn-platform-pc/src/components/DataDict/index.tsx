@@ -4,51 +4,41 @@ import { DirectoryTreeProps } from "antd/es/tree/DirectoryTree";
 import { useState } from "react";
 import style from "./index.module.less";
 import { Button } from "antd";
-
-const waitTime = (time = 100) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
-  });
-};
+import { useDeleteDict, useDicts, useEditDict } from "@/services/dict";
 
 type DataSourceType = {
-  id: React.Key;
+  id?: string;
   dictName?: string;
   dictCode?: string;
-  parendId?: string;
+  isCanUse?: boolean;
+  parentId?: string;
   modCode?: string;
 };
 
-const defaultData: DataSourceType[] = [];
 const { DirectoryTree } = Tree;
 
-const treeData: DataNode[] = [
-  {
-    title: "parent 0",
-    key: "0-0",
-    children: [
-      { title: "leaf 0-0", key: "0-0-0", isLeaf: true },
-      { title: "leaf 0-1", key: "0-0-1", isLeaf: true },
-    ],
-  },
-  {
-    title: "parent 1",
-    key: "0-1",
-    children: [
-      { title: "leaf 1-0", key: "0-1-0", isLeaf: true },
-      { title: "leaf 1-1", key: "0-1-1", isLeaf: true },
-    ],
-  },
-];
 /**
  * 获取用户信息组件
  */
 const DataDict = () => {
+  const { loading, data, page, refetch } = useDicts();
+  const [delHandler, delLoading] = useDeleteDict();
+  const [edit, editLoading] = useEditDict();
+  const [selectedKeys, setSelectedKeys] = useState("0");
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-  const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
-
+  const treeData: DataNode[] = [
+    {
+      title: "字典分类",
+      key: "0",
+      children: data
+        ? data.map((item) => ({
+            title: item.dictName,
+            key: item.id,
+            isLeaf: true,
+          }))
+        : [],
+    },
+  ];
   const columns: ProColumns<DataSourceType>[] = [
     {
       title: "字典名称",
@@ -78,10 +68,6 @@ const DataDict = () => {
       tooltip: "只读，使用form.getFieldValue可以获取到值",
       readonly: true,
       width: "15%",
-      fieldProps: (form, { rowIndex }) => {
-        form.setFieldValue("modCode", "platform");
-        return {};
-      },
     },
     {
       title: "是否启用",
@@ -109,7 +95,7 @@ const DataDict = () => {
           className="ml-1"
           type="primary"
           onClick={() => {
-            action?.startEditable?.(record.id);
+            action?.startEditable?.(record?.id ? record?.id : "0");
           }}
         >
           编辑
@@ -119,10 +105,11 @@ const DataDict = () => {
           className="ml-1"
           type="primary"
           onClick={() => {
-            setDataSource(dataSource.filter((item) => item.id !== record.id));
+            delHandler(record?.id);
           }}
+          danger
         >
-          编辑
+          删除
         </Button>,
       ],
     },
@@ -141,7 +128,8 @@ const DataDict = () => {
       <div className={style["dict-container"]}>
         <div className={style.left}>
           <DirectoryTree
-            multiple
+            expandedKeys={[selectedKeys]}
+            selectedKeys={[selectedKeys]}
             defaultExpandAll
             onSelect={onSelect}
             onExpand={onExpand}
@@ -155,24 +143,31 @@ const DataDict = () => {
             scroll={{
               x: 960,
             }}
-            loading={false}
+            loading={loading}
             columns={columns}
             request={async () => ({
-              data: defaultData,
-              total: 3,
+              data: data,
+              total: data?.length,
               success: true,
             })}
             recordCreatorProps={{
-              record: () => ({ id: (Math.random() * 1000000).toFixed(0) }),
+              record: (item) => ({ id: "0" }),
             }}
-            value={dataSource}
-            onChange={setDataSource}
+            value={data}
             editable={{
               type: "multiple",
               editableKeys,
               onSave: async (rowKey, data, row) => {
-                console.log(rowKey, data, row);
-                await waitTime(2000);
+                data.modCode = "LearnPlatform";
+                const id = data.id === "0" ? "" : data.id;
+                const formValue = {
+                  dictName: data.dictName,
+                  dictCode: data.dictCode,
+                  modCode: data.modCode,
+                  isCanUse: Boolean(data.isCanUse),
+                  parentId: data.parentId,
+                };
+                edit(id, formValue);
               },
               onChange: setEditableRowKeys,
             }}
