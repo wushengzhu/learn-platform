@@ -3,8 +3,9 @@ import Tree, { DataNode } from "antd/es/tree";
 import { DirectoryTreeProps } from "antd/es/tree/DirectoryTree";
 import { useState } from "react";
 import style from "./index.module.less";
-import { Button } from "antd";
+import { Button, Popconfirm } from "antd";
 import { useDeleteDict, useDicts, useEditDict } from "@/services/dict";
+import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
 
 type DataSourceType = {
   id?: string;
@@ -32,10 +33,10 @@ const DataDict = () => {
       key: "0",
       children: data
         ? data.map((item) => ({
-            title: item.dictName,
-            key: item.id,
-            isLeaf: true,
-          }))
+          title: item.dictName,
+          key: item.id,
+          isLeaf: true,
+        }))
         : [],
     },
   ];
@@ -92,25 +93,31 @@ const DataDict = () => {
       render: (text, record, _, action) => [
         <Button
           key="editable"
-          className="ml-1"
-          type="primary"
+          type="link"
+          className="btn"
           onClick={() => {
             action?.startEditable?.(record?.id ? record?.id : "0");
           }}
         >
-          编辑
+          <EditOutlined rev={undefined} />
         </Button>,
-        <Button
-          key="delete"
-          className="ml-1"
-          type="primary"
-          onClick={() => {
-            delHandler(record?.id);
-          }}
-          danger
+        <Popconfirm
+          title="删除字典"
+          description="删除操作不可恢复，确定要删除吗?"
+          onConfirm={delHandler(record?.id)}
+          okText="确认"
+          cancelText="取消"
         >
-          删除
-        </Button>,
+          <Button
+            key="delete"
+            className="ml-2 btn text-red-600"
+            type="link"
+            danger
+          >
+            <DeleteOutlined rev={undefined} />
+          </Button>
+        </Popconfirm>
+
       ],
     },
   ];
@@ -157,6 +164,8 @@ const DataDict = () => {
             editable={{
               type: "multiple",
               editableKeys,
+              saveText: (<SaveOutlined rev={undefined} />),
+              cancelText: (<CloseOutlined rev={undefined} />),
               onSave: async (rowKey, data, row) => {
                 data.modCode = "LearnPlatform";
                 const id = data.id === "0" ? "" : data.id;
@@ -168,6 +177,7 @@ const DataDict = () => {
                   parentId: data.parentId,
                 };
                 edit(id, formValue);
+                refetch();
               },
               onChange: setEditableRowKeys,
             }}

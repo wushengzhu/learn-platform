@@ -81,8 +81,10 @@ export class DictService {
    * @param id
    * @returns
    */
-  async deleteById(id: string): Promise<boolean> {
-    const res = await this.dictRepository.update(id, {});
+  async deleteById(id: string, userId: string): Promise<boolean> {
+    const res = await this.dictRepository.update(id, {
+      deletedBy: userId,
+    });
     if (res) {
       const res1 = await this.dictRepository.softDelete(id);
       if (res1.affected > 0) {

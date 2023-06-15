@@ -17,6 +17,7 @@ import { DictInput } from './dto/dict.input';
 import { PageInput } from '@/common/dto/page.input';
 import { FindOptionsWhere, Like } from 'typeorm';
 import { Dict } from './models/dict.entity';
+import { CurUserId } from '@/common/decorators/current-user.decorator';
 
 @Resolver(() => DictType)
 @UseGuards(GqlAuthGuard)
@@ -42,6 +43,7 @@ export class DictResolver {
   @Mutation(() => DictResult)
   async commitDict(
     @Args('params') params: DictInput,
+    @CurUserId() userId: string,
     @Args('id', { nullable: true }) id?: string,
   ): Promise<DictResult> {
     if (params?.dictName) {
@@ -63,6 +65,7 @@ export class DictResolver {
       }
       const res = await this.dictService.updateById(dict.id, {
         ...params,
+        updatedBy: userId,
       });
       if (res) {
         return {
@@ -74,6 +77,7 @@ export class DictResolver {
 
     const res = await this.dictService.create({
       ...params,
+      updatedBy: userId,
     });
     if (res) {
       return {
@@ -115,10 +119,13 @@ export class DictResolver {
   }
 
   @Mutation(() => Result)
-  async deleteDict(@Args('id') id: string): Promise<Result> {
+  async deleteDict(
+    @Args('id') id: string,
+    @CurUserId() userId: string,
+  ): Promise<Result> {
     const result = await this.dictService.findById(id);
     if (result) {
-      const delRes = await this.dictService.deleteById(id);
+      const delRes = await this.dictService.deleteById(id, userId);
       if (delRes) {
         return {
           code: SUCCESS,
@@ -134,5 +141,6 @@ export class DictResolver {
       code: DICT_NOT_EXIST,
       message: '字典不存在',
     };
+    // }
   }
 }

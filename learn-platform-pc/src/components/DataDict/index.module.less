@@ -1,12 +1,20 @@
-.dict-container{
-    width: 100%;
-    @apply flex;
+.dict-container {
+  width: 100%;
+  @apply flex;
 }
 
-.left{
-   width: 200px;
+.left {
+  width: 200px;
 }
 
-.right{
+.right {
   width: calc(100% - 200px);
+}
+
+:global {
+  .btn {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 !important;
+  }
 }

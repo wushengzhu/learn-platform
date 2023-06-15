@@ -39,7 +39,8 @@ export const useGetUser = () => {
           avatar,
           account,
           gender,
-          desc
+          desc,
+          refetchHandler: refetch,
         });
         // 当前在登录页面，且已经登录了，那就直接跳到首页
         if (location.pathname === "/login") {
