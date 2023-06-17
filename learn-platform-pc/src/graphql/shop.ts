@@ -55,6 +55,19 @@ export const GET_SHOP = gql`
   }
 `;
 
+export const GET_SIMPLE_SHOP = gql`
+query getShops($page: PageInput!,$name:String) {
+  getShops(page: $page,name:$name) {
+    code
+    message
+    data {
+      id
+      name
+    }
+  }
+}
+`;
+
 export const COMMIT_SHOP = gql`
   mutation commitShop($params: ShopInput!, $id: String) {
     commitShop(params: $params, id: $id) {

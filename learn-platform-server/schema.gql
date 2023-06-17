@@ -181,12 +181,6 @@ type ShopResults {
 
 type DictType {
   id: String!
-  createdAt: DateTime!
-  createdBy: String
-  updatedAt: DateTime
-  updatedBy: String
-  deletedAt: DateTime
-  deletedBy: String
 
   """字典名称"""
   dictName: String!

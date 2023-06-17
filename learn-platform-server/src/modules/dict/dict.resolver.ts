@@ -43,7 +43,6 @@ export class DictResolver {
   @Mutation(() => DictResult)
   async commitDict(
     @Args('params') params: DictInput,
-    @CurUserId() userId: string,
     @Args('id', { nullable: true }) id?: string,
   ): Promise<DictResult> {
     if (params?.dictName) {
@@ -65,7 +64,6 @@ export class DictResolver {
       }
       const res = await this.dictService.updateById(dict.id, {
         ...params,
-        updatedBy: userId,
       });
       if (res) {
         return {
@@ -77,7 +75,6 @@ export class DictResolver {
 
     const res = await this.dictService.create({
       ...params,
-      updatedBy: userId,
     });
     if (res) {
       return {
@@ -119,13 +116,9 @@ export class DictResolver {
   }
 
   @Mutation(() => Result)
-  async deleteDict(
-    @Args('id') id: string,
-    @CurUserId() userId: string,
-  ): Promise<Result> {
-    const result = await this.dictService.findById(id);
-    if (result) {
-      const delRes = await this.dictService.deleteById(id, userId);
+  async deleteDict(@Args('id') id: string): Promise<Result> {
+    if (id && !/^[0-9]/.test(id)) {
+      const delRes = await this.dictService.deleteById(id);
       if (delRes) {
         return {
           code: SUCCESS,
@@ -141,6 +134,5 @@ export class DictResolver {
       code: DICT_NOT_EXIST,
       message: '字典不存在',
     };
-    // }
   }
 }

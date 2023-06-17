@@ -36,7 +36,6 @@ export const useDict = (id: string) => {
 
 export const useEditDict = (): [handleEdit: Function, loading: boolean] => {
   const [edit, { loading }] = useMutation(COMMIT_DICT);
-
   const handleEdit = async (id: string, params: TBaseDict) => {
     const res = await edit({
       variables: {
@@ -54,10 +53,9 @@ export const useEditDict = (): [handleEdit: Function, loading: boolean] => {
   return [handleEdit, loading];
 };
 
-export const useDeleteDict = (): [handleEdit: Function, loading: boolean] => {
+export const useDeleteDict = (): [handleEdit: Function] => {
   const [del, { loading }] = useMutation(DEL_DICT);
-
-  const delHandler = async (id: number, callback: () => void) => {
+  const delHandler = async (id: number) => {
     const res = await del({
       variables: {
         id,
@@ -65,11 +63,11 @@ export const useDeleteDict = (): [handleEdit: Function, loading: boolean] => {
     });
     if (res.data.deleteDict.code === 200) {
       message.success(res.data.deleteDict.message);
-      callback();
+      // callback();
       return;
     }
     message.error(res.data.deleteDict.message);
   };
 
-  return [delHandler, loading];
+  return [delHandler];
 };

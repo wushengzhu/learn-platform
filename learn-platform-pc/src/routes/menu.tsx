@@ -15,6 +15,7 @@ export const ROUTE_KEY = {
   USER: "user",
   MY: "my",
   PAGE_404: "404",
+  NO_SHOP: "noshop",
   DICTIONARY: "dict",
   MONITOR: "monitor",
   SETTING: "setting",
@@ -36,7 +37,13 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.SHOP]: {
     path: "shop",
     name: "门店管理",
+    hideInMenu: true,
     icon: <ShopOutlined rev={undefined} />,
+  },
+  [ROUTE_KEY.SHOP]: {
+    path: "noshop",
+    name: "门店管理",
+    hideInMenu: true,
   },
   [ROUTE_KEY.USER]: {
     path: "user",

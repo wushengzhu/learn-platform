@@ -62,6 +62,7 @@ export interface IDict {
   dictCode: string;
   parentId: string;
   modCode: string;
+  isCanUse:boolean;
 }
 
 export type TBaseDict = Partial<IDict>;

@@ -1,16 +1,16 @@
-import { COMMIT_SHOP, DEL_SHOP, GET_SHOP, GET_SHOPS } from "@/graphql/shop";
+import { COMMIT_SHOP, DEL_SHOP, GET_SHOP, GET_SHOPS, GET_SIMPLE_SHOP } from "@/graphql/shop";
 import { DEFAULT_PAGE_SIZE } from "@/utils/constants";
 import { TBaseShop, TShopQuery, TShopsQuery } from "@/utils/types";
 import { useMutation, useQuery } from "@apollo/client";
 import { message } from "antd";
 
-export const useShops = (pageNum = 1, pageSize = DEFAULT_PAGE_SIZE) => {
-  const { loading, data, refetch } = useQuery<TShopsQuery>(GET_SHOPS, {
+export const useShops = (pageNum = 1, pageSize = DEFAULT_PAGE_SIZE,isSimple=false) => {
+  const { loading, data, refetch } = useQuery<TShopsQuery>(isSimple?GET_SIMPLE_SHOP:GET_SHOPS, {
     variables: {
       page: {
         pageNum,
         pageSize,
-      },
+      }
     },
   });
 

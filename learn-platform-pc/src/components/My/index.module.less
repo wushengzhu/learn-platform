@@ -1,18 +1,22 @@
 .form-container {
+  // min-height: 100vh;
   @apply flex justify-start;
 }
 
 .left {
+  overflow: auto;
   flex: 1;
 }
 
 .right {
   flex: 2;
+  min-height: 100vh;
+  margin-left: 10px;
   text-align: center;
 }
 
 .timeline {
-  max-height: 100vh;
+  max-height: 500px;
   padding-top: 5px;
   box-sizing: border-box;
   overflow: auto;

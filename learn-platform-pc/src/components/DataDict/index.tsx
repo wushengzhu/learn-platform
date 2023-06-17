@@ -1,14 +1,14 @@
-import { EditableProTable, ProColumns } from "@ant-design/pro-components";
+import { ActionType, EditableProTable, ProColumns } from "@ant-design/pro-components";
 import Tree, { DataNode } from "antd/es/tree";
 import { DirectoryTreeProps } from "antd/es/tree/DirectoryTree";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import style from "./index.module.less";
-import { Button, Popconfirm } from "antd";
+import { Button, Card, Popconfirm } from "antd";
 import { useDeleteDict, useDicts, useEditDict } from "@/services/dict";
 import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
 
 type DataSourceType = {
-  id?: string;
+  id: React.Key;
   dictName?: string;
   dictCode?: string;
   isCanUse?: boolean;
@@ -22,24 +22,35 @@ const { DirectoryTree } = Tree;
  * 获取用户信息组件
  */
 const DataDict = () => {
+  // const actionRef = useRef<ActionType>();
   const { loading, data, page, refetch } = useDicts();
-  const [delHandler, delLoading] = useDeleteDict();
+  // const [delHandler] = useDeleteDict();
   const [edit, editLoading] = useEditDict();
+  const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
   const [selectedKeys, setSelectedKeys] = useState("0");
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
-  const treeData: DataNode[] = [
-    {
-      title: "字典分类",
-      key: "0",
-      children: data
-        ? data.map((item) => ({
-          title: item.dictName,
-          key: item.id,
-          isLeaf: true,
-        }))
-        : [],
-    },
-  ];
+  const [treeData, setTreeData] = useState<DataNode[]>([]);
+  useEffect(() => {
+
+    const treeNode = [
+      {
+        title: "字典分类",
+        key: "0",
+        children: data
+          ? data.map((item) => ({
+            title: item.dictName,
+            key: item.id,
+            isLeaf: true,
+          }))
+          : [],
+      },
+    ];
+    if (data) {
+      setDataSource(data);
+    }
+
+    setTreeData(treeNode)
+  }, [data])
   const columns: ProColumns<DataSourceType>[] = [
     {
       title: "字典名称",
@@ -67,7 +78,7 @@ const DataDict = () => {
       title: "模块编码",
       dataIndex: "modCode",
       tooltip: "只读，使用form.getFieldValue可以获取到值",
-      readonly: true,
+      // readonly: true,
       width: "15%",
     },
     {
@@ -96,7 +107,7 @@ const DataDict = () => {
           type="link"
           className="btn"
           onClick={() => {
-            action?.startEditable?.(record?.id ? record?.id : "0");
+            action?.startEditable?.(record?.id ? record?.id : '0');
           }}
         >
           <EditOutlined rev={undefined} />
@@ -104,7 +115,7 @@ const DataDict = () => {
         <Popconfirm
           title="删除字典"
           description="删除操作不可恢复，确定要删除吗?"
-          onConfirm={delHandler(record?.id)}
+          // onConfirm={delHandler(record?.id)}
           okText="确认"
           cancelText="取消"
         >
@@ -134,38 +145,49 @@ const DataDict = () => {
     <>
       <div className={style["dict-container"]}>
         <div className={style.left}>
-          <DirectoryTree
-            expandedKeys={[selectedKeys]}
-            selectedKeys={[selectedKeys]}
-            defaultExpandAll
-            onSelect={onSelect}
-            onExpand={onExpand}
-            treeData={treeData}
-          />
+          <Card
+            style={{
+              minHeight: '500px'
+            }}
+          >
+            <DirectoryTree
+              expandedKeys={[selectedKeys]}
+              selectedKeys={[selectedKeys]}
+              defaultExpandAll
+              onSelect={onSelect}
+              onExpand={onExpand}
+              treeData={treeData}
+            />
+          </Card>
         </div>
         <div className={style.right}>
           <EditableProTable<DataSourceType>
             rowKey="id"
-            maxLength={5}
+            // maxLength={5}
             scroll={{
               x: 960,
             }}
+
             loading={loading}
             columns={columns}
-            request={async () => ({
-              data: data,
-              total: data?.length,
-              success: true,
-            })}
+            value={dataSource ? dataSource : []}
+            onChange={setDataSource}
             recordCreatorProps={{
-              record: (item) => ({ id: "0" }),
+              // newRecordType: 'dataSource',
+              record: () => ({
+                id: Date.now().toString(),
+              }),
             }}
-            value={data}
+            // recordCreatorProps={false}
+            // actionRef={actionRef}
             editable={{
               type: "multiple",
               editableKeys,
               saveText: (<SaveOutlined rev={undefined} />),
               cancelText: (<CloseOutlined rev={undefined} />),
+              onDelete: async (key, row) => {
+                console.log(Date.now().toString())
+              },
               onSave: async (rowKey, data, row) => {
                 data.modCode = "LearnPlatform";
                 const id = data.id === "0" ? "" : data.id;
@@ -174,7 +196,7 @@ const DataDict = () => {
                   dictCode: data.dictCode,
                   modCode: data.modCode,
                   isCanUse: Boolean(data.isCanUse),
-                  parentId: data.parentId,
+                  parentId: selectedKeys[0],
                 };
                 edit(id, formValue);
                 refetch();
