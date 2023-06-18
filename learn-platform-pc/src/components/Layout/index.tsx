@@ -150,6 +150,7 @@ const Layout = () => {
         logo={
           <img src="https://github.githubassets.com/images/modules/logos_page/Octocat.png" />
         }
+        title={'在线兴趣学习平台'}
         menuItemRender={menuItemRender}
       >
         <PageContainer key={store.currentShop}>
