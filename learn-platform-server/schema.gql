@@ -39,6 +39,13 @@ type Result {
   data: String
 }
 
+type UserResults {
+  code: Int!
+  message: String
+  data: [UserType!]
+  page: Page
+}
+
 type OSSType {
   """过期时间"""
   expire: String!
@@ -79,6 +86,12 @@ type StudentType {
 
   """账号"""
   account: String
+
+  """简介"""
+  desc: String
+
+  """性别"""
+  gender: Boolean
 
   """openid"""
   openid: String
@@ -213,10 +226,11 @@ type DictResults {
 
 type Query {
   """使用id查询用户"""
-  find(id: String!): UserType!
+  getUserById(id: String!): UserType!
 
   """使用id查询用户"""
   getUserInfo: UserType!
+  getUsers(page: PageInput!, name: String): UserResults!
 
   """获取OSS相关信息"""
   getOSSInfo: OSSType!

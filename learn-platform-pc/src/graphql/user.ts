@@ -24,6 +24,21 @@ export const GET_USER_ACCOUNT = gql`
   }
 `;
 
+export const GET_USER_BYID = gql`
+query getUserById($id: String!) {
+    getUserById(id: $id) {
+      id
+      tel
+      avatar
+      desc
+      name
+      account
+      gender
+      password
+    }
+  }
+`;
+
 export const UPDATE_USER = gql`
   mutation updateUserInfo($id: String!,$params:UserInput!) {
     updateUserInfo(id: $id,params:$params) {
@@ -31,4 +46,27 @@ export const UPDATE_USER = gql`
       message
     }
   }
+`;
+
+export const GET_USERS = gql`
+query getUsers($page: PageInput!) {
+  getUsers(page: $page) {
+    code
+    message
+    page {
+      total
+      pageNum
+      pageSize
+    }
+    data {
+      id
+      account
+      avatar
+      tel
+      name
+      desc
+      gender
+    }
+  }
+}
 `;

@@ -10,8 +10,8 @@ export interface IUser {
   account?: string;
   desc?: string;
   avatar: string;
-  refetchHandler: () => void;
   currentShop?: string;
+  refetchHandler: () => void;
 }
 export interface IPage {
   pageNum: number;
@@ -75,14 +75,30 @@ export type TDictQuery = {
   [key: string]: { __typename?: "Query"; data: IDict };
 };
 
+
+export type TBaseUser= Partial<IUser>;
+
+export type TUsersQuery = {
+  [key: string]: { __typename?: "Query"; data: IUser[]; page: IPage };
+};
+
+export type TUserQuery = {
+  [key: string]: { __typename?: "Query"; data: IUser };
+};
+
 export interface IStudent {
   name: string;
   id: string;
   tel: string;
   avatar: string;
   account: string;
+  desc?: string;
+  
 }
 
+export type TStudentsQuery = {
+  [key: string]: { __typename?: "Query"; data: IStudent[]; page: IPage };
+};
 export type TStudentQuery = {
   [key: string]: { __typename?: "Query"; data: IStudent[]; page: IPage };
 };

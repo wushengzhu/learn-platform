@@ -4,7 +4,7 @@ import type { UploadFile, UploadListType } from 'antd/es/upload/interface';
 import { useQuery } from '@apollo/client';
 import { GET_OSS_INFO } from '@/graphql/oss';
 import ImgCrop from 'antd-img-crop';
-import { ProFormUploadButton } from '@ant-design/pro-components';
+// import { ProFormUploadButton } from '@ant-design/pro-components';
 import { PlusOutlined } from '@ant-design/icons';
 
 interface OSSDataType {

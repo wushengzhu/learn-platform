@@ -146,7 +146,7 @@ export default () => {
                   onFinish={loginHandler}
                   logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
                   title="LearnPlatform"
-                  subTitle="兴趣班学习平台"
+                  subTitle="在线兴趣学习平台"
                   initialValues={{ tel: "15627512936" }}
                   actions={
                     <div>

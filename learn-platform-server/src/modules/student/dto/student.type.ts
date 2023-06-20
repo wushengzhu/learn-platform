@@ -30,6 +30,11 @@ export class StudentType extends CommonType {
   })
   account: string;
 
+  @Field({ description: '简介', nullable: true })
+  desc?: string;
+  @Field({ description: '性别', nullable: true })
+  gender?: boolean;
+
   @Field({
     description: 'openid',
     nullable: true,

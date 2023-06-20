@@ -38,6 +38,18 @@ export class Student extends CommonEntity {
   account: string;
 
   @Column({
+    comment: '描述',
+    nullable: true,
+  })
+  desc: string;
+
+  @Column({
+    comment: '性别',
+    nullable: true,
+  })
+  gender: boolean;
+
+  @Column({
     comment: 'openid',
     nullable: true,
   })

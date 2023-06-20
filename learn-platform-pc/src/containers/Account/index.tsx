@@ -2,9 +2,9 @@ import { useUserContext } from "@/hooks/useHooks";
 import { useTitle } from "@/hooks/useTitle";
 import { MobileOutlined, UserOutlined, WindowsOutlined } from "@ant-design/icons";
 import { Tabs } from "antd";
-import User from "../User";
+import User from "../../components/User";
 import { ReactNode } from "react";
-import Student from "../Student";
+import Student from "../../components/Student";
 import Teacher from "@/components/Teacher";
 
 const Account = () => {
@@ -30,7 +30,7 @@ const Account = () => {
 
   return (
     <Tabs
-      defaultActiveKey="1"
+      defaultActiveKey="0"
       items={[{ title: '管理端', icon: WindowsOutlined }, { title: '移动端', icon: MobileOutlined }].map((item, i) => {
 
         return {

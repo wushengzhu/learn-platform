@@ -162,7 +162,7 @@ const DataDict = () => {
         </div>
         <div className={style.right}>
           <EditableProTable<DataSourceType>
-            rowKey="id"
+            // rowKey="id"
             // maxLength={5}
             scroll={{
               x: 960,

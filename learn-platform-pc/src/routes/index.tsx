@@ -3,11 +3,11 @@ import SystemMonitor from "@/components/SystemMonitor";
 import Home from "@/containers/Home";
 import PageNotFound from "@/containers/PageNotFound";
 import Shop from "@/components/Shop";
-import User from "@/containers/User";
+import User from "@/components/User";
 import { ROUTE_KEY } from "./menu";
 import DataDict from "@/components/DataDict";
 import NoShop from "@/containers/NoShop";
-import Student from "@/containers/Student";
+import Student from "@/components/Student";
 import Account from "@/containers/Account";
 
 export const ROUTE_COMPONENT = {

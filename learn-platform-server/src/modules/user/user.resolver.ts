@@ -6,6 +6,10 @@ import { GqlAuthGuard } from '@/common/guards/auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { Result } from '@/common/dto/result.type';
 import { SUCCESS, UPDATE_ERROR } from '@/common/constants/code';
+import { UserResults } from './dto/result-user.output';
+import { PageInput } from '@/common/dto/page.input';
+import { FindOptionsWhere, Like } from 'typeorm';
+import { User } from './models/user.entity';
 
 @Resolver()
 @UseGuards(GqlAuthGuard)
@@ -18,7 +22,7 @@ export class UserResolver {
   }
 
   @Query(() => UserType, { description: '使用id查询用户' })
-  async find(@Args('id') id: string): Promise<UserType> {
+  async getUserById(@Args('id') id: string): Promise<UserType> {
     return await this.userService.find(id);
   }
 
@@ -54,5 +58,32 @@ export class UserResolver {
   @Mutation(() => Boolean, { description: '删除用户' })
   async del(@Args('id') id: string): Promise<boolean> {
     return await this.userService.del(id);
+  }
+
+  @Query(() => UserResults)
+  async getUsers(
+    @Args('page') page: PageInput,
+    @Args('name', { nullable: true }) name?: string,
+  ): Promise<UserResults> {
+    const { pageNum, pageSize } = page;
+    const where: FindOptionsWhere<User> = {};
+    if (name) {
+      where.name = Like(`%${name}%`);
+    }
+    const [results, total] = await this.userService.findUsers({
+      start: pageNum === 1 ? 0 : (pageNum - 1) * pageSize + 1,
+      length: pageSize,
+      where,
+    });
+    return {
+      code: SUCCESS,
+      data: results,
+      page: {
+        pageNum,
+        pageSize,
+        total,
+      },
+      message: '获取成功',
+    };
   }
 }

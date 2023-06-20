@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './models/user.entity';
-import { DeepPartial, Repository } from 'typeorm';
+import { DeepPartial, FindOptionsWhere, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -82,5 +82,24 @@ export class UserService {
       return true;
     }
     return false;
+  }
+
+  async findUsers({
+    start,
+    length,
+    where,
+  }: {
+    start: number;
+    length: number;
+    where: FindOptionsWhere<User>;
+  }): Promise<[User[], number]> {
+    return this.UserRepository.findAndCount({
+      take: length,
+      skip: start,
+      order: {
+        id: 'DESC',
+      },
+      where,
+    });
   }
 }

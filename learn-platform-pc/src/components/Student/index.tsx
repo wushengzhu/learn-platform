@@ -9,11 +9,11 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import AccountEdit from '../AccountEdit';
 
-const Teacher = () => {
+const Student = () => {
   const {
     loading, data, page, refetch,
   } = useStudents();
-  const [teacherId, setTeacherId] = useState('');
+  const [studentId, setStudentId] = useState('');
   const [showEdit, setShowEdit] = useState(false);
   const onPageChangeHandler = (pageNum: number, pageSize: number) => {
     refetch({
@@ -72,8 +72,8 @@ const Teacher = () => {
             />
           </div>
       </Card>
-      {showEdit && <AccountEdit id={teacherId} title={teacherId?'编辑':'新增'} onClose={onCloseHander}/>}
+      {showEdit && <AccountEdit id={studentId} title={studentId?'编辑':'新增'} onClose={onCloseHander}/>}
     </div>
   )
 }
-export default Teacher
+export default Student
