@@ -6,7 +6,8 @@ import { UPDATE_USER } from '@/graphql/user';
 import { useEffect, useRef, useState } from 'react';
 import ImageUpload from '../ImageUpload';
 import { useUserContext } from '@/hooks/useHooks';
-import { useUser } from '@/services/account';
+import { useStudent, useUser } from '@/services/account';
+import { COMMIT_STUDENT } from '@/graphql/student';
 
 interface IModalParams {
     id?: string;
@@ -19,33 +20,32 @@ interface IModalParams {
 /**
 * 获取用户信息组件
 */
-const AccountEdit = ({ title, id, width, onClose }: IModalParams) => {
+const AccountEdit = ({ title, id, width, onClose,type}: IModalParams) => {
     const { store } = useUserContext();
     const formRef = useRef<ProFormInstance>();
-    const [updateUser] = useMutation(UPDATE_USER);
+    const [updateAccount] = useMutation(type==='user'?UPDATE_USER:(type==='student'?COMMIT_STUDENT:COMMIT_STUDENT));
     const [isModalOpen, setIsModalOpen] = useState(true);
-    const { data } = useUser(id ? id : '')
+    const run = type==='user'?useUser:(type==='student'?useStudent:useStudent)
+    const { data } = run(id ? id : '')
 
     const handleOk = async () => {
-        const values = formRef.current?.getFieldsValue();
-        const res = await updateUser({
+        const values = Object.assign({},{...data},{...formRef.current?.getFieldsValue()});
+        const res = await updateAccount({
             variables: {
                 id: id,
                 params: {
-                    name: values.name,
-                    desc: values.desc,
-                    gender: values.gender,
+                    ...values,
                     avatar: values.avatar[0]?.url || ''
                 }
             }
         })
-        if (res.data.updateUserInfo.code === 200) {
+        if (res.data.updateUserInfo.code === 200||res.data.commitStudent.code === 200) {
             store.refetchHandler();
             message.success('更新成功！');
             setIsModalOpen(false);
             return;
         }
-        message.error(res.data.updateUserInfo.message);
+        message.error(res.data.updateUserInfo.message||res.data.commitStudent.message);
     };
 
     const afterClose = () => {
@@ -93,7 +93,7 @@ const AccountEdit = ({ title, id, width, onClose }: IModalParams) => {
                     width="lg"
                     name="account"
                     label="账号"
-                    disabled
+                    disabled={id?true:false}
                     placeholder="账号"
                 />
                 <ProFormText
@@ -113,7 +113,7 @@ const AccountEdit = ({ title, id, width, onClose }: IModalParams) => {
                     width="lg"
                     name="tel"
                     label="电话"
-                    disabled
+                    disabled={id?true:false}
                     placeholder="请输入电话"
                 />
                 <ProFormTextArea

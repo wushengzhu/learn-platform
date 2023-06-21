@@ -33,3 +33,12 @@ query getStudents($page: PageInput!) {
   }
 }
 `;
+
+export const COMMIT_STUDENT = gql`
+  mutation commitStudent($params: StudentInput!, $id: String) {
+    commitStudent(params: $params, id: $id) {
+      code
+      message
+    }
+  }
+`;

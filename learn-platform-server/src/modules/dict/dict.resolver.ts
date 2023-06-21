@@ -14,10 +14,9 @@ import {
   SUCCESS,
 } from '@/common/constants/code';
 import { DictInput } from './dto/dict.input';
-import { PageInput } from '@/common/dto/page.input';
+import { IFilters, PageInput } from '@/common/dto/page.input';
 import { FindOptionsWhere, Like } from 'typeorm';
 import { Dict } from './models/dict.entity';
-import { CurUserId } from '@/common/decorators/current-user.decorator';
 
 @Resolver(() => DictType)
 @UseGuards(GqlAuthGuard)
@@ -54,7 +53,8 @@ export class DictResolver {
         };
       }
     }
-    if (id) {
+    // 排除掉id为时间戳的数据
+    if (!/^\d+$/.test(id)) {
       const dict = await this.dictService.findById(id);
       if (!dict) {
         return {
@@ -92,6 +92,7 @@ export class DictResolver {
   async getDicts(
     @Args('page') page: PageInput,
     @Args('name', { nullable: true }) name?: string,
+    // @Args('filters', { nullable: true }) filters?: Array<IFilters>,
   ): Promise<DictResults> {
     const { pageNum, pageSize } = page;
     const where: FindOptionsWhere<Dict> = {};
@@ -117,7 +118,7 @@ export class DictResolver {
 
   @Mutation(() => Result)
   async deleteDict(@Args('id') id: string): Promise<Result> {
-    if (id && !/^[0-9]/.test(id)) {
+    if (id && !/^\d+$/.test(id)) {
       const delRes = await this.dictService.deleteById(id);
       if (delRes) {
         return {

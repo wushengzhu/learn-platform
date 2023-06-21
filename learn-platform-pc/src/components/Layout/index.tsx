@@ -11,7 +11,7 @@ import {
 } from "@ant-design/pro-components";
 import { Button, Card, Dropdown, Input, MenuProps, Space } from "antd";
 import * as React from "react";
-import { Link, useNavigate, useOutlet } from "react-router-dom";
+import { Link, Route, useNavigate, useOutlet } from "react-router-dom";
 import style from "./index.module.less";
 import ShopSelect from "../ShopSelect";
 
@@ -72,43 +72,6 @@ const Layout = () => {
         actionsRender={(props: { isMobile: any; layout: string; }) => {
           if (props.isMobile) return [];
           return [
-            // props.layout !== 'side' && document.body.clientWidth > 1400 ? (
-            //   // <div
-            //   //   key="SearchOutlined"
-            //   //   aria-hidden
-            //   //   style={{
-            //   //     display: 'flex',
-            //   //     alignItems: 'center',
-            //   //     marginInlineEnd: 24,
-            //   //   }}
-            //   //   onMouseDown={(e) => {
-            //   //     e.stopPropagation();
-            //   //     e.preventDefault();
-            //   //   }}
-            //   // >
-            //   //   <Input
-            //   //     style={{
-            //   //       borderRadius: 4,
-            //   //       marginInlineEnd: 12,
-            //   //       backgroundColor: 'rgba(57,62,67,1)',
-            //   //       color: '#fff',
-            //   //     }}
-            //   //     prefix={
-            //   //       <SearchOutlined
-            //   //         style={{
-            //   //           color: '#dfdfdf',
-            //   //         }} rev={undefined} />
-            //   //     }
-            //   //     placeholder="搜索方案"
-            //   //     bordered={false}
-            //   //   />
-            //   //   <PlusCircleFilled
-            //   //     style={{
-            //   //       color: 'var(--ant-primary-color)',
-            //   //       fontSize: 24,
-            //   //     }} rev={undefined} />
-            //   // </div>
-            // ) : undefined,
             <ShopSelect />,
             <BellOutlined rev={undefined} />,
             <ExpandOutlined rev={undefined} />,
@@ -153,7 +116,7 @@ const Layout = () => {
         title={'在线兴趣学习平台'}
         menuItemRender={menuItemRender}
       >
-        <PageContainer key={store.currentShop}>
+        {/* <PageContainer key={location.pathname}> */}
           {/* <Card
             style={{
               // marginTop: 56,
@@ -162,7 +125,7 @@ const Layout = () => {
           > */}
           {outlet}
           {/* </Card> */}
-        </PageContainer>
+        {/* </PageContainer> */}
       </ProLayout>
     </div>
   );

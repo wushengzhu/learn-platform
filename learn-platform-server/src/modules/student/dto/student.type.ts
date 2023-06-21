@@ -5,7 +5,10 @@ import { Field, ObjectType } from '@nestjs/graphql';
  * 学员
  */
 @ObjectType()
-export class StudentType extends CommonType {
+export class StudentType {
+  @Field()
+  id: string;
+
   @Field({
     description: '昵称',
     nullable: true,
@@ -30,8 +33,15 @@ export class StudentType extends CommonType {
   })
   account: string;
 
+  @Field({
+    description: '密码',
+    nullable: true,
+  })
+  password: string;
+
   @Field({ description: '简介', nullable: true })
   desc?: string;
+
   @Field({ description: '性别', nullable: true })
   gender?: boolean;
 

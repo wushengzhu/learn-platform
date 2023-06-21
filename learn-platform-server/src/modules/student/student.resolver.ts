@@ -2,12 +2,16 @@ import { Result } from '@/common/dto/result.type';
 import { Args, Mutation, Resolver, Query, Context } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '@/common/guards/auth.guard';
-import { SUCCESS, STUDENT_NOT_EXIST } from '@/common/constants/code';
+import {
+  SUCCESS,
+  STUDENT_NOT_EXIST,
+  SHOP_FAIL,
+  ACCOUNT_FAIL,
+} from '@/common/constants/code';
 import { StudentResult, StudentResults } from './dto/result-student.output';
 import { StudentInput } from './dto/student.input';
 import { StudentType } from './dto/student.type';
 import { StudentService } from './student.service';
-import { CurUserId } from '@/common/decorators/current-user.decorator';
 import { PageInput } from '@/common/dto/page.input';
 
 @Resolver(() => StudentType)
@@ -16,7 +20,7 @@ export class StudentResolver {
   constructor(private readonly studentService: StudentService) {}
 
   @Query(() => StudentResult)
-  async getStudentInfoById(@CurUserId() id: string): Promise<StudentResult> {
+  async getStudentById(@Args('id') id: string): Promise<StudentResult> {
     const result = await this.studentService.findById(id);
     if (result) {
       return {
@@ -38,13 +42,23 @@ export class StudentResolver {
   }
 
   @Mutation(() => StudentResult)
-  async commitStudentInfo(
+  async commitStudent(
     @Args('params') params: StudentInput,
-    @CurUserId() userId: string,
-  ): Promise<Result> {
-    const student = await this.studentService.findById(userId);
-    if (student) {
-      const res = await this.studentService.updateById(student.id, params);
+    @Args('id', { nullable: true }) id?: string,
+  ): Promise<StudentResult> {
+    if (id) {
+      const student = await this.studentService.findById(id);
+      if (!student) {
+        return {
+          code: STUDENT_NOT_EXIST,
+          message: '学员不存在',
+        };
+      }
+
+      const res = await this.studentService.updateById(student.id, {
+        ...params,
+        password: params?.password ? params.password : '123456',
+      });
       if (res) {
         return {
           code: SUCCESS,
@@ -52,9 +66,20 @@ export class StudentResolver {
         };
       }
     }
+
+    const res = await this.studentService.create({
+      ...params,
+      password: params?.password ? params.password : '123456',
+    });
+    if (res) {
+      return {
+        code: SUCCESS,
+        message: '创建成功',
+      };
+    }
     return {
-      code: STUDENT_NOT_EXIST,
-      message: '用户信息不存在',
+      code: ACCOUNT_FAIL,
+      message: '操作失败',
     };
   }
 

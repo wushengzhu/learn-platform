@@ -32,3 +32,4 @@ export const DICT_DEL_FAIL = 10030;
 export const DICT_UPDATE_FAIL = 10031;
 export const DICT_NOT_EXIST = 10032;
 export const DICT_FAIL = 10033;
+export const ACCOUNT_FAIL = 10034;

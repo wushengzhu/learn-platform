@@ -1,5 +1,11 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsInt, Min } from 'class-validator';
+import { IsArray, IsInt, Min } from 'class-validator';
+
+export interface IFilters {
+  field: string;
+  operate: string;
+  value: any;
+}
 
 @InputType()
 export class PageInput {
@@ -12,4 +18,8 @@ export class PageInput {
   @IsInt()
   @Min(0)
   pageSize: number;
+
+  // @Field()
+  // @IsArray()
+  // filters: Array<IFilters>;
 }

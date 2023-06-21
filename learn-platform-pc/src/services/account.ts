@@ -1,7 +1,7 @@
 import { GET_STUDENT, GET_STUDENTS } from "@/graphql/student";
 import { GET_USER, GET_USERS, GET_USER_BYID } from "@/graphql/user";
 import { DEFAULT_PAGE_SIZE } from "@/utils/constants";
-import { TStudentsQuery, TUserQuery, TUsersQuery } from "@/utils/types";
+import { TStudentQuery, TStudentsQuery, TUserQuery, TUsersQuery } from "@/utils/types";
 import { useQuery } from "@apollo/client";
 
 export const useUsers = (pageNum = 1, pageSize = DEFAULT_PAGE_SIZE) => {
@@ -33,6 +33,25 @@ export const useUser = (id: string) => {
     return {
       loading,
       data: data?.getUserById,
+    };
+  } else {
+    return {
+      data: {},
+    };
+  }
+};
+
+export const useStudent = (id: string) => {
+  if (id) {
+    const { loading, data } = useQuery<TStudentQuery>(GET_STUDENT, {
+      variables: {
+        id,
+      },
+    });
+    
+    return {
+      loading,
+      data: data?.getStudentById,
     };
   } else {
     return {
