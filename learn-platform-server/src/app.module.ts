@@ -10,6 +10,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { StudentModule } from './modules/student/student.module';
 import { ShopModule } from './modules/shop/shop.module';
 import { DictModule } from './modules/dict/dict.module';
+import { CourseModule } from './modules/course/course.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { DictModule } from './modules/dict/dict.module';
     ShopModule,
     AuthModule,
     DictModule,
+    CourseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

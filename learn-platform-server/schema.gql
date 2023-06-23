@@ -221,6 +221,38 @@ type DictResults {
   page: Page
 }
 
+type CourseType {
+  id: String!
+  createdAt: DateTime!
+  createdBy: String
+  updatedAt: DateTime
+  updatedBy: String
+  deletedAt: DateTime
+  deletedBy: String
+  name: String!
+  desc: String
+  group: String!
+  baseAbility: String!
+  limitNumber: Float!
+  duration: Float!
+  reserveInfo: String
+  refundInfo: String
+  otherInfo: String
+}
+
+type CourseResult {
+  code: Int!
+  message: String!
+  data: CourseType
+}
+
+type CourseResults {
+  code: Int!
+  message: String
+  data: [CourseType!]
+  page: Page
+}
+
 type Query {
   """使用id查询用户"""
   getUserById(id: String!): UserType!
@@ -240,6 +272,8 @@ type Query {
   getShops(page: PageInput!, name: String): ShopResults!
   getDictInfoById(id: String!): DictResult!
   getDicts(page: PageInput!, name: String): DictResults!
+  getCourseById: CourseResult!
+  getCourses(page: PageInput!, name: String): CourseResults!
 }
 
 input PageInput {
@@ -282,6 +316,8 @@ type Mutation {
   userRegister(account: String!, password: String!, avatar: String!, tel: String!): Result!
   commitDict(params: DictInput!, id: String): DictResult!
   deleteDict(id: String!): Result!
+  saveCourse(params: CourseInput!, id: String): CourseResult!
+  deleteCourse(id: String!): Result!
 }
 
 input UserInput {
@@ -391,4 +427,36 @@ input DictInput {
 
   """是否启用"""
   isCanUse: Boolean
+}
+
+input CourseInput {
+  """课程名称"""
+  name: String!
+
+  """课程描述"""
+  desc: String
+
+  """适龄人群"""
+  group: String!
+
+  """适合基础"""
+  baseAbility: String!
+
+  """封面图"""
+  coverUrl: String!
+
+  """限制上课人数"""
+  limitNumber: Float!
+
+  """持续时间"""
+  duration: Float!
+
+  """预约信息"""
+  reserveInfo: String
+
+  """退款信息"""
+  refundInfo: String
+
+  """其他说明信息"""
+  otherInfo: String
 }
