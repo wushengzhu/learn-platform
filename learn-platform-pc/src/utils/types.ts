@@ -134,7 +134,7 @@ export interface ICourse {
   reserveInfo?: string;
   refundInfo?: string;
   otherInfo?: string;
-  reducibleTime: IWeekCourse[];
+  // reducibleTime: IWeekCourse[];
 }
 
 export type TCoursesQuery = {

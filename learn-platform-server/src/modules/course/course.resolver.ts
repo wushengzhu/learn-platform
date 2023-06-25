@@ -22,7 +22,7 @@ export class CourseResolver {
   constructor(private readonly courseService: CourseService) {}
 
   @Query(() => CourseResult)
-  async getCourseById(@CurUserId() id: string): Promise<CourseResult> {
+  async getCourseById(@Args('id') id: string): Promise<CourseResult> {
     const result = await this.courseService.findById(id);
     if (result) {
       return {

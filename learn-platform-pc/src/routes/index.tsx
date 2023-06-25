@@ -9,11 +9,13 @@ import DataDict from "@/components/DataDict";
 import NoShop from "@/containers/NoShop";
 import Student from "@/components/Student";
 import Account from "@/containers/Account";
+import Course from "@/containers/Course";
 
 export const ROUTE_COMPONENT = {
   [ROUTE_KEY.HOME]: Home,
   [ROUTE_KEY.SHOP]: Shop,
   [ROUTE_KEY.USER]: User,
+  [ROUTE_KEY.COURSE]: Course,
   [ROUTE_KEY.STUDENT]: Student,
   [ROUTE_KEY.ACCOUNT]: Account,
   [ROUTE_KEY.MY]: My,

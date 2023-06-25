@@ -272,7 +272,7 @@ type Query {
   getShops(page: PageInput!, name: String): ShopResults!
   getDictInfoById(id: String!): DictResult!
   getDicts(page: PageInput!, name: String): DictResults!
-  getCourseById: CourseResult!
+  getCourseById(id: String!): CourseResult!
   getCourses(page: PageInput!, name: String): CourseResults!
 }
 
