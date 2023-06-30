@@ -437,13 +437,10 @@ input CourseInput {
   desc: String
 
   """适龄人群"""
-  group: String!
+  group: String
 
   """适合基础"""
-  baseAbility: String!
-
-  """封面图"""
-  coverUrl: String!
+  baseAbility: String
 
   """限制上课人数"""
   limitNumber: Float!

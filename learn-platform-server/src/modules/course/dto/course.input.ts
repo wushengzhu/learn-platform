@@ -15,18 +15,15 @@ export class CourseInput {
 
   @Field({
     description: '适龄人群',
+    nullable: true,
   })
   group: string;
 
   @Field({
     description: '适合基础',
+    nullable: true,
   })
   baseAbility: string;
-
-  @Field({
-    description: '封面图',
-  })
-  coverUrl: string;
 
   @Field({
     description: '限制上课人数',

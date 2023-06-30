@@ -6,6 +6,7 @@ import {
   SUCCESS,
   COURSE_NOT_EXIST,
   COURSE_DEL_FAIL,
+  COURSE_FAIL,
 } from '@/common/constants/code';
 import { CourseResult, CourseResults } from './dto/result-course.output';
 import { CourseInput } from './dto/course.input';
@@ -61,6 +62,21 @@ export class CourseResolver {
           message: '更新成功',
         };
       }
+    } else {
+      const res = await this.courseService.create({
+        ...params,
+        createdBy: userId,
+      });
+      if (res) {
+        return {
+          code: SUCCESS,
+          message: '创建成功',
+        };
+      }
+      return {
+        code: COURSE_FAIL,
+        message: '操作失败',
+      };
     }
   }
 
