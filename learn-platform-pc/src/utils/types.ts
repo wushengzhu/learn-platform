@@ -1,207 +1,205 @@
 export interface IPropChild {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 export interface IUser {
-  id: string;
-  tel: string;
-  name: string;
-  gender?: boolean;
-  account?: string;
-  desc?: string;
-  avatar: string;
-  currentShop?: string;
-  refetchHandler: () => void;
+    id: string;
+    tel: string;
+    name: string;
+    gender?: boolean;
+    account?: string;
+    desc?: string;
+    avatar: string;
+    currentShop?: string;
+    refetchHandler: () => void;
 }
 export interface IPage {
-  pageNum: number;
-  pageSize: number;
-  total: number;
+    pageNum: number;
+    pageSize: number;
+    total: number;
 }
 export interface IMedia {
-  id: string;
-  url: string;
-  remark: string;
+    id: string;
+    url: string;
+    remark: string;
 }
 /**
  * 门店
  */
 export interface IShop {
-  id: string;
-  shopFrontImg?: IMedia[];
-  shopRoomImg?: IMedia[];
-  shopOtherImg?: IMedia[];
-  name: string;
-  logo: string;
-  tags?: string;
-  representative?: string;
-  establishmentDate: Date;
-  description?: string;
-  address?: string;
-  tel?: string;
-  longitude?: string;
-  latitude?: string;
-  identityCardBackImg: string;
-  identityCardFrontImg: string;
-  businessLicense: string;
+    id: string;
+    shopFrontImg?: IMedia[];
+    shopRoomImg?: IMedia[];
+    shopOtherImg?: IMedia[];
+    name: string;
+    logo: string;
+    tags?: string;
+    representative?: string;
+    establishmentDate: Date;
+    description?: string;
+    address?: string;
+    tel?: string;
+    longitude?: string;
+    latitude?: string;
+    identityCardBackImg: string;
+    identityCardFrontImg: string;
+    businessLicense: string;
 }
 
 export type TBaseShop = Partial<IShop>;
 
 export type TShopsQuery = {
-  [key: string]: { __typename?: "Query"; data: IShop[]; page: IPage };
+    [key: string]: { __typename?: "Query"; data: IShop[]; page: IPage };
 };
 
 export type TShopQuery = {
-  [key: string]: { __typename?: "Query"; data: IShop };
+    [key: string]: { __typename?: "Query"; data: IShop };
 };
 
 export interface IDict {
-  id: string;
-  dictName: string;
-  dictCode: string;
-  parentId: string;
-  modCode: string;
-  isCanUse:boolean;
+    id: string;
+    dictName: string;
+    dictCode: string;
+    parentId: string;
+    modCode: string;
+    isCanUse: boolean;
 }
 
 export type TBaseDict = Partial<IDict>;
 
 export type TDictsQuery = {
-  [key: string]: { __typename?: "Query"; data: IDict[]; page: IPage };
+    [key: string]: { __typename?: "Query"; data: IDict[]; page: IPage };
 };
 
 export type TDictQuery = {
-  [key: string]: { __typename?: "Query"; data: IDict };
+    [key: string]: { __typename?: "Query"; data: IDict };
 };
 
-
-export type TBaseUser= Partial<IUser>;
+export type TBaseUser = Partial<IUser>;
 
 export type TUsersQuery = {
-  [key: string]: { __typename?: "Query"; data: IUser[]; page: IPage };
+    [key: string]: { __typename?: "Query"; data: IUser[]; page: IPage };
 };
 
 export type TUserQuery = {
-  [key: string]: { __typename?: "Query"; data: IUser };
+    [key: string]: { __typename?: "Query"; data: IUser };
 };
 
 export interface IStudent {
-  name: string;
-  id: string;
-  tel: string;
-  avatar: string;
-  account: string;
-  desc?: string;
-  
+    name: string;
+    id: string;
+    tel: string;
+    avatar: string;
+    account: string;
+    desc?: string;
 }
 
 export type TStudentsQuery = {
-  [key: string]: { __typename?: "Query"; data: IStudent[]; page: IPage };
+    [key: string]: { __typename?: "Query"; data: IStudent[]; page: IPage };
 };
 export type TStudentQuery = {
-  [key: string]: { __typename?: "Query"; data: IStudent[]; page: IPage };
+    [key: string]: { __typename?: "Query"; data: IStudent[]; page: IPage };
 };
 
 export interface IOrderTime {
-  startTime: string;
-  endTime: string;
-  key: number;
+    startTime: string;
+    endTime: string;
+    key: number;
 }
 
 export type TWeek =
-  | "monday"
-  | "tuesday"
-  | "wednesday"
-  | "thursday"
-  | "friday"
-  | "saturday"
-  | "sunday";
+    | "monday"
+    | "tuesday"
+    | "wednesday"
+    | "thursday"
+    | "friday"
+    | "saturday"
+    | "sunday";
 
 export interface IWeekCourse {
-  week: TWeek;
-  orderTime: IOrderTime[];
+    week: TWeek;
+    orderTime: IOrderTime[];
 }
 
 export interface ICourse {
-  id: string;
-  name: string; // 标题
-  desc?: string;
-  group?: string; // 适龄人群
-  baseAbility?: string;
-  limitNumber: number; // 限制人数
-  duration: number; // 持续时长
-  reserveInfo?: string;
-  refundInfo?: string;
-  otherInfo?: string;
-  // reducibleTime: IWeekCourse[];
+    id: string;
+    name: string; // 标题
+    desc?: string;
+    group?: string; // 适龄人群
+    baseAbility?: string;
+    limitNumber: number; // 限制人数
+    duration: number; // 持续时长
+    reserveInfo?: string;
+    refundInfo?: string;
+    otherInfo?: string;
+    reducibleTime: IWeekCourse[];
 }
 
 export type TCoursesQuery = {
-  [key: string]: { __typename?: "Query"; data: ICourse[]; page: IPage };
+    [key: string]: { __typename?: "Query"; data: ICourse[]; page: IPage };
 };
 
 export type TCourseQuery = {
-  [key: string]: { __typename?: "Query"; data: ICourse; page: IPage };
+    [key: string]: { __typename?: "Query"; data: ICourse; page: IPage };
 };
 
 export type TBaseCourse = Partial<ICourse>;
 
 export interface ICard {
-  id: string;
-  name: string;
-  type: string;
-  time: number;
-  validityDay: number;
-  course: ICourse;
+    id: string;
+    name: string;
+    type: string;
+    time: number;
+    validityDay: number;
+    course: ICourse;
 }
 
 export type TCardsQuery = {
-  [key: string]: { __typename?: "Query"; data: ICard[]; page: IPage };
+    [key: string]: { __typename?: "Query"; data: ICard[]; page: IPage };
 };
 
 /**
  * 商品类型
  */
 export interface IProduct {
-  id: string;
-  limitBuyNumber: number;
-  name: string;
-  coverUrl?: string;
-  bannerUrl?: string;
-  desc: string;
-  originalPrice: number;
-  stock: number;
-  preferentialPrice: number;
-  cards: ICard[];
+    id: string;
+    limitBuyNumber: number;
+    name: string;
+    coverUrl?: string;
+    bannerUrl?: string;
+    desc: string;
+    originalPrice: number;
+    stock: number;
+    preferentialPrice: number;
+    cards: ICard[];
 }
 
 export type TProductsQuery = {
-  [key: string]: { __typename?: "Query"; data: IProduct[]; page: IPage };
+    [key: string]: { __typename?: "Query"; data: IProduct[]; page: IPage };
 };
 
 export type TProductQuery = {
-  [key: string]: { __typename?: "Query"; data: IProduct };
+    [key: string]: { __typename?: "Query"; data: IProduct };
 };
 
 export type TBaseProduct = Partial<IProduct>;
 
 export interface ITeacher {
-  id: string;
-  name: string;
-  photoUrl: string;
-  teacherTime: number;
-  education: string;
-  seniority: string;
-  experience: string;
-  carryPrize: string;
-  tags: string;
+    id: string;
+    name: string;
+    photoUrl: string;
+    teacherTime: number;
+    education: string;
+    seniority: string;
+    experience: string;
+    carryPrize: string;
+    tags: string;
 }
 
 export type TBaseTeacher = Partial<ITeacher>;
 export type TTeachersQuery = {
-  [key: string]: { __typename?: "Query"; data: ITeacher[]; page: IPage };
+    [key: string]: { __typename?: "Query"; data: ITeacher[]; page: IPage };
 };
 export type TTeacherQuery = {
-  [key: string]: { __typename?: "Query"; data: ITeacher };
+    [key: string]: { __typename?: "Query"; data: ITeacher };
 };

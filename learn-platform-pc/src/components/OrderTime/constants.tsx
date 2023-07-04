@@ -47,10 +47,27 @@ export const DAYS: IDay[] = [
     },
 ];
 
+export const isWorkDay = (day: string) =>
+    ["monday", "tuesday", "wednesday", "thursday", "friday"].includes(day);
+
+export const getMaxKey = (orderTime: IOrderTime[] | undefined): number => {
+    const keys = orderTime?.map((item) => item.key) || [];
+
+    if (keys.length === 0) {
+        return 0;
+    }
+    return Math.max(...keys);
+};
+
 export interface IOrderTime {
     startTime: string;
     endTime: string;
     key: number;
+}
+
+export interface IWeekCourse {
+    week: TWeek;
+    orderTime: IOrderTime[];
 }
 
 export const getColumns = (onDeleteHandler: Function): ProColumns[] => [
@@ -63,12 +80,14 @@ export const getColumns = (onDeleteHandler: Function): ProColumns[] => [
     {
         title: "开始时间",
         dataIndex: "startTime",
+        valueType: "time",
         width: 120,
         align: "center",
     },
     {
         title: "结束时间",
         dataIndex: "endTime",
+        valueType: "time",
         width: 120,
         align: "center",
     },

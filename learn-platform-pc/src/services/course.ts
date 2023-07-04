@@ -113,11 +113,11 @@ export const useCourse = () => {
 };
 
 export const useCourseInfo = (id: string) => {
-    const { data, refetch } = useQuery<TCourseQuery>(GET_COURSE, {
+    const { data, loading, refetch } = useQuery<TCourseQuery>(GET_COURSE, {
         variables: {
             id,
         },
     });
 
-    return { data: data?.getCourseById.data, refetch };
+    return { data: data?.getCourseById.data, refetch, loading };
 };

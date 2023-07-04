@@ -9,7 +9,7 @@ import {
   COURSE_FAIL,
 } from '@/common/constants/code';
 import { CourseResult, CourseResults } from './dto/result-course.output';
-import { CourseInput } from './dto/course.input';
+import { CourseInput, PartialCourseInput } from './dto/course.input';
 import { CourseType } from './dto/course.type';
 import { CourseService } from './course.service';
 import { CurUserId } from '@/common/decorators/current-user.decorator';
@@ -40,7 +40,7 @@ export class CourseResolver {
 
   @Mutation(() => CourseResult)
   async saveCourse(
-    @Args('params') params: CourseInput,
+    @Args('params') params: PartialCourseInput,
     @CurUserId() userId: string,
     @Args('id', { nullable: true }) id?: string,
   ): Promise<CourseResult> {
