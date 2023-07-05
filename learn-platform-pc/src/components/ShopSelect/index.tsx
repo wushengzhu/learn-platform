@@ -1,4 +1,3 @@
-import style from "./index.module.less";
 import { Select, Space } from "antd";
 import { useShops } from "@/services/shop";
 import lodash from "lodash";

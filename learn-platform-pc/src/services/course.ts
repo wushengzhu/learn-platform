@@ -74,7 +74,7 @@ export const useEditCourse = (): [handleEdit: Function, loading: boolean] => {
     const [edit, { loading }] = useMutation(SAVE_COURSE);
 
     const handleEdit = async (
-        id: number,
+        id: string,
         params: TBaseCourse,
         callback?: (isReload: boolean) => void
     ) => {

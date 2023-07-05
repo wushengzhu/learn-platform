@@ -13,6 +13,7 @@ import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CourseEdit from "@/components/CourseEdit";
 import OrderTime from "@/components/OrderTime";
+import ConsumeCard from "@/components/ConsumeCard";
 
 const Course = () => {
     useTitle("课程管理");
@@ -21,6 +22,7 @@ const Course = () => {
     const { refetch } = useCourses();
     const [showInfo, setShowInfo] = useState(false);
     const [showOrderTime, setOrderTime] = useState(false);
+    const [showConsumeCard, setConsumeCard] = useState(false);
 
     const editCourse = (id?: string) => {
         if (id) {
@@ -88,6 +90,13 @@ const Course = () => {
                 <OrderTime
                     id={courseId}
                     title={"编辑可约时间"}
+                    onClose={onCloseHander}
+                />
+            )}
+            {showConsumeCard && (
+                <ConsumeCard
+                    id={courseId}
+                    title={"编辑消费卡"}
                     onClose={onCloseHander}
                 />
             )}
