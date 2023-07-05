@@ -16,6 +16,7 @@ import { CurUserId } from '@/common/decorators/current-user.decorator';
 import { PageInput } from '@/common/dto/page.input';
 import { FindOptionsWhere, Like } from 'typeorm';
 import { Course } from './models/course.entity';
+import { CurShopId } from '@/common/decorators/current-shop.decorator';
 
 @Resolver(() => CourseType)
 @UseGuards(GqlAuthGuard)
@@ -42,10 +43,11 @@ export class CourseResolver {
   async saveCourse(
     @Args('params') params: PartialCourseInput,
     @CurUserId() userId: string,
+    @CurShopId() shopId: string,
     @Args('id', { nullable: true }) id?: string,
   ): Promise<CourseResult> {
     if (id) {
-      const course = await this.courseService.findById(userId);
+      const course = await this.courseService.findById(id);
       if (!course) {
         return {
           code: COURSE_NOT_EXIST,
@@ -66,6 +68,9 @@ export class CourseResolver {
       const res = await this.courseService.create({
         ...params,
         createdBy: userId,
+        shop: {
+          id: shopId,
+        },
       });
       if (res) {
         return {
@@ -84,10 +89,14 @@ export class CourseResolver {
   async getCourses(
     @Args('page') page: PageInput,
     @CurUserId() userId: string,
+    @CurShopId() shopId: string,
     @Args('name', { nullable: true }) name?: string,
   ): Promise<CourseResults> {
     const { pageNum, pageSize } = page;
-    const where: FindOptionsWhere<Course> = { createdBy: userId };
+    const where: FindOptionsWhere<Course> = {
+      createdBy: userId,
+      shop: { id: shopId },
+    };
     if (name) {
       where.name = Like(`%${name}%`);
     }

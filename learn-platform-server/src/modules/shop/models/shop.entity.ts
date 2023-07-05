@@ -1,4 +1,5 @@
 import { CommonEntity } from '@/common/entities/common.entity';
+import { Course } from '@/modules/course/models/course.entity';
 import { ShopImage } from '@/modules/shop-image/models/shop-image.entity';
 import { IsNotEmpty } from 'class-validator';
 import { Column, Entity, OneToMany } from 'typeorm';
@@ -107,8 +108,8 @@ export class Shop extends CommonEntity {
   })
   shopOtherImg?: ShopImage[];
 
-  // @OneToMany(() => Course, (course) => course.shop)
-  // courses: Course[];
+  @OneToMany(() => Course, (course) => course.shop)
+  courses: Course[];
 
   // @OneToMany(() => Card, (card) => card.shop)
   // cards: Card[];
