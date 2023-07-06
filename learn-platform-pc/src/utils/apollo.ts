@@ -4,7 +4,7 @@ import { setContext } from "@apollo/client/link/context";
 import { currentShop } from ".";
 
 const httpLink = createHttpLink({
-    uri: "http://localhost:3002/graphql",
+    uri: "http://localhost:1024/graphql",
 });
 const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem(AUTH_TOKEN);

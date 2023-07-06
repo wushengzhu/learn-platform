@@ -14,6 +14,6 @@ async function bootstrap() {
   };
   // 允许跨域
   app.enableCors(corsOptions);
-  await app.listen(3002);
+  await app.listen(1024);
 }
 bootstrap();
