@@ -1,0 +1,11 @@
+import { CommonEntity } from '@/common/entities/common.entity';
+import { Column, Entity } from 'typeorm';
+
+@Entity('{{kebabCase name}}')
+export class {{pascalCase name}} extends CommonEntity {
+  @Column({
+    comment: '昵称',
+    default: '',
+  })
+  name: string;
+}

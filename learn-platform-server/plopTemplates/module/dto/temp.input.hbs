@@ -1,0 +1,9 @@
+import { Field, InputType } from '@nestjs/graphql';
+
+@InputType()
+export class {{pascalCase name}}Input {
+  @Field({
+    description: '昵称',
+  })
+  name: string;
+}
