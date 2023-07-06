@@ -28,7 +28,7 @@ const ShopSelect = () => {
         } else {
             go(ROUTE_KEY.NO_SHOP);
         }
-    });
+    }, []);
     const onChangeHandler = (val: { value: string; label: string }) => {
         setStore({
             currentShop: val.value,

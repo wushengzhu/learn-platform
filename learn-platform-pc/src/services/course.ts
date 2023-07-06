@@ -2,7 +2,12 @@ import { message } from "antd";
 import { TBaseCourse, TCourseQuery, TCoursesQuery } from "@/utils/types";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { DEFAULT_PAGE_SIZE } from "@/utils/constants";
-import { SAVE_COURSE, GET_COURSE, GET_COURSES } from "../graphql/course";
+import {
+    SAVE_COURSE,
+    GET_COURSE,
+    GET_COURSES,
+    DEL_COURSE,
+} from "../graphql/course";
 
 export const useCourses = (pageNum = 1, pageSize = DEFAULT_PAGE_SIZE) => {
     const { loading, data, refetch } = useQuery<TCoursesQuery>(GET_COURSES, {
@@ -120,4 +125,23 @@ export const useCourseInfo = (id: string) => {
     });
 
     return { data: data?.getCourseById.data, refetch, loading };
+};
+
+export const useDeleteCourse = (): [delHandler: Function, loading: boolean] => {
+    const [del, { loading }] = useMutation(DEL_COURSE);
+    const delHandler = async (id: number, callback: () => void) => {
+        const res = await del({
+            variables: {
+                id,
+            },
+        });
+        if (res.data.deleteCourse.code === 200) {
+            message.success(res.data.deleteCourse.message);
+            callback();
+            return;
+        }
+        message.error(res.data.deleteCourse.message);
+    };
+
+    return [delHandler, loading];
 };

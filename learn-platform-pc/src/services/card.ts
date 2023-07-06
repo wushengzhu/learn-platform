@@ -43,7 +43,7 @@ export const useEditCard = (): [handleEdit: Function, loading: boolean] => {
     return [handleEdit, loading];
 };
 
-export const useDeleteCard = (): [handleEdit: Function, loading: boolean] => {
+export const useDeleteCard = (): [delHandler: Function, loading: boolean] => {
     const [del, { loading }] = useMutation(DEL_CARD);
     const delHandler = async (id: number, callback: () => void) => {
         const res = await del({

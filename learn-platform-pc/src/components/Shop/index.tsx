@@ -33,9 +33,11 @@ const Shop = () => {
             },
         });
     };
+
     const delInfoHandler = async (id: string) => {
         delHandler(id, refetch);
     };
+
     const dataSource = data?.map((item) => ({
         ...item,
         key: item.id,

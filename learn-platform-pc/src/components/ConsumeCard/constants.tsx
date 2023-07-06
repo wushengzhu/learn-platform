@@ -1,4 +1,3 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ProColumns } from "@ant-design/pro-components";
 import { Button, Popconfirm, Space } from "antd";
 

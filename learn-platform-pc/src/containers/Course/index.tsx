@@ -7,7 +7,7 @@ import {
 } from "@ant-design/pro-components";
 import { useRef, useState } from "react";
 import { getColumns } from "./constants";
-import { useCourses } from "@/services/course";
+import { useCourses, useDeleteCourse } from "@/services/course";
 import { DEFAULT_PAGE_SIZE } from "@/utils/constants";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
@@ -20,6 +20,7 @@ const Course = () => {
     const actionRef = useRef<ActionType>();
     const [courseId, setCourseId] = useState("");
     const { refetch } = useCourses();
+    const [del, delLoading] = useDeleteCourse();
     const [showInfo, setShowInfo] = useState(false);
     const [showOrderTime, setOrderTime] = useState(false);
     const [showConsumeCard, setConsumeCard] = useState(false);
@@ -36,12 +37,16 @@ const Course = () => {
     const onCloseHander = (isReload?: boolean) => {
         setShowInfo(false);
         setOrderTime(false);
+        setConsumeCard(false);
         if (isReload) {
             actionRef.current?.reload();
         }
     };
 
-    const deleteCourse = async (id: string) => {};
+    const deleteCourse = async (id: string) => {
+        del(id);
+        refetch({});
+    };
 
     const onOrderTimeHandler = (id: string) => {
         setOrderTime(true);
@@ -49,7 +54,7 @@ const Course = () => {
     };
 
     const onCardHandler = (id: string) => {
-        setOrderTime(true);
+        setConsumeCard(true);
         setCourseId(id);
     };
 
@@ -57,6 +62,7 @@ const Course = () => {
         <PageContainer header={{ title: "当前门店下开设的课程" }}>
             <ProTable<ICourse>
                 rowKey="id"
+                loading={delLoading}
                 actionRef={actionRef}
                 columns={getColumns({
                     onDeleteHandler: deleteCourse,
