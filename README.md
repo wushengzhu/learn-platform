@@ -1,4 +1,4 @@
-<h4 align="center">基于React+Antd+NestJs+MySql实现的全栈在线兴趣班学习平台</h4>
+<h3 align="center">基于React+Antd+NestJs+MySql实现的全栈在线兴趣班学习平台</h3>
 <p align="center">
 	<a href="https://pnpm.io/" target="_blank">
     <img src="https://img.shields.io/badge/pnpm-8.6.1-blue">
@@ -32,40 +32,37 @@
     </a>
 </p>
 
-- 安装 pnpm
-
+安装 pnpm：
 ```
 pnpm install
 ```
-
-- 注意地
+注意地：
 
 > ^0.3.16 版本的 typeorm 会触发自动删除 id，会有一些 bug，暂时未知什么原因
 
 ## learn-platform-server
+启动本地后端服务：
+```
+pnpm dev
+```
 
-- 启动本地后端服务
-  ```
-  pnpm dev
-  ```
-- 打开 graphql 可视化 api 调试：http://localhost:1024/graphql
-- 生成 modules 中 api 文件模板
-  ```
-  pnpm temp
-  ```
+打开 graphql 可视化 api 调试：http://localhost:1024/graphql
 
+生成 modules 中 api 文件模板：
+```
+pnpm temp
+```
 ## learn-platform-pc
-
-- 启动本地 pc 端
-  ```
-  pnpm dev
-  ```
-- 打开 pc 端页面：http://localhost:1396
+启动本地 pc 端：
+```
+pnpm dev
+```
+打开 pc 端页面：http://localhost:1396
 
 ## learn-platform-mobile
 
-- 启动本地 mobile 端
-  ```
-  pnpm dev
-  ```
-- 打开 mobile 端页面：http://localhost:1398
+启动本地 mobile 端：
+```
+pnpm dev
+```
+打开 mobile 端页面：http://localhost:1398
