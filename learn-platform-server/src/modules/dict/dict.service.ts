@@ -44,6 +44,17 @@ export class DictService {
     return false;
   }
 
+  async findByParentId(parentId: string): Promise<Dict[]> {
+    return this.dictRepository.find({
+      order: {
+        id: 'DESC',
+      },
+      where: {
+        parentId: parentId,
+      },
+    });
+  }
+
   async updateById(id: string, entity: DeepPartial<Dict>): Promise<boolean> {
     const existEntity = await this.findById(id);
     if (!existEntity) {

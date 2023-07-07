@@ -15,7 +15,7 @@ import {
 } from '@/common/constants/code';
 import { DictInput } from './dto/dict.input';
 import { IFilters, PageInput } from '@/common/dto/page.input';
-import { FindOptionsWhere, Like } from 'typeorm';
+import { Equal, FindOptionsWhere, Like } from 'typeorm';
 import { Dict } from './models/dict.entity';
 
 @Resolver(() => DictType)
@@ -39,8 +39,26 @@ export class DictResolver {
     };
   }
 
+  @Query(() => DictResults)
+  async getDictsByParentId(
+    @Args('parentId') parentId: string,
+  ): Promise<DictResults> {
+    const result = await this.dictService.findByParentId(parentId);
+    if (result) {
+      return {
+        code: SUCCESS,
+        data: result,
+        message: '获取成功',
+      };
+    }
+    return {
+      code: DICT_NOT_EXIST,
+      message: '本字典不存在',
+    };
+  }
+
   @Mutation(() => DictResult)
-  async commitDict(
+  async saveDict(
     @Args('params') params: DictInput,
     @Args('id', { nullable: true }) id?: string,
   ): Promise<DictResult> {
@@ -91,13 +109,21 @@ export class DictResolver {
   @Query(() => DictResults)
   async getDicts(
     @Args('page') page: PageInput,
+    @Args('parentId', { nullable: true }) parentId?: string,
     @Args('name', { nullable: true }) name?: string,
+    @Args('code', { nullable: true }) code?: string,
     // @Args('filters', { nullable: true }) filters?: Array<IFilters>,
   ): Promise<DictResults> {
     const { pageNum, pageSize } = page;
     const where: FindOptionsWhere<Dict> = {};
     if (name) {
       where.dictName = Like(`%${name}%`);
+    }
+    if (code) {
+      where.dictCode = Equal(code);
+    }
+    if (parentId) {
+      where.parentId = Equal(parentId);
     }
     const [results, total] = await this.dictService.findDicts({
       start: pageNum === 1 ? 0 : (pageNum - 1) * pageSize + 1,

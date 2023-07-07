@@ -8,7 +8,12 @@ import { DirectoryTreeProps } from "antd/es/tree/DirectoryTree";
 import { useEffect, useRef, useState } from "react";
 import style from "./index.module.less";
 import { Button, Card, Popconfirm } from "antd";
-import { useDeleteDict, useDicts, useEditDict } from "@/services/dict";
+import {
+    useDeleteDict,
+    useDicts,
+    useDictsByParentId,
+    useEditDict,
+} from "@/services/dict";
 import {
     CloseOutlined,
     DeleteOutlined,
@@ -33,21 +38,26 @@ const DataDict = () => {
     const { loading, data, page, refetch } = useDicts();
     const [delHandler] = useDeleteDict();
     const [edit, editLoading] = useEditDict();
+    const { refetchByParentId, data: listData } = useDictsByParentId();
     const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
     const [selectedKeys, setSelectedKeys] = useState("0");
+    const [expandKeys, setExpandKeys] = useState("0");
     const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
     const [treeData, setTreeData] = useState<DataNode[]>([]);
-    useEffect(() => {
-        if (data) {
-            setDataSource(data);
-        }
-        refreshTree();
-    }, [data]);
+    const [curNode, setCurNode] = useState(treeData[0]);
 
-    const refreshTree = () => {
+    useEffect(() => {
+        if (listData) {
+            setDataSource(listData);
+        }
+        buildTree();
+    }, [listData]);
+
+    const buildTree = () => {
         const treeNode = [
             {
                 title: "字典分类",
+                code: "",
                 key: "0",
                 children: data ? listToTree(data, "0") : [],
             },
@@ -64,6 +74,7 @@ const DataDict = () => {
                 const children = listToTree(list, ele.id);
                 child.push({
                     title: ele.dictName,
+                    code: ele.dictCode,
                     key: ele.id,
                     isLeaf: children ? true : false,
                     children: children,
@@ -76,7 +87,7 @@ const DataDict = () => {
     const deleteDict = (id: string) => {
         // 注意不能直接调这个函数放在组件onClick中，会报错
         delHandler(id);
-        refetch();
+        refetch({});
     };
 
     const columns: ProColumns<DataSourceType>[] = [
@@ -100,7 +111,7 @@ const DataDict = () => {
                     rules: [{ required: true, message: "此项为必填项" }],
                 };
             },
-            width: "15%",
+            width: "20%",
         },
         {
             title: "模块编码",
@@ -128,7 +139,7 @@ const DataDict = () => {
         {
             title: "操作",
             valueType: "option",
-            width: 200,
+            width: 100,
             render: (text, record, _, action) => [
                 <Button
                     key="editable"
@@ -162,16 +173,14 @@ const DataDict = () => {
     ];
 
     const onSelect: DirectoryTreeProps["onSelect"] = (keys, info) => {
-        // info.nativeEvent.preventDefault()
         info.nativeEvent.stopPropagation();
         setSelectedKeys(keys[0] + "");
         if (data && keys[0] === "0") {
-            setDataSource(data.filter((item) => item.parentId === "0"));
+            refetchByParentId("0");
         } else {
-            setDataSource(
-                data ? data.filter((item) => item.id === keys[0] + "") : []
-            );
+            refetchByParentId(keys[0].toString());
         }
+        setCurNode(info.node);
     };
 
     const onExpand: DirectoryTreeProps["onExpand"] = (keys, info) => {
@@ -189,11 +198,10 @@ const DataDict = () => {
                     >
                         <Tree
                             showLine
-                            // expandedKeys={[selectedKeys]}
+                            expandedKeys={[expandKeys]}
                             selectedKeys={[selectedKeys]}
-                            defaultExpandAll
                             onSelect={onSelect}
-                            // onExpand={onExpand}
+                            onExpand={onExpand}
                             treeData={treeData}
                         />
                     </Card>
@@ -212,13 +220,26 @@ const DataDict = () => {
                         recordCreatorProps={{
                             record: () => ({
                                 id: Date.now().toString(),
+                                modCode: "LearnPlatform",
+                                dictCode: curNode?.code,
+                                isCanUse: Boolean(true),
                             }),
                         }}
                         editable={{
                             type: "multiple",
                             editableKeys,
-                            saveText: <SaveOutlined rev={undefined} />,
-                            cancelText: <CloseOutlined rev={undefined} />,
+                            saveText: (
+                                <SaveOutlined
+                                    rev={undefined}
+                                    className="text-blue-500"
+                                />
+                            ),
+                            cancelText: (
+                                <CloseOutlined
+                                    rev={undefined}
+                                    className="text-blue-500"
+                                />
+                            ),
                             onDelete: async (key, row) => {},
                             onSave: async (rowKey, data, row) => {
                                 data.modCode = "LearnPlatform";
@@ -228,10 +249,11 @@ const DataDict = () => {
                                     dictCode: data.dictCode,
                                     modCode: data.modCode,
                                     isCanUse: Boolean(data.isCanUse),
-                                    parentId: selectedKeys[0],
+                                    parentId: curNode?.key,
                                 };
                                 edit(id, formValue);
-                                refreshTree();
+                                buildTree();
+                                refetch({});
                             },
                             onChange: setEditableRowKeys,
                             // actionRender: (row, config, dom) => [dom.save, dom.cancel],
