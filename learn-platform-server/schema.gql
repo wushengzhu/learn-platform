@@ -2,31 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type UserType {
-  id: String!
-
-  """昵称"""
-  name: String
-
-  """简介"""
-  desc: String
-
-  """账号"""
-  account: String!
-
-  """密码"""
-  password: String!
-
-  """性别"""
-  gender: Boolean
-
-  """tel"""
-  tel: String
-
-  """头像"""
-  avatar: String
-}
-
 type Page {
   total: Int!
   pageNum: Int!
@@ -37,74 +12,6 @@ type Result {
   code: Int!
   message: String
   data: String
-}
-
-type UserResults {
-  code: Int!
-  message: String
-  data: [UserType!]
-  page: Page
-}
-
-type OSSType {
-  """过期时间"""
-  expire: String!
-
-  """策略"""
-  policy: String!
-
-  """签名"""
-  signature: String!
-
-  """key"""
-  accessId: String!
-
-  """主机"""
-  host: String!
-
-  """目录"""
-  dir: String!
-}
-
-type StudentType {
-  id: String!
-
-  """昵称"""
-  name: String
-
-  """手机号"""
-  tel: String
-
-  """头像"""
-  avatar: String
-
-  """账号"""
-  account: String
-
-  """密码"""
-  password: String
-
-  """简介"""
-  desc: String
-
-  """性别"""
-  gender: Boolean
-
-  """openid"""
-  openid: String
-}
-
-type StudentResult {
-  code: Int!
-  message: String!
-  data: StudentType
-}
-
-type StudentResults {
-  code: Int!
-  message: String
-  data: [StudentType!]
-  page: Page
 }
 
 type ShopImageType {
@@ -176,6 +83,240 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type OrderTimeType {
+  """开始时间"""
+  startTime: String!
+
+  """结束时间"""
+  endTime: String!
+
+  """key"""
+  key: Float!
+}
+
+type ReducibleTimeType {
+  """周几"""
+  week: String!
+
+  """可约时间 json"""
+  orderTime: [OrderTimeType!]!
+}
+
+type CourseType {
+  id: String!
+  createdAt: DateTime!
+  createdBy: String
+  updatedAt: DateTime
+  updatedBy: String
+  deletedAt: DateTime
+  deletedBy: String
+  name: String!
+  desc: String
+  group: String!
+  baseAbility: String!
+  limitNumber: Float!
+  duration: Float!
+  reserveInfo: String
+  refundInfo: String
+  otherInfo: String
+
+  """可约时间"""
+  reducibleTime: [ReducibleTimeType!]
+}
+
+type CardType {
+  """id"""
+  id: String!
+
+  """名字"""
+  name: String!
+
+  """
+  卡类型 
+       TIME = "time",
+      DURATION = "duration"
+  """
+  type: String!
+
+  """上课次数"""
+  time: Float!
+
+  """有效期 （天）"""
+  validityDay: Float!
+
+  """课程"""
+  course: CourseType!
+}
+
+type ProductType {
+  id: String!
+  createdAt: DateTime!
+  createdBy: String
+  updatedAt: DateTime
+  updatedBy: String
+  deletedAt: DateTime
+  deletedBy: String
+
+  """名称"""
+  name: String!
+
+  """描述"""
+  desc: String
+
+  """状态"""
+  status: String!
+
+  """距离"""
+  distance: String!
+
+  """分类"""
+  type: String
+
+  """库存总数"""
+  stock: Float!
+
+  """当前库存"""
+  curStock: Float!
+
+  """卖出去多少"""
+  buyNumber: Float!
+
+  """每人限购数量"""
+  limitBuyNumber: Float!
+
+  """封面图"""
+  coverUrl: String!
+
+  """头部banner图"""
+  bannerUrl: String!
+
+  """原价"""
+  originalPrice: Float!
+
+  """优惠价"""
+  preferentialPrice: Float!
+
+  """门店信息"""
+  shop: ShopType!
+
+  """消费卡"""
+  cards: [CardType!]
+}
+
+type ProductTypeType {
+  """key"""
+  key: String!
+
+  """名称"""
+  title: String!
+}
+
+type ProductResult {
+  code: Int!
+  message: String!
+  data: ProductType
+}
+
+type ProductResults {
+  code: Int!
+  message: String
+  data: [ProductType!]
+  page: Page
+}
+
+type UserType {
+  id: String!
+
+  """昵称"""
+  name: String
+
+  """简介"""
+  desc: String
+
+  """账号"""
+  account: String!
+
+  """密码"""
+  password: String!
+
+  """性别"""
+  gender: Boolean
+
+  """tel"""
+  tel: String
+
+  """头像"""
+  avatar: String
+}
+
+type UserResults {
+  code: Int!
+  message: String
+  data: [UserType!]
+  page: Page
+}
+
+type OSSType {
+  """过期时间"""
+  expire: String!
+
+  """策略"""
+  policy: String!
+
+  """签名"""
+  signature: String!
+
+  """key"""
+  accessId: String!
+
+  """主机"""
+  host: String!
+
+  """目录"""
+  dir: String!
+}
+
+type StudentType {
+  id: String!
+
+  """昵称"""
+  name: String
+
+  """手机号"""
+  tel: String
+
+  """头像"""
+  avatar: String
+
+  """账号"""
+  account: String
+
+  """密码"""
+  password: String
+
+  """简介"""
+  desc: String
+
+  """性别"""
+  gender: Boolean
+
+  """openid"""
+  openid: String
+}
+
+type StudentResult {
+  code: Int!
+  message: String!
+  data: StudentType
+}
+
+type StudentResults {
+  code: Int!
+  message: String
+  data: [StudentType!]
+  page: Page
+}
+
 type ShopResult {
   code: Int!
   message: String!
@@ -221,47 +362,6 @@ type DictResults {
   page: Page
 }
 
-type OrderTimeType {
-  """开始时间"""
-  startTime: String!
-
-  """结束时间"""
-  endTime: String!
-
-  """key"""
-  key: Float!
-}
-
-type ReducibleTimeType {
-  """周几"""
-  week: String!
-
-  """可约时间 json"""
-  orderTime: [OrderTimeType!]!
-}
-
-type CourseType {
-  id: String!
-  createdAt: DateTime!
-  createdBy: String
-  updatedAt: DateTime
-  updatedBy: String
-  deletedAt: DateTime
-  deletedBy: String
-  name: String!
-  desc: String
-  group: String!
-  baseAbility: String!
-  limitNumber: Float!
-  duration: Float!
-  reserveInfo: String
-  refundInfo: String
-  otherInfo: String
-
-  """可约时间"""
-  reducibleTime: [ReducibleTimeType!]
-}
-
 type CourseResult {
   code: Int!
   message: String!
@@ -272,6 +372,19 @@ type CourseResults {
   code: Int!
   message: String
   data: [CourseType!]
+  page: Page
+}
+
+type CardResult {
+  code: Int!
+  message: String!
+  data: CardType
+}
+
+type CardResults {
+  code: Int!
+  message: String
+  data: [CardType!]
   page: Page
 }
 
@@ -293,9 +406,14 @@ type Query {
   getShopInfoById(id: String!): ShopResult!
   getShops(page: PageInput!, name: String): ShopResults!
   getDictInfoById(id: String!): DictResult!
-  getDicts(page: PageInput!, name: String): DictResults!
+  getDictsByParentId(parentId: String!): DictResults!
+  getDicts(page: PageInput!, parentId: String, name: String, code: String): DictResults!
   getCourseById(id: String!): CourseResult!
   getCourses(page: PageInput!, name: String): CourseResults!
+  getCardById(id: String!): CardResult!
+  getCards(page: PageInput!, courseId: String!, name: String): CardResults!
+  getProductById(id: String!): ProductResult!
+  getProducts(page: PageInput!, name: String): ProductResults!
 }
 
 input PageInput {
@@ -336,10 +454,14 @@ type Mutation {
 
   """用户注册"""
   userRegister(account: String!, password: String!, avatar: String!, tel: String!): Result!
-  commitDict(params: DictInput!, id: String): DictResult!
+  saveDict(params: DictInput!, id: String): DictResult!
   deleteDict(id: String!): Result!
   saveCourse(params: PartialCourseInput!, id: String): CourseResult!
   deleteCourse(id: String!): Result!
+  saveCard(params: CardInput!, courseId: String!, id: String): CardResult!
+  deleteCard(id: String!): Result!
+  saveProduct(params: PartialProductInput!, id: String): ProductResult!
+  deleteProduct(id: String!): Result!
 }
 
 input UserInput {
@@ -500,4 +622,53 @@ input OrderTimeInput {
 
   """key"""
   key: Float!
+}
+
+input CardInput {
+  """名字"""
+  name: String!
+
+  """卡类型 次数：time 时长：duration"""
+  type: String!
+
+  """上课次数"""
+  time: Float
+
+  """有效期 （天）"""
+  validityDay: Float!
+}
+
+input PartialProductInput {
+  """名称"""
+  name: String
+
+  """描述"""
+  desc: String
+
+  """状态"""
+  status: String
+
+  """分类"""
+  type: String
+
+  """库存总数"""
+  stock: Float
+
+  """每人限购数量"""
+  limitBuyNumber: Float
+
+  """封面图"""
+  coverUrl: String
+
+  """头部banner图"""
+  bannerUrl: String
+
+  """原价"""
+  originalPrice: Float
+
+  """优惠价"""
+  preferentialPrice: Float
+
+  """消费卡"""
+  cards: [String!]
 }

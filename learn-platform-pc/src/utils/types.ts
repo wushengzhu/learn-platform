@@ -168,6 +168,7 @@ export interface IProduct {
     coverUrl?: string;
     bannerUrl?: string;
     desc: string;
+    status: string;
     originalPrice: number;
     stock: number;
     preferentialPrice: number;

@@ -1,8 +1,9 @@
 import { CommonEntity } from '@/common/entities/common.entity';
 import { IsInt, IsNotEmpty, Min } from 'class-validator';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { ReducibleTimeType } from '../dto/common.type';
 import { Shop } from '@/modules/shop/models/shop.entity';
+import { Card } from '@/modules/card/models/card.entity';
 
 /**
  * 组件
@@ -73,6 +74,17 @@ export class Course extends CommonEntity {
   })
   reducibleTime: ReducibleTimeType[];
 
-  @ManyToOne(() => Shop, (shop) => shop.courses)
+  @ManyToOne(() => Shop, (shop) => shop.courses, {
+    cascade: true,
+  })
   shop: Shop;
+
+  @OneToMany(() => Card, (card) => card.course)
+  cards: Card;
+
+  // @ManyToMany(() => Teacher, { cascade: true })
+  // @JoinTable({
+  //   name: 'course_teacher',
+  // })
+  // teachers: Teacher[];
 }

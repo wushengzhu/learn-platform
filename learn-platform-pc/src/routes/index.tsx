@@ -10,19 +10,21 @@ import NoShop from "@/containers/NoShop";
 import Student from "@/components/Student";
 import Account from "@/containers/Account";
 import Course from "@/containers/Course";
+import Product from "@/containers/Product";
 
 export const ROUTE_COMPONENT = {
-  [ROUTE_KEY.HOME]: Home,
-  [ROUTE_KEY.SHOP]: Shop,
-  [ROUTE_KEY.USER]: User,
-  [ROUTE_KEY.COURSE]: Course,
-  [ROUTE_KEY.STUDENT]: Student,
-  [ROUTE_KEY.ACCOUNT]: Account,
-  [ROUTE_KEY.MY]: My,
-  [ROUTE_KEY.NO_SHOP]: NoShop,
-  [ROUTE_KEY.DICTIONARY]: DataDict,
-  [ROUTE_KEY.MONITOR]: SystemMonitor,
-  [ROUTE_KEY.LOG]: SystemMonitor,
-  [ROUTE_KEY.SETTING]: SystemMonitor,
-  [ROUTE_KEY.PAGE_404]: PageNotFound,
+    [ROUTE_KEY.HOME]: Home,
+    [ROUTE_KEY.SHOP]: Shop,
+    [ROUTE_KEY.USER]: User,
+    [ROUTE_KEY.COURSE]: Course,
+    [ROUTE_KEY.STUDENT]: Student,
+    [ROUTE_KEY.ACCOUNT]: Account,
+    [ROUTE_KEY.PRODUCT]: Product,
+    [ROUTE_KEY.MY]: My,
+    [ROUTE_KEY.NO_SHOP]: NoShop,
+    [ROUTE_KEY.DICTIONARY]: DataDict,
+    [ROUTE_KEY.MONITOR]: SystemMonitor,
+    [ROUTE_KEY.LOG]: SystemMonitor,
+    [ROUTE_KEY.SETTING]: SystemMonitor,
+    [ROUTE_KEY.PAGE_404]: PageNotFound,
 };

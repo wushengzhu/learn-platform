@@ -21,5 +21,5 @@ export class PageInput {
 
   // @Field()
   // @IsArray()
-  // filters: Array<IFilters>;
+  // filters?: Array<IFilters>;
 }

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ProductModule } from './modules/product/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -11,6 +12,7 @@ import { StudentModule } from './modules/student/student.module';
 import { ShopModule } from './modules/shop/shop.module';
 import { DictModule } from './modules/dict/dict.module';
 import { CourseModule } from './modules/course/course.module';
+import { CardModule } from './modules/card/card.module';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { CourseModule } from './modules/course/course.module';
     AuthModule,
     DictModule,
     CourseModule,
+    CardModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

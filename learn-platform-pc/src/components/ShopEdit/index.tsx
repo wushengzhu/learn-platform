@@ -18,7 +18,7 @@ import {
     UploadFile,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ImageUpload from "../ImageUpload";
 import { IShop } from "@/utils/types";
 import dayjs from "dayjs";
@@ -30,7 +30,7 @@ interface IProp {
 
 const ShopEdit = ({ id, onClose }: IProp) => {
     const [form] = Form.useForm();
-
+    const [isDrawerOpen, setIsDrawerOpen] = useState(true);
     const { data, loading: queryLoading } = useShop(id);
     const [edit, editLoading] = useEditInfo();
     const initValue = useMemo(
@@ -136,11 +136,12 @@ const ShopEdit = ({ id, onClose }: IProp) => {
 
     return (
         <Drawer
-            width="700"
+            width={700}
             title={id ? "编辑门店" : "新增门店"}
             placement="right"
-            onClose={onClose}
-            open
+            onClose={() => setIsDrawerOpen(false)}
+            open={isDrawerOpen}
+            afterOpenChange={(o) => !o && onClose()}
             footer={
                 <div className="flex justify-end">
                     <Button onClick={onClose}>取消</Button>

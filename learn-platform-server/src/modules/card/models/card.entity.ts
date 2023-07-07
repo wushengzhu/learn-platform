@@ -10,7 +10,7 @@ export enum CardTypeEnum {
 }
 
 /**
- * 组件
+ * 消费卡
  */
 @Entity('card')
 export class Card extends CommonEntity {
@@ -40,13 +40,13 @@ export class Card extends CommonEntity {
   validityDay: number;
 
   // 关联课程
-  @ManyToOne(() => Course, {
+  @ManyToOne(() => Course, (course) => course.cards, {
     cascade: true,
   })
   course: Course;
 
   // 关联门店
-  @ManyToOne(() => Shop, {
+  @ManyToOne(() => Shop, (shop) => shop.cards, {
     cascade: true,
   })
   shop: Shop;

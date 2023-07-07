@@ -61,8 +61,9 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
         const values =
             await formRef.current?.validateFieldsReturnFormatValue?.();
         if (values) {
-            await handleEdit(id, params, onClose(true));
+            await handleEdit(id, params);
             setIsDrawerOpen(false);
+            onClose(true);
         } else {
             message.error("请根据表单提示进行修改！");
         }

@@ -5,6 +5,7 @@ import {
     ReadOutlined,
     SettingOutlined,
     ShopOutlined,
+    ShoppingCartOutlined,
     TeamOutlined,
     UserOutlined,
     VideoCameraOutlined,
@@ -26,6 +27,7 @@ export const ROUTE_KEY = {
     STUDENT: "student",
     ACCOUNT: "account",
     COURSE: "course",
+    PRODUCT: "product",
     MY: "my",
     PAGE_404: "p404",
     NO_SHOP: "noshop",
@@ -57,6 +59,11 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
         path: "course",
         name: "课程管理",
         icon: <VideoCameraOutlined rev={undefined} />,
+    },
+    [ROUTE_KEY.PRODUCT]: {
+        path: "product",
+        name: "商品管理",
+        icon: <ShoppingCartOutlined rev={undefined} />,
     },
     [ROUTE_KEY.SHOP]: {
         path: "noshop",

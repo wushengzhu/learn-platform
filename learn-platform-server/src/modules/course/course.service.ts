@@ -51,6 +51,7 @@ export class CourseService {
         createdAt: 'DESC',
       },
       where,
+      relations: ['shop'],
     });
   }
 
