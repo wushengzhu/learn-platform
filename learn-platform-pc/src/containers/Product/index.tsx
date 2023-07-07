@@ -17,6 +17,7 @@ import {
     useEditProduct,
     useProducts,
 } from "@/services/product";
+import RelatedCard from "@/components/RelatedCard";
 
 const Product = () => {
     useTitle("商品管理");
@@ -39,6 +40,7 @@ const Product = () => {
 
     const onCloseHander = (isReload?: boolean) => {
         setProductEdit(false);
+        setConsumeCard(false);
         if (isReload) {
             actionRef.current?.reload();
         }
@@ -98,7 +100,7 @@ const Product = () => {
                 />
             )}
             {showConsumeCard && (
-                <ConsumeCard
+                <RelatedCard
                     id={productId}
                     title={productId ? "编辑" : "新增"}
                     onClose={onCloseHander}

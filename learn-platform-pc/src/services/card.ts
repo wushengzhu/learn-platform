@@ -1,6 +1,6 @@
 import { DEL_CARD, GET_CARDS, SAVE_CARD } from "@/graphql/card";
 import { ICard } from "@/utils/types";
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { message } from "antd";
 
 export const useCards = (courseId: string) => {
@@ -13,6 +13,23 @@ export const useCards = (courseId: string) => {
         loading,
         data: data?.getCards.data,
         refetch,
+    };
+};
+
+export const useLazyCards = () => {
+    const [get, { data, loading }] = useLazyQuery(GET_CARDS);
+    const getCards = (courseId: string) => {
+        get({
+            variables: {
+                courseId,
+            },
+        });
+    };
+
+    return {
+        loading,
+        data: data?.getCards.data,
+        getCards,
     };
 };
 
