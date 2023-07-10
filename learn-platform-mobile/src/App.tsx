@@ -1,13 +1,15 @@
-// import { useState } from 'react';
-// import { useQuery, useMutation } from '@apollo/client';
-// import { FIND, UPDATE } from './graphql/demo';
-import { ImageUploader, Space, Toast, Dialog } from 'antd-mobile';
-import useUploadOSS from './hooks/useUploadOSS';
-import './App.css';
+import { Outlet } from 'react-router-dom';
+import Bottom from './components/Bottom';
+import Header from './components/Header';
 
 const App = () => {
-  const uploadHandler = useUploadOSS();
-  return <ImageUploader upload={uploadHandler} />;
+  return (
+    <div>
+      <Header />
+      <Outlet />
+      <Bottom />
+    </div>
+  );
 };
 
 export default App;

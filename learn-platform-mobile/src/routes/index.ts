@@ -2,36 +2,13 @@ import Register from '../containers/Register';
 import Home from '../containers/Home';
 import Login from '../containers/Login';
 import PageNotFound from '../containers/PageNotFound';
+import { ROUTE_KEY } from './menu';
+import My from '@/containers/My';
 
-export const ROUTE_CONFIG = [
-  {
-    key: 'login',
-    path: '/login',
-    element: Login,
-    title: '登录',
-  },
-  {
-    key: 'register',
-    path: '/register',
-    element: Register,
-    title: '注册',
-  },
-  {
-    key: 'home',
-    path: '/',
-    element: Home,
-    title: '首页',
-  },
-  {
-    key: 'home',
-    path: '/',
-    element: Home,
-    title: '首页',
-  },
-  {
-    key: '404',
-    path: '*',
-    element: PageNotFound,
-    title: '404',
-  },
-];
+export const ROUTE_COMPONENT = {
+  [ROUTE_KEY.HOME]: Home,
+  [ROUTE_KEY.MY]: My,
+  [ROUTE_KEY.REGISTER]: Register,
+  [ROUTE_KEY.LOGIN]: Login,
+  [ROUTE_KEY.PAGENOTFOUND]: PageNotFound,
+};
