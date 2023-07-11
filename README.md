@@ -40,7 +40,7 @@ pnpm install
 
 > ^0.3.16 版本的 typeorm 会触发自动删除 id，会有一些 bug，暂时未知什么原因
 
-## learn-platform-server
+## learn-platform-server （服务端）
 启动本地后端服务：
 ```
 pnpm dev
@@ -52,7 +52,7 @@ pnpm dev
 ```
 pnpm temp
 ```
-## learn-platform-pc
+## learn-platform-pc （网页端）
 启动本地 pc 端：
 ```
 pnpm dev
@@ -67,7 +67,7 @@ pnpm dev
 ```
 打开 mobile 端页面：http://localhost:1398
 
-手机上本地调试H5：
+手机上本地调试H5：（H5端）
 
 - 先配置vite的server：
 ```
