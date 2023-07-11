@@ -40,7 +40,7 @@ pnpm install
 
 > ^0.3.16 版本的 typeorm 会触发自动删除 id，会有一些 bug，暂时未知什么原因
 
-## learn-platform-server
+## learn-platform-server （服务端）
 启动本地后端服务：
 ```
 pnpm dev
@@ -52,17 +52,61 @@ pnpm dev
 ```
 pnpm temp
 ```
-## learn-platform-pc
+## learn-platform-pc （网页端）
 启动本地 pc 端：
 ```
 pnpm dev
 ```
 打开 pc 端页面：http://localhost:1396
 
-## learn-platform-mobile
+## learn-platform-mobile（手机端）
 
 启动本地 mobile 端：
 ```
 pnpm dev
 ```
 打开 mobile 端页面：http://localhost:1398
+
+手机上本地调试H5：
+
+- 先配置vite的server：
+```
+  server: {
+    host: '0.0.0.0', // 打开通过IP地址访问的开关
+    port: 1398,
+    https: false,
+    open: true, // 自动打开浏览器
+    cors: true, // 允许跨域
+    hmr: true,
+  },
+```
+- 配置代理的后端服务的uri为自己的ip地址：
+```
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { AUTH_TOKEN } from './constants';
+
+const httpLink = createHttpLink({
+  // uri: 'http://localhost:1024/graphql',
+  uri: `${本地ip地址}:1024/graphql`, // 可手机上调试的本地ip后端地址
+});
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem(AUTH_TOKEN);
+  return {
+    headers: {
+      ...headers,
+      Authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+export const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache({
+    addTypename: false,
+  }),
+});
+
+```
+- 手机与电脑处于同一个局域网下
+- 安装一个谷歌二维码生成插件，开启二维码插件后把上面url的localhost部分换成本地ip地址
+- 通过手机扫一扫，就可以打开mobile端，注意地，打不开可能需要关闭电脑防火墙。
