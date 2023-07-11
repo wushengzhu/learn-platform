@@ -106,8 +106,8 @@ export class AuthResolver {
   async studentRegister(
     @Args('account') account: string,
     @Args('password') password: string,
-    @Args('avatar') avatar: string,
-    @Args('tel') tel?: string,
+    @Args('avatar', { nullable: true }) avatar?: string,
+    @Args('tel', { nullable: true }) tel?: string,
   ): Promise<Result> {
     const result = accountAndPwdValidate(account, password);
     if (result.code !== SUCCESS) {

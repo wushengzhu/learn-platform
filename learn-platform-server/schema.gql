@@ -224,6 +224,13 @@ type ProductResults {
   page: Page
 }
 
+type ProductTypesResults {
+  code: Int!
+  message: String
+  data: [ProductTypeType!]
+  page: Page
+}
+
 type UserType {
   id: String!
 
@@ -412,8 +419,10 @@ type Query {
   getCourses(page: PageInput!, name: String): CourseResults!
   getCardById(id: String!): CardResult!
   getCards(page: PageInput!, courseId: String!, name: String): CardResults!
+  getProductTypes: ProductTypesResults!
   getProductById(id: String!): ProductResult!
   getProducts(page: PageInput!, name: String): ProductResults!
+  getProductsForH5(page: PageInput!, type: String, name: String): ProductResults!
 }
 
 input PageInput {
@@ -447,7 +456,7 @@ type Mutation {
   studentLogin(account: String!, password: String!): Result!
 
   """学员注册"""
-  studentRegister(account: String!, password: String!, avatar: String!, tel: String!): Result!
+  studentRegister(account: String!, password: String!, avatar: String, tel: String): Result!
 
   """用户登录"""
   userLogin(account: String!, password: String!): Result!

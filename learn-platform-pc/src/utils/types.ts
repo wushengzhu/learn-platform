@@ -65,6 +65,11 @@ export interface IDict {
     isCanUse: boolean;
 }
 
+export interface IProductType {
+    key: string;
+    title: string;
+}
+
 export type TBaseDict = Partial<IDict>;
 
 export type TDictsQuery = {
@@ -181,6 +186,9 @@ export type TProductsQuery = {
 
 export type TProductQuery = {
     [key: string]: { __typename?: "Query"; data: IProduct };
+};
+export type TProductTypeQuery = {
+    [key: string]: { __typename?: "Query"; data: IProductType[] };
 };
 
 export type TBaseProduct = Partial<IProduct>;

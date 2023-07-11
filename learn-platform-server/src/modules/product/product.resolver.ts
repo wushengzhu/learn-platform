@@ -11,19 +11,37 @@ import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '@/common/guards/auth.guard';
 import { SUCCESS } from '@/common/constants/code';
-import { ProductResult, ProductResults } from './dto/result-product.output';
-import { PartialProductInput, ProductInput } from './dto/product.input';
+import {
+  ProductResult,
+  ProductResults,
+  ProductTypesResults,
+} from './dto/result-product.output';
+import { PartialProductInput } from './dto/product.input';
 import { ProductType } from './dto/product.type';
 import { ProductService } from './product.service';
 import { CurUserId } from '@/common/decorators/current-user.decorator';
 import { PageInput } from '@/common/dto/page.input';
 import { CurShopId } from '@/common/decorators/current-shop.decorator';
 import { ProductStatus } from '@/common/constants/enum';
+import { PRODUCT_TYPES } from '@/common/constants/product-types';
 
 @Resolver(() => ProductType)
 @UseGuards(GqlAuthGuard)
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
+
+  /**
+   * 获取商品分类数据
+   * @returns
+   */
+  @Query(() => ProductTypesResults)
+  async getProductTypes(): Promise<ProductTypesResults> {
+    return {
+      code: SUCCESS,
+      data: PRODUCT_TYPES,
+      message: '获取成功',
+    };
+  }
 
   @Query(() => ProductResult)
   async getProductById(@Args('id') id: string): Promise<ProductResult> {
@@ -48,7 +66,6 @@ export class ProductResolver {
     @CurShopId() shopId: string,
     @Args('id', { nullable: true }) id: string,
   ): Promise<Result> {
-    console.log('shopId', shopId);
     if (!id) {
       const res = await this.productService.create({
         ...params,
@@ -100,12 +117,18 @@ export class ProductResolver {
   async getProducts(
     @Args('page') page: PageInput,
     @CurUserId() userId: string,
+    @CurShopId() shopId: string,
     @Args('name', { nullable: true }) name?: string,
   ): Promise<ProductResults> {
     const { pageNum, pageSize } = page;
     const where: FindOptionsWhere<Product> = { createdBy: userId };
     if (name) {
       where.name = Like(`%${name}%`);
+    }
+    if (shopId) {
+      where.shop = {
+        id: shopId,
+      };
     }
     const [results, total] = await this.productService.findProducts({
       start: (pageNum - 1) * pageSize,
@@ -146,6 +169,37 @@ export class ProductResolver {
     return {
       code: COURSE_NOT_EXIST,
       message: '门店信息不存在',
+    };
+  }
+
+  @Query(() => ProductResults)
+  async getProductsForH5(
+    @Args('page') page: PageInput,
+    @Args('type', { nullable: true }) type?: string,
+    @Args('name', { nullable: true }) name?: string,
+  ): Promise<ProductResults> {
+    const { pageNum, pageSize } = page;
+    const where: FindOptionsWhere<Product> = {};
+    if (name) {
+      where.name = Like(`%${name}%`);
+    }
+    if (type) {
+      where.type = type;
+    }
+    const [results, total] = await this.productService.findProducts({
+      start: pageNum === 1 ? 0 : (pageNum - 1) * pageSize + 1,
+      length: pageSize,
+      where,
+    });
+    return {
+      code: SUCCESS,
+      data: results,
+      page: {
+        pageNum,
+        pageSize,
+        total,
+      },
+      message: '获取成功',
     };
   }
 }

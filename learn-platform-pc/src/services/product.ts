@@ -1,5 +1,10 @@
 import { message } from "antd";
-import { TBaseProduct, TProductQuery, TProductsQuery } from "@/utils/types";
+import {
+    TBaseProduct,
+    TProductQuery,
+    TProductTypeQuery,
+    TProductsQuery,
+} from "@/utils/types";
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import { DEFAULT_PAGE_SIZE } from "@/utils/constants";
 import {
@@ -7,7 +12,17 @@ import {
     GET_PRODUCT,
     GET_PRODUCTS,
     DEL_PRODUCT,
+    GET_PRODUCT_TYPES,
 } from "../graphql/product";
+
+export const useProductTypes = () => {
+    const { data, loading } = useQuery<TProductTypeQuery>(GET_PRODUCT_TYPES);
+
+    return {
+        data: data?.getProductTypes.data || [],
+        loading,
+    };
+};
 
 export const useProducts = (pageNum = 1, pageSize = DEFAULT_PAGE_SIZE) => {
     const { loading, data, refetch } = useQuery<TProductsQuery>(GET_PRODUCTS, {

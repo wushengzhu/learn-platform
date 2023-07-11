@@ -17,6 +17,7 @@ import { useEditProduct, useProductInfo } from "@/services/product";
 import DictSelect from "../DictSelect";
 import TextArea from "antd/es/input/TextArea";
 import ImageUpload from "../ImageUpload";
+import TypeSelect from "../TypeSelect";
 
 interface IDrawerParams {
     id: string;
@@ -111,7 +112,8 @@ const ProductEdit = ({ title, id, width, onClose }: IDrawerParams) => {
                                     wrapperCol={{ span: 16 }}
                                     rules={[{ required: true }]}
                                 >
-                                    <DictSelect dictCode="product_category" />
+                                    {/* <DictSelect dictCode="product_category" /> */}
+                                    <TypeSelect />
                                 </Form.Item>
                             </Col>
                             <Col sm={12}>
