@@ -35,14 +35,17 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.REGISTER]: {
     path: 'register',
     name: '注册',
+    isMenu: false,
   },
   [ROUTE_KEY.LOGIN]: {
     path: 'login',
     name: '登录',
+    isMenu: false,
   },
   [ROUTE_KEY.PAGENOTFOUND]: {
     path: '404',
-    name: '',
+    name: '404',
+    isMenu: false,
   },
 };
 

@@ -1,8 +1,22 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { AUTH_TOKEN } from './constants';
 
+const httpLink = createHttpLink({
+  // uri: 'http://localhost:1024/graphql',
+  uri: 'http://192.168.1.174:1024/graphql', // 可手机上调试的本地ip后端地址
+});
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem(AUTH_TOKEN);
+  return {
+    headers: {
+      ...headers,
+      Authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
 export const client = new ApolloClient({
-  // uri: `http://${window.location.hostname}:3000/graphql`,
-  uri: 'http://localhost:1024/graphql',
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     addTypename: false,
   }),

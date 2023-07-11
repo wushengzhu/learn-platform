@@ -4,8 +4,8 @@ export const STUDENT_REGISTER = gql`
   mutation studentRegister(
     $account: String!
     $password: String!
-    $tel: String!
-    $avatar: String!
+    $tel: String
+    $avatar: String
   ) {
     studentRegister(
       account: $account

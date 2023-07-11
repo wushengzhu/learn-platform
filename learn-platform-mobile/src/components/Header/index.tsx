@@ -1,6 +1,7 @@
 import { LeftOutline } from 'antd-mobile-icons';
 import style from './index.module.less';
 import { useGoTo, useMatchedRoute } from '@/hooks';
+import classNames from 'classnames';
 
 const Header = () => {
   const { go, back } = useGoTo();
@@ -15,7 +16,12 @@ const Header = () => {
   }
 
   return (
-    <div className={style.container}>
+    <div
+      className={classNames({
+        [style.containerLarge]: route?.isMenu,
+        [style.containerSmall]: !route?.isMenu,
+      })}
+    >
       {!route?.isMenu && (
         <LeftOutline className={style.back} onClick={onClickHandler} />
       )}
