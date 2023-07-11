@@ -16,9 +16,11 @@ export default defineConfig({
     ],
   },
   server: {
-    host: '0.0.0.0',
+    host: '0.0.0.0', // 打开通过IP地址访问的开关
     port: 1398,
     https: false,
+    open: true, // 自动打开浏览器
+    cors: true, // 允许跨域
     hmr: true,
   },
 });
