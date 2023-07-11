@@ -59,7 +59,7 @@ pnpm dev
 ```
 打开 pc 端页面：http://localhost:1396
 
-## learn-platform-mobile
+## learn-platform-mobile（手机端）
 
 启动本地 mobile 端：
 ```
@@ -67,7 +67,7 @@ pnpm dev
 ```
 打开 mobile 端页面：http://localhost:1398
 
-手机上本地调试H5：（H5端）
+手机上本地调试H5：
 
 - 先配置vite的server：
 ```
