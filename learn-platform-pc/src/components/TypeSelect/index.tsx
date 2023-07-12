@@ -30,4 +30,9 @@ const TypeSelect = ({ onChange, value }: IProps) => {
     );
 };
 
+TypeSelect.defaultProps = {
+    value: undefined,
+    onChange: () => {},
+};
+
 export default TypeSelect;

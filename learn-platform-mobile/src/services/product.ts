@@ -26,8 +26,6 @@ export const useProducts = (name = '', type = '') => {
   const [data, setData] = useState<IProduct[]>([]);
   const [get] = useLazyQuery<TProductsQuery>(GET_PRODUCTS);
 
-  console.log('pn.current', pn.current);
-
   const init = async (pageNum = 1) => {
     const toast = Toast.show({
       icon: 'loading',

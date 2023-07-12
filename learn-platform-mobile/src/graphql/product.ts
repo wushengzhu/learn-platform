@@ -12,7 +12,7 @@ export const GET_PRODUCT_TYPES = gql`
 `;
 
 export const GET_PRODUCTS = gql`
-  query getProductsForH5($page: PageInput!, $name: String, $type: string) {
+  query getProductsForH5($page: PageInput!, $name: String, $type: String) {
     getProductsForH5(page: $page, name: $name, type: $type) {
       code
       message
