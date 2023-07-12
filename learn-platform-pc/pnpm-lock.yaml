@@ -44,6 +44,9 @@ dependencies:
   react:
     specifier: ^18.2.0
     version: registry.npmmirror.com/react@18.2.0
+  react-bmapgl:
+    specifier: ^0.2.20
+    version: registry.npmmirror.com/react-bmapgl@0.2.20(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: registry.npmmirror.com/react-dom@18.2.0(react@18.2.0)
@@ -2821,6 +2824,12 @@ packages:
       semver: registry.npmmirror.com/semver@5.7.1
     optional: true
 
+  registry.npmmirror.com/mapvgl@1.0.0-beta.183:
+    resolution: {integrity: sha512-efRK8fnOAC6kG0vh+NZJD3fIJJ0VBYhu/nk3S5KRZmsKGmx6reEuRfhQHzwuko1qfOuwLgCSA8XA0dsdhR/zVA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mapvgl/-/mapvgl-1.0.0-beta.183.tgz}
+    name: mapvgl
+    version: 1.0.0-beta.183
+    dev: false
+
   registry.npmmirror.com/md5@2.3.0:
     resolution: {integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/md5/-/md5-2.3.0.tgz}
     name: md5
@@ -3828,6 +3837,21 @@ packages:
       rc-util: registry.npmmirror.com/rc-util@5.30.0(react-dom@18.2.0)(react@18.2.0)
       react: registry.npmmirror.com/react@18.2.0
       react-dom: registry.npmmirror.com/react-dom@18.2.0(react@18.2.0)
+    dev: false
+
+  registry.npmmirror.com/react-bmapgl@0.2.20(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-mmri3ExN6tED4feJd4fdwv8S2qop9irnmTGdgPUrYogDgOC+c+Hl8Qx3xKyIt1ZG8I8eVH9tXTze7WP+pmh5Gg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/react-bmapgl/-/react-bmapgl-0.2.20.tgz}
+    id: registry.npmmirror.com/react-bmapgl/0.2.20
+    name: react-bmapgl
+    version: 0.2.20
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      mapvgl: registry.npmmirror.com/mapvgl@1.0.0-beta.183
+      react: registry.npmmirror.com/react@18.2.0
+      react-dom: registry.npmmirror.com/react-dom@18.2.0(react@18.2.0)
+      shallowequal: registry.npmmirror.com/shallowequal@1.1.0
     dev: false
 
   registry.npmmirror.com/react-dom@18.2.0(react@18.2.0):

@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+            type="text/javascript"
+            src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=HCc3yEesa1Uj7w8YM2CawZRYq1uC9vBv"
+        ></script>
+        <title>学习平台</title>
+        <style>
+            /* 浏览器滚动条样式 */
+            /* width */
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 4px;
+            }
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>学习平台</title>
-  <style>
-    /* 浏览器滚动条样式 */
-    /* width */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 4px;
-    }
+            /* Track */
+            ::-webkit-scrollbar-track {
+                background: rgb(255, 255, 255);
+                border-radius: 8px;
+            }
 
-    /* Track */
-    ::-webkit-scrollbar-track {
-      background: rgb(255, 255, 255);
-      border-radius: 8px;
-    }
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: rgb(201, 201, 202);
+                border-radius: 8px;
+            }
 
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-      background: rgb(201, 201, 202);
-      border-radius: 8px;
-    }
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: rgb(162, 162, 163);
+            }
+        </style>
+    </head>
 
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgb(162, 162, 163);
-    }
-  </style>
-</head>
-
-<body>
-  <div id="root"></div>
-  <script src="https://whois.pconline.com.cn/ipJson.jsp?callback=getIp"></script>
-  <script>
-    function getIp (ipInfo) {
-      localStorage.setItem('ipInfo', JSON.stringify(ipInfo));
-    }
-  </script>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+    <body>
+        <div id="root"></div>
+        <script src="https://whois.pconline.com.cn/ipJson.jsp?callback=getIp"></script>
+        <script>
+            function getIp(ipInfo) {
+                localStorage.setItem("ipInfo", JSON.stringify(ipInfo));
+            }
+        </script>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
 </html>

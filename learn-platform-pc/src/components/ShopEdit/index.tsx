@@ -1,27 +1,23 @@
 import { useEditInfo, useShop } from "@/services/shop";
 import {
     Button,
-    Checkbox,
     Col,
     DatePicker,
     Divider,
     Drawer,
     Form,
-    FormRule,
     Input,
-    InputNumber,
-    Radio,
     Row,
     Select,
     Spin,
-    Switch,
     UploadFile,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import ImageUpload from "../ImageUpload";
 import { IShop } from "@/utils/types";
 import dayjs from "dayjs";
+import BaiduMap from "../BaiduMap";
 
 interface IProp {
     id: string;
@@ -31,6 +27,8 @@ interface IProp {
 const ShopEdit = ({ id, onClose }: IProp) => {
     const [form] = Form.useForm();
     const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+    const [lng, setLng] = useState(116.402544);
+    const [lat, setLat] = useState(39.928216);
     const { data, loading: queryLoading } = useShop(id);
     const [edit, editLoading] = useEditInfo();
     const initValue = useMemo(
@@ -128,6 +126,17 @@ const ShopEdit = ({ id, onClose }: IProp) => {
                 message: "请填写",
             },
         ],
+    };
+
+    const onChangeMap = (map: any) => {
+        console.log(map);
+        const { lng, lat } = map.latlng || { lng: 116.402544, lat: 39.928216 };
+        form.setFieldsValue({
+            longitude: lng,
+            latitude: lat,
+        });
+        setLng(lng);
+        setLat(lat);
     };
 
     if (queryLoading) {
@@ -263,6 +272,9 @@ const ShopEdit = ({ id, onClose }: IProp) => {
                             </Form.Item>
                         </Col>
                     </Row>
+                    <Form.Item label="地图">
+                        <BaiduMap onChange={onChangeMap} lng={lng} lat={lat} />
+                    </Form.Item>
                     <Row gutter={20}>
                         <Col sm={10}>
                             <Form.Item
