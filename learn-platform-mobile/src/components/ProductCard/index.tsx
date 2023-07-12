@@ -9,9 +9,6 @@ interface IProps {
 
 const ProductCard = ({ data }: IProps) => {
   const [state, setState] = useState();
-  useEffect(() => {
-    console.log(state, setState);
-  }, []);
 
   return (
     <div className={style.container}>

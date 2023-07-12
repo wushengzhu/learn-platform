@@ -36,7 +36,7 @@ export const useProducts = (name = '', type = '') => {
     //   longitude,
     // } = await getPosition();
     const res = await get({
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'network-only', // 不用缓存，每次都请求下
       variables: {
         name,
         type: type === DEFAULT_TYPE ? '' : type,
