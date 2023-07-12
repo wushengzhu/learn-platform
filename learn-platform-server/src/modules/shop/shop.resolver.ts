@@ -49,7 +49,7 @@ export class ShopResolver {
     @Args('id', { nullable: true }) id?: string,
   ): Promise<ShopResult> {
     if (id) {
-      const shop = await this.shopService.findById(userId);
+      const shop = await this.shopService.findById(id);
       if (!shop) {
         return {
           code: SHOP_NOT_EXIST,

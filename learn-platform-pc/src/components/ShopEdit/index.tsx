@@ -13,7 +13,7 @@ import {
     UploadFile,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ImageUpload from "../ImageUpload";
 import { IShop } from "@/utils/types";
 import dayjs from "dayjs";
@@ -27,8 +27,8 @@ interface IProp {
 const ShopEdit = ({ id, onClose }: IProp) => {
     const [form] = Form.useForm();
     const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-    const [lng, setLng] = useState(116.402544);
-    const [lat, setLat] = useState(39.928216);
+    const [lng, setLng] = useState(113.37069466999039);
+    const [lat, setLat] = useState(23.131782278003545);
     const { data, loading: queryLoading } = useShop(id);
     const [edit, editLoading] = useEditInfo();
     const initValue = useMemo(
@@ -51,6 +51,12 @@ const ShopEdit = ({ id, onClose }: IProp) => {
                 : {},
         [data]
     );
+
+    useEffect(() => {
+        if (!id) {
+            form.resetFields();
+        }
+    }, [id]);
 
     const formItemLayout = {
         labelCol: { span: 10 },
@@ -129,11 +135,13 @@ const ShopEdit = ({ id, onClose }: IProp) => {
     };
 
     const onChangeMap = (map: any) => {
-        console.log(map);
-        const { lng, lat } = map.latlng || { lng: 116.402544, lat: 39.928216 };
+        const { lng, lat } = map.latlng || {
+            lng: 113.37069466999039,
+            lat: 23.131782278003545,
+        };
         form.setFieldsValue({
-            longitude: lng,
-            latitude: lat,
+            longitude: lng + "",
+            latitude: lat + "",
         });
         setLng(lng);
         setLat(lat);
@@ -148,7 +156,10 @@ const ShopEdit = ({ id, onClose }: IProp) => {
             width={700}
             title={id ? "编辑门店" : "新增门店"}
             placement="right"
-            onClose={() => setIsDrawerOpen(false)}
+            onClose={() => {
+                setIsDrawerOpen(false);
+                form?.resetFields();
+            }}
             open={isDrawerOpen}
             afterOpenChange={(o) => !o && onClose()}
             footer={

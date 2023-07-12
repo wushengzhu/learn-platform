@@ -20,6 +20,7 @@ const ProductCard = ({ data }: IProps) => {
           <span className={style.shopName}>{data.shop.name}</span>
           <span className={style.distance}>
             <EnvironmentOutline />
+            {data.distance}
           </span>
         </div>
         <div className={style.price}>

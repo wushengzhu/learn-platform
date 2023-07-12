@@ -422,7 +422,7 @@ type Query {
   getProductTypes: ProductTypesResults!
   getProductById(id: String!): ProductResult!
   getProducts(page: PageInput!, name: String): ProductResults!
-  getProductsForH5(page: PageInput!, type: String, name: String): ProductResults!
+  getProductsForH5(page: PageInput!, latitude: Float!, longitude: Float!, type: String, name: String): ProductResults!
 }
 
 input PageInput {

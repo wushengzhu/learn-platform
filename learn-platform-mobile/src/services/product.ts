@@ -14,6 +14,24 @@ export const useProductTypes = () => {
   };
 };
 
+// 获取当前定位
+export const getPosition = () =>
+  new Promise<{ latitude: number; longitude: number }>((r) => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        r({ latitude, longitude });
+      },
+      () => {
+        r({ latitude: 0, longitude: 0 });
+      },
+      {
+        timeout: 3000,
+        maximumAge: 1000 * 60 * 30,
+      },
+    );
+  });
+
 /**
  * 获取商品列表
  * @param pageNum
@@ -31,17 +49,14 @@ export const useProducts = (name = '', type = '') => {
       icon: 'loading',
       content: '加载中…',
     });
-    // const {
-    //   latitude,
-    //   longitude,
-    // } = await getPosition();
+    const { latitude, longitude } = await getPosition();
     const res = await get({
       fetchPolicy: 'network-only', // 不用缓存，每次都请求下
       variables: {
         name,
         type: type === DEFAULT_TYPE ? '' : type,
-        latitude: 120,
-        longitude: 38,
+        latitude,
+        longitude,
         page: {
           pageNum,
           pageSize: DEFAULT_PAGE_SIZE,
