@@ -5,6 +5,7 @@ import PageNotFound from '../containers/PageNotFound';
 import { ROUTE_KEY } from './menu';
 import My from '@/containers/My';
 import ShopInfo from '@/containers/ShopInfo';
+import ProductInfo from '@/containers/ProductInfo';
 
 export const ROUTE_COMPONENT = {
   [ROUTE_KEY.HOME]: Home,
@@ -12,5 +13,7 @@ export const ROUTE_COMPONENT = {
   [ROUTE_KEY.REGISTER]: Register,
   [ROUTE_KEY.LOGIN]: Login,
   [ROUTE_KEY.SHOPINFO]: ShopInfo,
+  [ROUTE_KEY.PRODUCTINFO]: ProductInfo,
+  [ROUTE_KEY.BUY]: '',
   [ROUTE_KEY.PAGENOTFOUND]: PageNotFound,
 };

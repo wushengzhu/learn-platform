@@ -32,12 +32,15 @@ export const GET_SHOP = gql`
         establishmentDate
         representative
         shopFrontImg {
+          id
           url
         }
         shopRoomImg {
+          id
           url
         }
         shopOtherImg {
+          id
           url
         }
         logo

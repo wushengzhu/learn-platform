@@ -70,3 +70,51 @@ export const GET_PRODUCTS = gql`
     }
   }
 `;
+
+export const GET_PRODUCT = gql`
+  query getProductById($id: String!) {
+    getProductById(id: $id) {
+      code
+      message
+      data {
+        id
+        limitBuyNumber
+        name
+        type
+        coverUrl
+        bannerUrl
+        desc
+        status
+        originalPrice
+        stock
+        curStock
+        buyNumber
+        preferentialPrice
+        shop {
+          logo
+          name
+          tel
+        }
+        cards {
+          id
+          name
+          type
+          time
+          validityDay
+          course {
+            id
+            name
+            desc
+            group
+            baseAbility
+            limitNumber
+            duration
+            reserveInfo
+            refundInfo
+            otherInfo
+          }
+        }
+      }
+    }
+  }
+`;

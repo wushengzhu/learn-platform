@@ -20,7 +20,7 @@ const BaseInfo = ({ data }: IProps) => {
       </div>
       <div className={style.tags}>
         {data?.tags?.split(',').map((item: string) => (
-          <span className={style.tagSpan}>
+          <span className={style.tagSpan} key={item}>
             <CheckShieldOutline />
             <span className={style.tagName}>{item}</span>
           </span>

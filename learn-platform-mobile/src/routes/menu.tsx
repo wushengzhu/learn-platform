@@ -1,4 +1,4 @@
-import { AppOutline, UserOutline } from 'antd-mobile-icons';
+import { UserOutline } from 'antd-mobile-icons';
 import * as React from 'react';
 import courseSvg from '../assets/course.svg';
 
@@ -18,6 +18,8 @@ export const ROUTE_KEY = {
   LOGIN: 'login',
   PAGENOTFOUND: 'pagenotfound',
   SHOPINFO: 'shop',
+  PRODUCTINFO: 'product',
+  BUY: 'buy',
 };
 
 export const ROUTE_CONFIG: Record<string, IRoute> = {
@@ -41,6 +43,16 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.SHOPINFO]: {
     path: 'shop/:id',
     name: '门店详情',
+    isMenu: false,
+  },
+  [ROUTE_KEY.PRODUCTINFO]: {
+    path: 'product/:id',
+    name: '商品详情',
+    isMenu: false,
+  },
+  [ROUTE_KEY.BUY]: {
+    path: 'buy/:id',
+    name: '购买信息',
     isMenu: false,
   },
   [ROUTE_KEY.LOGIN]: {

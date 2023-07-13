@@ -5,6 +5,8 @@ import style from './index.module.less';
 // import { GridItem } from 'antd-mobile/es/components/grid/grid';
 // import PullToRefresh from '../PullToRefresh';
 import InfiniteScroll from '../InfiniteScroll';
+import { ROUTE_KEY } from '@/routes/menu';
+import { useGoTo } from '@/hooks';
 
 interface IProps {
   name: string; // 搜索的关键字
@@ -12,7 +14,11 @@ interface IProps {
 }
 
 const ProductList = ({ name, type }: IProps) => {
+  const { go } = useGoTo();
   const { data, onRefresh, hasMore, loadMore } = useProducts(name, type);
+  const goProductInfo = (id: string) => {
+    go(ROUTE_KEY.PRODUCTINFO, { id });
+  };
 
   if (data && data.length === 0) {
     return <ErrorBlock status="empty" />;
@@ -24,7 +30,7 @@ const ProductList = ({ name, type }: IProps) => {
       <PullToRefresh onRefresh={onRefresh} completeDelay={500}>
         <Grid columns={2} gap={10}>
           {data?.map((item) => (
-            <Grid.Item key={item.id}>
+            <Grid.Item key={item.id} onClick={() => goProductInfo(item.id)}>
               <ProductCard data={item} />
             </Grid.Item>
           ))}
