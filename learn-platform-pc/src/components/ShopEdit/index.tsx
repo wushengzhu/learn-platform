@@ -18,6 +18,7 @@ import ImageUpload from "../ImageUpload";
 import { IShop } from "@/utils/types";
 import dayjs from "dayjs";
 import BaiduMap from "../BaiduMap";
+import DictSelect from "../DictSelect";
 
 interface IProp {
     id: string;
@@ -235,10 +236,10 @@ const ShopEdit = ({ id, onClose }: IProp) => {
                         <TextArea rows={4} />
                     </Form.Item>
                     <Form.Item label="标签" name="tags">
-                        <Select
+                        <DictSelect
+                            dictCode="shop_tag"
                             mode="tags"
-                            style={{ width: "100%" }}
-                            placeholder="请输入标签"
+                            // value={data?.tags}
                         />
                     </Form.Item>
                     <Row gutter={20}>

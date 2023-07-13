@@ -410,7 +410,7 @@ type Query {
   """使用id查询用户"""
   getStudentInfoByGuard: StudentType!
   getStudents(page: PageInput!): StudentResults!
-  getShopInfoById(id: String!): ShopResult!
+  getShopById(id: String!): ShopResult!
   getShops(page: PageInput!, name: String): ShopResults!
   getDictInfoById(id: String!): DictResult!
   getDictsByParentId(parentId: String!): DictResults!
@@ -423,6 +423,7 @@ type Query {
   getProductById(id: String!): ProductResult!
   getProducts(page: PageInput!, name: String): ProductResults!
   getProductsForH5(page: PageInput!, latitude: Float!, longitude: Float!, type: String, name: String): ProductResults!
+  getProductsByShopIdForH5(shopId: String!): ProductResults!
 }
 
 input PageInput {
@@ -443,7 +444,7 @@ type Mutation {
   """删除用户"""
   del(id: String!): Boolean!
   commitStudent(params: StudentInput!, id: String): StudentResult!
-  commitShop(params: ShopInput!, id: String): ShopResult!
+  saveShop(params: ShopInput!, id: String): ShopResult!
   deleteShop(id: String!): Result!
 
   """获取短信服务验证码"""

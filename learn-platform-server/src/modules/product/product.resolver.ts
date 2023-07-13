@@ -231,4 +231,22 @@ export class ProductResolver {
       message: '获取成功',
     };
   }
+
+  @Query(() => ProductResults)
+  async getProductsByShopIdForH5(@Args('shopId') shopId: string) {
+    const [results] = await this.productService.findProducts({
+      start: 0,
+      length: 5,
+      where: {
+        shop: {
+          id: shopId,
+        },
+      },
+    });
+    return {
+      code: SUCCESS,
+      data: results,
+      message: '获取成功',
+    };
+  }
 }

@@ -17,6 +17,7 @@ export const ROUTE_KEY = {
   REGISTER: 'register',
   LOGIN: 'login',
   PAGENOTFOUND: 'pagenotfound',
+  SHOPINFO: 'shop',
 };
 
 export const ROUTE_CONFIG: Record<string, IRoute> = {
@@ -35,6 +36,11 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.REGISTER]: {
     path: 'register',
     name: '注册',
+    isMenu: false,
+  },
+  [ROUTE_KEY.SHOPINFO]: {
+    path: 'shop/:id',
+    name: '门店详情',
     isMenu: false,
   },
   [ROUTE_KEY.LOGIN]: {

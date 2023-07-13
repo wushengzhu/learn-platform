@@ -22,21 +22,21 @@ const TypeSelect = ({ onChange }: IProps) => {
     return <SpinLoading />;
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    window.onscroll = async () => {
-      const { scrollTop } = document.body;
-      if (scrollTop >= 100) {
-        setFixTab(true);
-      } else {
-        setFixTab(false);
-      }
-    };
+  // // eslint-disable-next-line react-hooks/rules-of-hooks
+  // useEffect(() => {
+  //   window.onscroll = async () => {
+  //     const { scrollTop } = document.body;
+  //     if (scrollTop < 100) {
+  //       setFixTab(true);
+  //     } else {
+  //       setFixTab(false);
+  //     }
+  //   };
 
-    return () => {
-      window.onscroll = null;
-    };
-  }, []);
+  //   return () => {
+  //     window.onscroll = null;
+  //   };
+  // }, []);
 
   return (
     <Tabs
@@ -45,7 +45,7 @@ const TypeSelect = ({ onChange }: IProps) => {
         [style.fixTabs]: fixTab,
       })}
       onChange={onChange}
-      defaultActiveKey={data[0]?.key}
+      defaultActiveKey={DEFAULT_TYPE}
     >
       <Tabs.Tab title="全部" key={DEFAULT_TYPE} />
       {data.map((item) => (

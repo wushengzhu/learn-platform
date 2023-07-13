@@ -18,7 +18,7 @@ import useUploadOSS from '@/hooks/useUploadOSS';
 import * as md5 from 'md5';
 import { useMutation } from '@apollo/client';
 import { STUDENT_REGISTER, USER_REGISTER } from '@/graphql/user';
-import toast from '@/utils/toast';
+import { fail, success } from '@/utils/toast';
 
 interface IValue {
   account: string;
@@ -82,9 +82,9 @@ export default () => {
         variables: formValues,
       });
       if (res.data.studentRegister.code === 200) {
-        toast.success('注册成功！');
+        success('注册成功！');
       } else {
-        toast.fail('注册失败！');
+        fail('注册失败！');
       }
     }
   };

@@ -43,7 +43,7 @@ export const useShop = (id: string) => {
     });
     return {
         loading,
-        data: data?.getShopInfoById?.data,
+        data: data?.getShopById?.data,
     };
 };
 
@@ -58,7 +58,7 @@ export const useOnShop = () => {
             },
         });
 
-        return res.data?.getShopInfoById?.data;
+        return res.data?.getShopById?.data;
     };
 
     return { getShop, loading };
@@ -74,10 +74,10 @@ export const useEditInfo = (): [handleEdit: Function, loading: boolean] => {
                 params,
             },
         });
-        if (res.data.commitShop.code === 200) {
-            message.success(res.data.commitShop.message);
+        if (res.data.saveShop.code === 200) {
+            message.success(res.data.saveShop.message);
         } else {
-            message.error(res.data.commitShop.message);
+            message.error(res.data.saveShop.message);
         }
     };
 

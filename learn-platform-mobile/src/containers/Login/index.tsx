@@ -4,10 +4,10 @@ import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons';
 import styles from './index.module.less';
 import { Link, Route, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import toast from '@/utils/toast';
 import { STUDENT_LOGIN } from '@/graphql/user';
 import { AUTH_TOKEN } from '@/utils/constants';
 import * as md5 from 'md5';
+import { fail, success } from '@/utils/toast';
 
 const Login = () => {
   const [form] = Form.useForm();
@@ -25,10 +25,10 @@ const Login = () => {
       });
       if (res.data.studentLogin.code === 200) {
         localStorage.setItem(AUTH_TOKEN, res.data.studentLogin.data);
-        toast.success('登录成功！');
+        success('登录成功！');
         nav('/');
       } else {
-        toast.fail('登录失败！');
+        fail('登录失败！');
       }
     }
   };

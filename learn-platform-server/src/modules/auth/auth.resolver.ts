@@ -14,7 +14,6 @@ import {
   SUCCESS,
 } from '@/common/constants/code';
 import { JwtService } from '@nestjs/jwt';
-import * as md5 from 'md5';
 import { accountAndPwdValidate } from '@/shared/utils';
 
 @Resolver()

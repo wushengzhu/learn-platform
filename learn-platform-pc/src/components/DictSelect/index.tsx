@@ -6,10 +6,11 @@ import { useEffect } from "react";
 interface IProps {
     dictCode: string;
     value?: string;
+    mode?: "multiple" | "tags";
     onChange?: (val: string) => void;
 }
 
-const DictSelect = ({ value, dictCode, onChange }: IProps) => {
+const DictSelect = ({ value, dictCode, onChange, mode }: IProps) => {
     const { data, refetch } = useDicts();
 
     useEffect(() => {
@@ -21,11 +22,19 @@ const DictSelect = ({ value, dictCode, onChange }: IProps) => {
     };
 
     return (
-        <Select placeholder="请选择" value={value} onChange={onChangeHandler}>
+        <Select
+            placeholder="请选择"
+            value={value}
+            onChange={onChangeHandler}
+            mode={mode}
+        >
             {data?.map(
                 (item: IDict) =>
                     item.parentId !== "0" && (
-                        <Select.Option key={item.id} value={item.id}>
+                        <Select.Option
+                            value={item.dictName}
+                            key={item.dictName}
+                        >
                             {item.dictName}
                         </Select.Option>
                     )

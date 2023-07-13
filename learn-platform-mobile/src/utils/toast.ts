@@ -13,20 +13,18 @@ const msg = (type: string, info: string) => {
   });
 };
 
-const success = (info: string) => {
+export const success = (info: string) => {
   msg(InfoType.success, info);
 };
 
-const fail = (info: string) => {
+export const fail = (info: string) => {
   msg(InfoType.fail, info);
 };
 
-const load = (info: string) => {
+export const load = (info: string) => {
   msg(InfoType.load, info);
 };
 
-const cuscom = (info: string) => {
+export const cuscom = (info: string) => {
   msg(InfoType.cuscom, info);
 };
-const toast = { success, fail, load, cuscom };
-export default toast;

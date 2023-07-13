@@ -1,4 +1,3 @@
-import { CommonType } from '@/common/dto/common.type';
 import { Field, ObjectType } from '@nestjs/graphql';
 
 /**

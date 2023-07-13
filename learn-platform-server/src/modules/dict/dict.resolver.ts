@@ -64,10 +64,10 @@ export class DictResolver {
   ): Promise<DictResult> {
     if (params?.dictName) {
       const dict = await this.dictService.findByName(params?.dictName);
-      if (dict) {
+      if (dict && !id) {
         return {
           code: DICT_REPEAT,
-          message: '字典已存在',
+          message: '字典名称已存在',
         };
       }
     }

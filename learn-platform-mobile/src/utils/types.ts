@@ -117,8 +117,8 @@ export type TProductTypeQuery = TBaseQuery<IProductType[]>;
 export type TProductsQuery = TBaseQuery<IProduct[]>;
 export type TProductQuery = TBaseQuery<IProduct>;
 
-export type TOrgQuery = TBaseQuery<IShop>;
-export type TOrgsQuery = TBaseQuery<IShop[]>;
+export type TShopQuery = TBaseQuery<IShop>;
+export type TShopsQuery = TBaseQuery<IShop[]>;
 
 export type TCourse = ICourse & { cardName: string };
 

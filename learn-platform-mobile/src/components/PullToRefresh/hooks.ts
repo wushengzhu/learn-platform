@@ -25,12 +25,14 @@ export const usePullToRefresh = (onRefresh: () => void) => {
   const y = useRef(0);
   useEffect(() => {
     if (!containerRef.current) return () => {};
+    // 触发开始
     containerRef.current.ontouchstart = (e) => {
       e.preventDefault();
       if (document.documentElement.scrollTop === 0) {
         y.current = e.touches[0].pageY;
       }
     };
+    // 移动触发
     containerRef.current.ontouchmove = (e) => {
       e.preventDefault();
       if (document.documentElement.scrollTop === 0) {

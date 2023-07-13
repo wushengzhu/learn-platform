@@ -51,17 +51,13 @@ export const STUDENT_LOGIN = gql`
 `;
 
 export const GET_STUDENT_INFO = gql`
-  query getStudentInfo {
-    getStudentInfo {
-      code
-      message
-      data {
-        name
-        id
-        avatar
-        tel
-        openid
-      }
+  query getStudentInfoByGuard {
+    getStudentInfoByGuard {
+      name
+      id
+      avatar
+      tel
+      openid
     }
   }
 `;

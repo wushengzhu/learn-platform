@@ -11,6 +11,24 @@ export const GET_PRODUCT_TYPES = gql`
   }
 `;
 
+export const GET_PRODUCTS_BY_SHOP_ID = gql`
+  query getProductsByShopIdForH5($orgId: String!) {
+    getProductsByShopIdForH5(orgId: $orgId) {
+      code
+      message
+      data {
+        id
+        name
+        coverUrl
+        desc
+        originalPrice
+        preferentialPrice
+        buyNumber
+      }
+    }
+  }
+`;
+
 export const GET_PRODUCTS = gql`
   query getProductsForH5(
     $page: PageInput!
