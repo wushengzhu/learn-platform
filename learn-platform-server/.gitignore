@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# secret constant
+.env
+
 # Logs
 logs
 *.log

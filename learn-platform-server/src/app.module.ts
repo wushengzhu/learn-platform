@@ -18,11 +18,11 @@ import { CardModule } from './modules/card/card.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '123456',
-      database: 'learn-platform',
+      host: process.env.MYSQL_HOST,
+      port: parseInt(process.env.MYSQL_PORT),
+      username: process.env.MYSQL_USERNAME,
+      password: process.env.MYSQL_PWD,
+      database: process.env.MYSQL_DB,
       entities: [`${__dirname}/../modules/**/*.entity{.ts,.js}`],
       logging: true,
       synchronize: true,

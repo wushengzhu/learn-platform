@@ -5,7 +5,6 @@ import { UserService } from '../user/user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/models/user.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { JWT_SECRET } from '@/common/constants/aliyun';
 import { JwtStrategy } from './jwt.strategy';
 import { StudentService } from '../student/student.service';
 import { Student } from '../student/models/student.entity';
@@ -13,7 +12,7 @@ import { Student } from '../student/models/student.entity';
 @Module({
   imports: [
     JwtModule.register({
-      secret: JWT_SECRET,
+      secret: process.env.JWT_SECRET,
       signOptions: {
         expiresIn: 60 * 60 * 24 * 7 + 's',
       },

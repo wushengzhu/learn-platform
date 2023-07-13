@@ -50,6 +50,9 @@ dependencies:
   dayjs:
     specifier: ^1.11.7
     version: registry.npmmirror.com/dayjs@1.11.7
+  dotenv:
+    specifier: ^16.3.1
+    version: registry.npmmirror.com/dotenv@16.3.1
   graphql:
     specifier: ^16.6.0
     version: registry.npmmirror.com/graphql@16.6.0
@@ -4291,10 +4294,10 @@ packages:
       tslib: registry.npmmirror.com/tslib@2.5.0
     dev: true
 
-  registry.npmmirror.com/dotenv@16.0.3:
-    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/dotenv/-/dotenv-16.0.3.tgz}
+  registry.npmmirror.com/dotenv@16.3.1:
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/dotenv/-/dotenv-16.3.1.tgz}
     name: dotenv
-    version: 16.0.3
+    version: 16.3.1
     engines: {node: '>=12'}
     dev: false
 
@@ -9043,7 +9046,7 @@ packages:
       cli-highlight: registry.npmmirror.com/cli-highlight@2.1.11
       date-fns: registry.npmmirror.com/date-fns@2.30.0
       debug: registry.npmmirror.com/debug@4.3.4
-      dotenv: registry.npmmirror.com/dotenv@16.0.3
+      dotenv: registry.npmmirror.com/dotenv@16.3.1
       glob: registry.npmmirror.com/glob@7.2.3
       js-yaml: registry.npmmirror.com/js-yaml@4.1.0
       mkdirp: registry.npmmirror.com/mkdirp@1.0.4
