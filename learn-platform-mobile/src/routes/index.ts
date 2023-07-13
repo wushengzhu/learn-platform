@@ -6,6 +6,7 @@ import { ROUTE_KEY } from './menu';
 import My from '@/containers/My';
 import ShopInfo from '@/containers/ShopInfo';
 import ProductInfo from '@/containers/ProductInfo';
+import Buy from '@/containers/Buy';
 
 export const ROUTE_COMPONENT = {
   [ROUTE_KEY.HOME]: Home,
@@ -14,6 +15,6 @@ export const ROUTE_COMPONENT = {
   [ROUTE_KEY.LOGIN]: Login,
   [ROUTE_KEY.SHOPINFO]: ShopInfo,
   [ROUTE_KEY.PRODUCTINFO]: ProductInfo,
-  [ROUTE_KEY.BUY]: '',
+  [ROUTE_KEY.BUY]: Buy,
   [ROUTE_KEY.PAGENOTFOUND]: PageNotFound,
 };
