@@ -55,4 +55,10 @@ export class CourseType extends CommonType {
     nullable: true,
   })
   reducibleTime: ReducibleTimeType[];
+
+  @Field({
+    description: '封面图',
+    nullable: true,
+  })
+  coverUrl: string;
 }

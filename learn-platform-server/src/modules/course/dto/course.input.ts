@@ -59,6 +59,12 @@ export class CourseInput {
     nullable: true,
   })
   reducibleTime: ReducibleTimeInput[];
+
+  @Field({
+    description: '封面图',
+    nullable: true,
+  })
+  coverUrl: string;
 }
 
 @InputType()

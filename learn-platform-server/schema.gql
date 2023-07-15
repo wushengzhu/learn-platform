@@ -53,6 +53,9 @@ type CourseType {
 
   """可约时间"""
   reducibleTime: [ReducibleTimeType!]
+
+  """封面图"""
+  coverUrl: String
 }
 
 """
@@ -796,6 +799,9 @@ input PartialCourseInput {
 
   """可约时间"""
   reducibleTime: [ReducibleTimeInput!]
+
+  """封面图"""
+  coverUrl: String
 }
 
 input ReducibleTimeInput {

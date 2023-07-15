@@ -11,6 +11,7 @@ import EditInfo from '@/components/EditInfo';
 import MyCard from '@/components/MyCard';
 import MyCourse from '@/components/MyCourse';
 import OrderCourse from '@/components/OrderCourse';
+import Setting from '@/components/Setting';
 
 export const ROUTE_COMPONENT = {
   [ROUTE_KEY.HOME]: Home,
@@ -24,5 +25,6 @@ export const ROUTE_COMPONENT = {
   [ROUTE_KEY.MY_CARD]: MyCard,
   [ROUTE_KEY.MY_COURSE]: MyCourse,
   [ROUTE_KEY.ORDER_COURSE]: OrderCourse,
+  [ROUTE_KEY.SETTING]: Setting,
   [ROUTE_KEY.PAGENOTFOUND]: PageNotFound,
 };

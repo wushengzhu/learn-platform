@@ -24,6 +24,7 @@ export const ROUTE_KEY = {
   MY_COURSE: 'myCourse',
   ORDER_COURSE: 'orderCourse',
   MY_CARD: 'myCard',
+  SETTING: 'setting'
 };
 
 export const ROUTE_CONFIG: Record<string, IRoute> = {
@@ -57,6 +58,11 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
   [ROUTE_KEY.MY_CARD]: {
     path: 'myCard',
     name: '我的消费卡',
+    isMenu: false,
+  },
+  [ROUTE_KEY.SETTING]: {
+    path: 'setting',
+    name: '设置',
     isMenu: false,
   },
   [ROUTE_KEY.REGISTER]: {

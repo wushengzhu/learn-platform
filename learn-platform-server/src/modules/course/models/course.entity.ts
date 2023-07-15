@@ -74,6 +74,12 @@ export class Course extends CommonEntity {
   })
   reducibleTime: ReducibleTimeType[];
 
+  @Column({
+    comment: '封面图',
+    nullable: true,
+  })
+  coverUrl: string;
+
   @ManyToOne(() => Shop, (shop) => shop.courses, {
     cascade: true,
   })

@@ -20,6 +20,7 @@ import {
 } from "@ant-design/pro-components";
 import { useEffect, useRef, useState } from "react";
 import { useCourse, useEditCourse } from "@/services/course";
+import ImageUpload from "../ImageUpload";
 
 interface IDrawerParams {
     id?: string;
@@ -45,7 +46,7 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
         const init = async () => {
             if (id) {
                 const res = await getCourse(id);
-                formRef.current?.setFieldsValue({ ...res });
+                formRef.current?.setFieldsValue({ ...res, coverUrl: res?.coverUrl ? [{ url: res.coverUrl }] : [] });
             } else {
                 formRef.current?.resetFields();
             }
@@ -54,13 +55,15 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
     }, [id]);
 
     const handleOk = async () => {
-        const params = Object.assign(
-            {},
-            { ...formRef.current?.getFieldsValue() }
-        );
+
         const values =
             await formRef.current?.validateFieldsReturnFormatValue?.();
         if (values) {
+            const params =
+            {
+                ...values,
+                coverUrl: values.coverUrl[0].url
+            }
             await handleEdit(id, params);
             setIsDrawerOpen(false);
             onClose(true);
@@ -128,6 +131,13 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
                 submitter={false}
                 loading={loading}
             >
+                <Form.Item
+                    name="coverUrl"
+                    label="封面图："
+                    rules={[{ required: true, message: '请上传' }]}
+                >
+                    <ImageUpload listType={"picture-card"} maxCount={1} />
+                </Form.Item>
                 <ProFormText
                     width="xl"
                     name="name"

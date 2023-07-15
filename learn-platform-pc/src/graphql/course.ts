@@ -11,6 +11,7 @@ export const GET_COURSE = gql`
                 desc
                 group
                 baseAbility
+                coverUrl
                 limitNumber
                 duration
                 reserveInfo
@@ -44,6 +45,7 @@ export const GET_COURSES = gql`
                 name
                 desc
                 group
+                coverUrl
                 baseAbility
                 limitNumber
                 duration
