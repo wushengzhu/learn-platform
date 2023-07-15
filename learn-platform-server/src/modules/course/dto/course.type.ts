@@ -2,6 +2,7 @@ import { CommonType } from '@/common/dto/common.type';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { IsInt, IsNotEmpty, Min } from 'class-validator';
 import { ReducibleTimeType } from './common.type';
+import { TeacherType } from '@/modules/teacher/dto/teacher.type';
 
 /**
  * 学员
@@ -61,4 +62,10 @@ export class CourseType extends CommonType {
     nullable: true,
   })
   coverUrl: string;
+
+  @Field(() => [TeacherType], {
+    description: '任课老师',
+    nullable: true,
+  })
+  teachers: TeacherType[];
 }

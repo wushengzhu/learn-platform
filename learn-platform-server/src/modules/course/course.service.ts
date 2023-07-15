@@ -24,6 +24,7 @@ export class CourseService {
       where: {
         id,
       },
+      relations: ['teachers'],
     });
   }
 
@@ -51,7 +52,7 @@ export class CourseService {
         createdAt: 'DESC',
       },
       where,
-      relations: ['shop'],
+      relations: ['shop', 'teachers'],
     });
   }
 

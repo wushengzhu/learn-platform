@@ -21,6 +21,8 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useCourse, useEditCourse } from "@/services/course";
 import ImageUpload from "../ImageUpload";
+import TeacherSelect from "../TeacherSelect";
+import { ITeacher, IValue } from "@/utils/types";
 
 interface IDrawerParams {
     id?: string;
@@ -46,7 +48,11 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
         const init = async () => {
             if (id) {
                 const res = await getCourse(id);
-                formRef.current?.setFieldsValue({ ...res, coverUrl: res?.coverUrl ? [{ url: res.coverUrl }] : [] });
+                formRef.current?.setFieldsValue({
+                    ...res,
+                    teachers: res.teachers ? res.teachers.map((item: ITeacher) => ({ label: item.name, value: item.id })) : [],
+                    coverUrl: res?.coverUrl ? [{ url: res.coverUrl }] : []
+                });
             } else {
                 formRef.current?.resetFields();
             }
@@ -55,13 +61,13 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
     }, [id]);
 
     const handleOk = async () => {
-
         const values =
             await formRef.current?.validateFieldsReturnFormatValue?.();
         if (values) {
             const params =
             {
                 ...values,
+                teachers: values.teachers ? values?.teachers?.map((item: IValue) => item.value) : '',
                 coverUrl: values.coverUrl[0].url
             }
             await handleEdit(id, params);
@@ -145,6 +151,13 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
                     placeholder="课程名称"
                     rules={rules.name}
                 />
+                <Form.Item
+                    name="teachers"
+                    label="任课老师："
+                    rules={[{ required: true, message: '请上传' }]}
+                >
+                    <TeacherSelect />
+                </Form.Item>
                 <ProFormTextArea
                     name="desc"
                     width="xl"

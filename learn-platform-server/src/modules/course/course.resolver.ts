@@ -9,12 +9,12 @@ import {
   COURSE_FAIL,
 } from '@/common/constants/code';
 import { CourseResult, CourseResults } from './dto/result-course.output';
-import { CourseInput, PartialCourseInput } from './dto/course.input';
+import { PartialCourseInput } from './dto/course.input';
 import { CourseType } from './dto/course.type';
 import { CourseService } from './course.service';
 import { CurUserId } from '@/common/decorators/current-user.decorator';
 import { PageInput } from '@/common/dto/page.input';
-import { FindOptionsWhere, Like } from 'typeorm';
+import { DeepPartial, FindOptionsWhere, Like } from 'typeorm';
 import { Course } from './models/course.entity';
 import { CurShopId } from '@/common/decorators/current-shop.decorator';
 
@@ -54,10 +54,15 @@ export class CourseResolver {
           message: '课程不存在',
         };
       }
-      const res = await this.courseService.updateById(course.id, {
+      const courseInput: DeepPartial<Course> = {
         ...params,
         updatedBy: userId,
-      });
+        teachers: course.teachers,
+      };
+      if (params.teachers) {
+        courseInput.teachers = params.teachers.map((item) => ({ id: item }));
+      }
+      const res = await this.courseService.updateById(course.id, courseInput);
       if (res) {
         return {
           code: SUCCESS,
@@ -71,6 +76,7 @@ export class CourseResolver {
         shop: {
           id: shopId,
         },
+        teachers: params.teachers.map((item) => ({ id: item })),
       });
       if (res) {
         return {
