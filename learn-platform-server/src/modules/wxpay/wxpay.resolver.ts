@@ -19,7 +19,7 @@ import { WxConfig } from './dto/wx-config.type';
 import { OrderService } from '../order/order.service';
 import { OrderStatus } from '@/common/constants/enum';
 import { Result } from '@/common/dto/result.type';
-import { CardRecordService } from '../cardRecord/card-record.service';
+import { CardRecordService } from '../card-record/card-record.service';
 
 @Resolver()
 @UseGuards(GqlAuthGuard)

@@ -1,31 +1,34 @@
-import { FindOptionsWhere, Like } from 'typeorm';
+import { FindOptionsWhere } from 'typeorm';
 import { CardRecord } from './models/card-record.entity';
 import {
-  COURSE_CREATE_FAIL,
+  CARD_NOT_EXIST,
   COURSE_DEL_FAIL,
   COURSE_NOT_EXIST,
-  COURSE_UPDATE_FAIL,
-} from './../../common/constants/code';
+} from '../../common/constants/code';
 import { Result } from '@/common/dto/result.type';
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '@/common/guards/auth.guard';
 import { SUCCESS } from '@/common/constants/code';
-import { CardRecordResult, CardRecordResults } from './dto/result-card-record.output';
-import { CardRecordInput } from './dto/card-record.input';
+import {
+  CardRecordResult,
+  CardRecordResults,
+} from './dto/result-card-record.output';
 import { CardRecordType } from './dto/card-record.type';
 import { CardRecordService } from './card-record.service';
 import { CurUserId } from '@/common/decorators/current-user.decorator';
 import { PageInput } from '@/common/dto/page.input';
+import { CardStatus, CardType } from '@/common/constants/enum';
+import * as dayjs from 'dayjs';
 
 @Resolver(() => CardRecordType)
 @UseGuards(GqlAuthGuard)
 export class CardRecordResolver {
-  constructor(private readonly card-recordService: CardRecordService) {}
+  constructor(private readonly cardRecordService: CardRecordService) {}
 
   @Query(() => CardRecordResult)
   async getCardRecordInfo(@Args('id') id: string): Promise<CardRecordResult> {
-    const result = await this.card-recordService.findById(id);
+    const result = await this.cardRecordService.findById(id);
     if (result) {
       return {
         code: SUCCESS,
@@ -34,57 +37,54 @@ export class CardRecordResolver {
       };
     }
     return {
-      code: COURSE_NOT_EXIST,
-      message: '课程信息不存在',
+      code: CARD_NOT_EXIST,
+      message: '消费卡信息不存在',
     };
   }
 
-  @Mutation(() => CardRecordResult)
-  async saveCardRecord(
-    @Args('params') params: CardRecordInput,
+  @Query(() => CardRecordResults, { description: '获取个人的消费卡' })
+  async getCardRecordsForH5(
+    @Args('page') page: PageInput,
     @CurUserId() userId: string,
-    @CurShopId() shopId: string,
-    @Args('id', { nullable: true }) id: string,
-  ): Promise<Result> {
-    if (!id) {
-      const res = await this.card-recordService.create({
-        ...params,
-        createdBy: userId,
-        shop: {
-          id: shopId,
-        }
-      });
-      if (res) {
-        return {
-          code: SUCCESS,
-          message: '创建成功',
-        };
+  ): Promise<CardRecordResults> {
+    const { pageNum, pageSize } = page;
+    const where: FindOptionsWhere<CardRecord> = {
+      student: {
+        id: userId,
+      },
+    };
+    const [results, total] = await this.cardRecordService.findCardRecords({
+      start: (pageNum - 1) * pageSize,
+      length: pageSize,
+      where,
+    });
+
+    const newRes = results.map((c) => {
+      let status = CardStatus.VALID;
+      // 过期了
+      if (dayjs().isAfter(c.endTime)) {
+        status = CardStatus.EXPIRED;
+      }
+
+      // 耗尽了
+      if (c.card.type === CardType.TIME && c.residueTime === 0) {
+        status = CardStatus.DEPLETE;
       }
       return {
-        code: COURSE_CREATE_FAIL,
-        message: '创建失败',
+        ...c,
+        status,
       };
-    }
-    const card-record = await this.card-recordService.findById(id);
-    if (card-record) {
-      const res = await this.card-recordService.updateById(card-record.id, {
-        ...params,
-        updatedBy: userId,
-      });
-      if (res) {
-        return {
-          code: SUCCESS,
-          message: '更新成功',
-        };
-      }
-      return {
-        code: COURSE_UPDATE_FAIL,
-        message: '更新失败',
-      };
-    }
+    });
+
     return {
-      code: COURSE_NOT_EXIST,
-      message: '课程信息不存在',
+      code: SUCCESS,
+      data: newRes,
+      page: {
+        pageNum,
+        pageSize,
+        total,
+      },
+      message: '获取成功',
     };
   }
 
@@ -92,14 +92,10 @@ export class CardRecordResolver {
   async getCardRecords(
     @Args('page') page: PageInput,
     @CurUserId() userId: string,
-    @Args('name', { nullable: true }) name?: string,
   ): Promise<CardRecordResults> {
     const { pageNum, pageSize } = page;
     const where: FindOptionsWhere<CardRecord> = { createdBy: userId };
-    if (name) {
-      where.name = Like(`%${name}%`);
-    }
-    const [results, total] = await this.card-recordService.findCardRecords({
+    const [results, total] = await this.cardRecordService.findCardRecords({
       start: (pageNum - 1) * pageSize,
       length: pageSize,
       where,
@@ -121,9 +117,9 @@ export class CardRecordResolver {
     @Args('id') id: string,
     @CurUserId() userId: string,
   ): Promise<Result> {
-    const result = await this.card-recordService.findById(id);
+    const result = await this.cardRecordService.findById(id);
     if (result) {
-      const delRes = await this.card-recordService.deleteById(id, userId);
+      const delRes = await this.cardRecordService.deleteById(id, userId);
       if (delRes) {
         return {
           code: SUCCESS,
@@ -138,6 +134,29 @@ export class CardRecordResolver {
     return {
       code: COURSE_NOT_EXIST,
       message: '门店信息不存在',
+    };
+  }
+
+  // 获取当前学员在某个课程上可以用的消费卡
+  @Query(() => CardRecordResults, {
+    description: '获取当前学员在某个课程上可以用的消费卡',
+  })
+  async getUseCardRecordsByCourse(
+    @Args('courseId') courseId: string,
+    @CurUserId() userId: string,
+  ): Promise<CardRecordResults> {
+    const [cards, total] = await this.cardRecordService.findUseCards(
+      userId,
+      courseId,
+    );
+
+    return {
+      code: SUCCESS,
+      message: '获取成功',
+      data: cards,
+      page: {
+        total,
+      },
     };
   }
 }

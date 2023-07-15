@@ -13,6 +13,11 @@ import { ProductService } from '../product/product.service';
 import { WECHAT_PAY_MANAGER } from 'nest-wechatpay-node-v3';
 import { IWxpayResult } from './dto/wxpay-result.type';
 import WxPay from 'wechatpay-node-v3';
+import { CardRecordService } from '../card-record/card-record.service';
+import { OrderService } from '../order/order.service';
+import { WxorderService } from '../wxorder/wxorder.service';
+import { WxorderType } from '../wxorder/dto/wxorder.type';
+import { OrderStatus } from '@/common/constants/enum';
 
 @Controller('wx')
 export class WxpayController {
@@ -59,8 +64,8 @@ export class WxpayController {
           ...result,
           ...result.payer,
           ...result.amount,
-          org: {
-            id: order.org.id,
+          shop: {
+            id: order.shop.id,
           },
         });
       }
