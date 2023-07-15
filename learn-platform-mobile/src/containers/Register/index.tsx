@@ -27,7 +27,7 @@ interface IValue {
   avatar?: string;
 }
 
-export default () => {
+const Register = () => {
   const [avatarImage, setAvatarImage] = useState('');
   const [visible, setVisible] = useState(false);
   const [rules] = useState({
@@ -167,3 +167,5 @@ export default () => {
     </div>
   );
 };
+
+export default Register;

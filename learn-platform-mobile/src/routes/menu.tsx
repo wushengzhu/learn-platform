@@ -20,6 +20,10 @@ export const ROUTE_KEY = {
   SHOPINFO: 'shop',
   PRODUCTINFO: 'product',
   BUY: 'buy',
+  EDITINFO: 'editInfo',
+  MY_COURSE: 'myCourse',
+  ORDER_COURSE: 'orderCourse',
+  MY_CARD: 'myCard',
 };
 
 export const ROUTE_CONFIG: Record<string, IRoute> = {
@@ -34,6 +38,26 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
     name: '个人信息',
     isMenu: true,
     icon: <UserOutline />,
+  },
+  [ROUTE_KEY.EDITINFO]: {
+    path: 'editInfo',
+    name: '编辑个人信息',
+    isMenu: false,
+  },
+  [ROUTE_KEY.MY_COURSE]: {
+    path: 'myCourse',
+    name: '我的课程',
+    isMenu: false,
+  },
+  [ROUTE_KEY.ORDER_COURSE]: {
+    path: 'orderCourse',
+    name: '预约课程',
+    isMenu: false,
+  },
+  [ROUTE_KEY.MY_CARD]: {
+    path: 'myCard',
+    name: '我的消费卡',
+    isMenu: false,
   },
   [ROUTE_KEY.REGISTER]: {
     path: 'register',

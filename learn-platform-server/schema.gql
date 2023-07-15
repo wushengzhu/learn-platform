@@ -14,6 +14,104 @@ type Result {
   data: String
 }
 
+type OrderTimeType {
+  """开始时间"""
+  startTime: String!
+
+  """结束时间"""
+  endTime: String!
+
+  """key"""
+  key: Float!
+}
+
+type ReducibleTimeType {
+  """周几"""
+  week: String!
+
+  """可约时间 json"""
+  orderTime: [OrderTimeType!]!
+}
+
+type CourseType {
+  id: String!
+  createdAt: DateTime!
+  createdBy: String
+  updatedAt: DateTime
+  updatedBy: String
+  deletedAt: DateTime
+  deletedBy: String
+  name: String!
+  desc: String
+  group: String!
+  baseAbility: String!
+  limitNumber: Float!
+  duration: Float!
+  reserveInfo: String
+  refundInfo: String
+  otherInfo: String
+
+  """可约时间"""
+  reducibleTime: [ReducibleTimeType!]
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type CardType {
+  """id"""
+  id: String!
+
+  """名字"""
+  name: String!
+
+  """
+  卡类型 
+       TIME = "time",
+      DURATION = "duration"
+  """
+  type: String!
+
+  """上课次数"""
+  time: Float!
+
+  """有效期 （天）"""
+  validityDay: Float!
+
+  """课程"""
+  course: CourseType!
+}
+
+type StudentType {
+  id: String!
+
+  """昵称"""
+  name: String
+
+  """手机号"""
+  tel: String
+
+  """头像"""
+  avatar: String
+
+  """账号"""
+  account: String
+
+  """密码"""
+  password: String
+
+  """简介"""
+  desc: String
+
+  """性别"""
+  gender: Boolean
+
+  """openid"""
+  openid: String
+}
+
 type ShopImageType {
   id: String
   url: String!
@@ -78,31 +176,78 @@ type ShopType {
   shopOtherImg: [ShopImageType!]
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+type CardRecordType {
+  """id"""
+  id: String!
 
-type OrderTimeType {
   """开始时间"""
-  startTime: String!
+  startTime: DateTime
 
   """结束时间"""
-  endTime: String!
+  endTime: DateTime
 
-  """key"""
-  key: Float!
+  """购买时间"""
+  buyTime: DateTime
+
+  """剩余次数"""
+  residueTime: Float
+
+  """状态"""
+  status: String
+
+  """关联卡实体"""
+  card: CardType
+
+  """课程"""
+  course: CourseType
+
+  """学员"""
+  student: StudentType
+
+  """门店"""
+  shop: ShopType
 }
 
-type ReducibleTimeType {
-  """周几"""
-  week: String!
-
-  """可约时间 json"""
-  orderTime: [OrderTimeType!]!
+type CardRecordResult {
+  code: Int!
+  message: String!
+  data: CardRecordType
 }
 
-type CourseType {
+type CardRecordResults {
+  code: Int!
+  message: String
+  data: [CardRecordType!]
+  page: Page
+}
+
+type CardResult {
+  code: Int!
+  message: String!
+  data: CardType
+}
+
+type CardResults {
+  code: Int!
+  message: String
+  data: [CardType!]
+  page: Page
+}
+
+type StudentResult {
+  code: Int!
+  message: String!
+  data: StudentType
+}
+
+type StudentResults {
+  code: Int!
+  message: String
+  data: [StudentType!]
+  page: Page
+}
+
+type WxorderType {
   id: String!
   createdAt: DateTime!
   createdBy: String
@@ -110,42 +255,67 @@ type CourseType {
   updatedBy: String
   deletedAt: DateTime
   deletedBy: String
-  name: String!
-  desc: String
-  group: String!
-  baseAbility: String!
-  limitNumber: Float!
-  duration: Float!
-  reserveInfo: String
-  refundInfo: String
-  otherInfo: String
 
-  """可约时间"""
-  reducibleTime: [ReducibleTimeType!]
+  """微信公众号ID"""
+  appid: String!
+
+  """商户号"""
+  mchid: String!
+
+  """openid"""
+  openid: String
+
+  """交易类型"""
+  trade_type: String
+
+  """交易状态"""
+  trade_state: String
+
+  """银行"""
+  bank_type: String
+
+  """微信支付订单号"""
+  transaction_id: String
+
+  """商户订单号"""
+  out_trade_no: String
+
+  """附加数据"""
+  attach: String
+
+  """交易状态描述"""
+  trade_state_desc: String
+
+  """支付完成时间"""
+  success_time: String
+
+  """订单总金额，单位为分"""
+  total: Float
+
+  """用户支付金额，单位为分"""
+  payer_total: Float
+
+  """CNY：人民币，境内商户号仅支持人民币"""
+  currency: String
+
+  """用户支付币种，示例值：CNY"""
+  payer_currency: String
+
+  """门店"""
+  shop: ShopType
 }
 
-type CardType {
-  """id"""
-  id: String!
+type WxorderResult {
+  code: Int!
+  message: String!
+  data: WxorderType
+}
 
-  """名字"""
-  name: String!
-
-  """
-  卡类型 
-       TIME = "time",
-      DURATION = "duration"
-  """
-  type: String!
-
-  """上课次数"""
-  time: Float!
-
-  """有效期 （天）"""
-  validityDay: Float!
-
-  """课程"""
-  course: CourseType!
+type WxorderResults {
+  code: Int!
+  message: String
+  data: [WxorderType!]
+  page: Page
 }
 
 type ProductType {
@@ -201,6 +371,58 @@ type ProductType {
 
   """消费卡"""
   cards: [CardType!]
+}
+
+type OrderType {
+  id: String
+
+  """createdAt"""
+  createdAt: DateTime
+  createdBy: String
+  updatedAt: DateTime
+  updatedBy: String
+  deletedAt: DateTime
+  deletedBy: String
+
+  """数量"""
+  quantity: Float!
+
+  """amount"""
+  amount: Float!
+
+  """手机号"""
+  tel: String!
+
+  """状态"""
+  status: String!
+
+  """订单号"""
+  outTradeNo: String
+
+  """购买学员"""
+  student: StudentType
+
+  """机构"""
+  shop: ShopType
+
+  """商品"""
+  product: ProductType
+
+  """微信订单信息"""
+  wxOrder: WxorderType
+}
+
+type OrderResult {
+  code: Int!
+  message: String!
+  data: OrderType
+}
+
+type OrderResults {
+  code: Int!
+  message: String
+  data: [OrderType!]
+  page: Page
 }
 
 type ProductTypeType {
@@ -283,47 +505,6 @@ type OSSType {
   dir: String!
 }
 
-type StudentType {
-  id: String!
-
-  """昵称"""
-  name: String
-
-  """手机号"""
-  tel: String
-
-  """头像"""
-  avatar: String
-
-  """账号"""
-  account: String
-
-  """密码"""
-  password: String
-
-  """简介"""
-  desc: String
-
-  """性别"""
-  gender: Boolean
-
-  """openid"""
-  openid: String
-}
-
-type StudentResult {
-  code: Int!
-  message: String!
-  data: StudentType
-}
-
-type StudentResults {
-  code: Int!
-  message: String
-  data: [StudentType!]
-  page: Page
-}
-
 type ShopResult {
   code: Int!
   message: String!
@@ -382,19 +563,6 @@ type CourseResults {
   page: Page
 }
 
-type CardResult {
-  code: Int!
-  message: String!
-  data: CardType
-}
-
-type CardResults {
-  code: Int!
-  message: String
-  data: [CardType!]
-  page: Page
-}
-
 type Query {
   """使用id查询用户"""
   getUserById(id: String!): UserType!
@@ -424,6 +592,18 @@ type Query {
   getProducts(page: PageInput!, name: String): ProductResults!
   getProductsForH5(page: PageInput!, latitude: Float!, longitude: Float!, type: String, name: String): ProductResults!
   getProductsByShopIdForH5(shopId: String!): ProductResults!
+  getOrderInfo(id: String!): OrderResult!
+  getOrders(page: PageInput!): OrderResults!
+  getWxorderInfo(id: String!): WxorderResult!
+  getWxorders(page: PageInput!): WxorderResults!
+  getCardRecordInfo(id: String!): CardRecordResult!
+
+  """获取个人的消费卡"""
+  getCardRecordsForH5(page: PageInput!): CardRecordResults!
+  getCardRecords(page: PageInput!): CardRecordResults!
+
+  """获取当前学员在某个课程上可以用的消费卡"""
+  getUseCardRecordsByCourse(courseId: String!): CardRecordResults!
 }
 
 input PageInput {
@@ -472,6 +652,9 @@ type Mutation {
   deleteCard(id: String!): Result!
   saveProduct(params: PartialProductInput!, id: String): ProductResult!
   deleteProduct(id: String!): Result!
+  deleteOrder(id: String!): Result!
+  deleteWxorder(id: String!): Result!
+  deleteCardRecord(id: String!): Result!
 }
 
 input UserInput {

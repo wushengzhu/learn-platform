@@ -54,6 +54,7 @@ export const GET_STUDENT_INFO = gql`
   query getStudentInfoByGuard {
     getStudentInfoByGuard {
       name
+      account
       id
       avatar
       tel
