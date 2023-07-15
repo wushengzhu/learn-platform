@@ -15,7 +15,7 @@ import {
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useUploadOSS from '@/hooks/useUploadOSS';
-import * as md5 from 'md5';
+import md5 from 'md5';
 import { useMutation } from '@apollo/client';
 import { STUDENT_REGISTER, USER_REGISTER } from '@/graphql/user';
 import { fail, success } from '@/utils/toast';

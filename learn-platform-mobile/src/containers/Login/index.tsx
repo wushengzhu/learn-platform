@@ -6,7 +6,7 @@ import { Link, Route, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { STUDENT_LOGIN } from '@/graphql/user';
 import { AUTH_TOKEN } from '@/utils/constants';
-import * as md5 from 'md5';
+import md5 from 'md5';
 import { fail, success } from '@/utils/toast';
 
 const Login = () => {

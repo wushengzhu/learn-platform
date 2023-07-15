@@ -1,8 +1,4 @@
-lockfileVersion: '6.1'
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
+lockfileVersion: '6.0'
 
 dependencies:
   '@apollo/client':
@@ -5368,3 +5364,7 @@ packages:
     name: zen-observable
     version: 0.8.15
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

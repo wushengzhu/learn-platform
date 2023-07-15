@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { CardRecordModule } from './modules/card-record/card-record.module';
+import { WxorderModule } from './modules/wxorder/wxorder.module';
+import { OrderModule } from './modules/order/order.module';
 import { ProductModule } from './modules/product/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -42,6 +45,9 @@ import { CardModule } from './modules/card/card.module';
     CourseModule,
     CardModule,
     ProductModule,
+    OrderModule,
+    WxorderModule,
+    CardRecordModule,
   ],
   controllers: [AppController],
   providers: [AppService],
