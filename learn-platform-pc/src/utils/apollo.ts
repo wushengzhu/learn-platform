@@ -1,10 +1,37 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { AUTH_TOKEN } from "./constants";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 import { currentShop } from ".";
+import { message } from "antd";
+
+let uri = `http://${window.location.hostname}:1024/graphql`;
+// uri: 'http://192.168.1.174:1024/graphql', // 可手机上调试的本地ip后端地址
+if (process.env.NODE_ENV === "production") {
+    uri = "";
+}
+
+/**
+ * 统一处理接口报错
+ */
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+        message.info("请求参数或者返回的数据格式不对");
+        graphQLErrors.forEach((item) => {
+            if (item.message === "Unauthorized") {
+                message.destroy();
+                message.error("登录失效，请登录");
+            }
+        });
+    }
+    if (networkError) {
+        message.destroy();
+        message.error(networkError.message);
+    }
+});
 
 const httpLink = createHttpLink({
-    uri: "http://localhost:1024/graphql",
+    uri,
 });
 const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem(AUTH_TOKEN);
@@ -17,9 +44,12 @@ const authLink = setContext((_, { headers }) => {
     };
 });
 export const client = new ApolloClient({
-    // uri: `http://${window.location.hostname}:3000/graphql`,
-    // uri: "http://localhost:3002/graphql",
-    link: authLink.concat(httpLink),
+    link: errorLink.concat(authLink.concat(httpLink)),
+    defaultOptions: {
+        watchQuery: {
+            fetchPolicy: "no-cache",
+        },
+    },
     cache: new InMemoryCache({
         addTypename: false,
     }),

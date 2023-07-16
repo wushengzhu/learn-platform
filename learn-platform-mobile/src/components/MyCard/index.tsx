@@ -3,7 +3,7 @@ import style from './index.module.less'
 import { Space, Tag } from "antd-mobile";
 import { BankcardOutline } from "antd-mobile-icons";
 import { CARD_STATUS, CARD_TYPE, DAY_FORMAT } from "@/utils/constants";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import classNames from "classnames";
 
 const MyCard = () => {

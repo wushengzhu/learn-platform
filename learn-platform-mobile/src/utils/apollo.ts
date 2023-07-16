@@ -4,6 +4,11 @@ import { AUTH_TOKEN } from './constants';
 import { onError } from '@apollo/client/link/error'; // 引入onError
 import { Toast } from 'antd-mobile';
 
+let uri = 'http://localhost:1024/graphql';
+// uri: 'http://192.168.1.174:1024/graphql', // 可手机上调试的本地ip后端地址
+if(process.env.NODE_ENV === 'production'){
+  uri = ''
+}
 /**
  * 统一处理接口报错
  */
@@ -33,8 +38,7 @@ const errorLink = onError(({
 });
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:1024/graphql',
-  // uri: 'http://192.168.1.174:1024/graphql', // 可手机上调试的本地ip后端地址
+  uri,
 });
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN);

@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { ApolloProvider } from '@apollo/client';
 import { ConfigProvider } from 'antd-mobile';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import zhCN from 'antd-mobile/es/locales/zh-CN';
 import { client } from './utils/apollo';
