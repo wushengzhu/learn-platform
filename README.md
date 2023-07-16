@@ -40,11 +40,6 @@ pnpm install
 
 > ^0.3.16 版本的 typeorm 会触发自动删除 id，会有一些 bug，暂时未知什么原因
 
-一些GraphQL未知错误的调试方式：
->1.  Uncaught GraphQLError: Syntax Error: Expected Name, found "{": graphq接口书写有误或者获取未知属性就会出现
-
-![image](https://github.com/wushengzhu/learn-platform/assets/59349073/8afd6c90-c315-4404-8f4b-85bbde886594)
-
 
 ## learn-platform-server （服务端）
 启动本地后端服务：
