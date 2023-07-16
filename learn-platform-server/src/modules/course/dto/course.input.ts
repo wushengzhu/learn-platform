@@ -1,6 +1,5 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql';
 import { ReducibleTimeInput } from './common.input';
-import { TeacherInput } from '@/modules/teacher/dto/teacher.input';
 
 @InputType()
 export class CourseInput {

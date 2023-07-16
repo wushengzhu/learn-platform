@@ -18,7 +18,7 @@ export const useGoTo = () => {
     const route = getRouteKey(pageKey);
     if (route) {
       if (!params) {
-        nav(route.path);
+        nav(`/${route.path}`);
         return;
       }
 

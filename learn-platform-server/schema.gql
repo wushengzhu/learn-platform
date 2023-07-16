@@ -14,6 +14,58 @@ type Result {
   data: String
 }
 
+type TeacherType {
+  id: String!
+  createdAt: DateTime!
+  createdBy: String
+  updatedAt: DateTime
+  updatedBy: String
+  deletedAt: DateTime
+  deletedBy: String
+
+  """名称"""
+  name: String!
+
+  """照片"""
+  photoUrl: String
+
+  """教龄"""
+  teacherTime: Float
+
+  """风格标签，以，隔开"""
+  tags: String
+
+  """学历"""
+  education: String
+
+  """资历"""
+  seniority: String
+
+  """职业经验"""
+  experience: String
+
+  """获奖经历"""
+  carryPrize: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type TeacherResult {
+  code: Int!
+  message: String!
+  data: TeacherType
+}
+
+type TeacherResults {
+  code: Int!
+  message: String
+  data: [TeacherType!]
+  page: Page
+}
+
 type OrderTimeType {
   """开始时间"""
   startTime: String!
@@ -56,12 +108,10 @@ type CourseType {
 
   """封面图"""
   coverUrl: String
-}
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+  """任课老师"""
+  teachers: [TeacherType!]
+}
 
 type CardType {
   """id"""
@@ -599,7 +649,7 @@ type Query {
   getOrders(page: PageInput!): OrderResults!
   getWxorderInfo(id: String!): WxorderResult!
   getWxorders(page: PageInput!): WxorderResults!
-  getCardRecordInfo(id: String!): CardRecordResult!
+  getCardRecordById(id: String!): CardRecordResult!
 
   """获取个人的消费卡"""
   getCardRecordsForH5(page: PageInput!): CardRecordResults!
@@ -607,6 +657,8 @@ type Query {
 
   """获取当前学员在某个课程上可以用的消费卡"""
   getUseCardRecordsByCourse(courseId: String!): CardRecordResults!
+  getTeacherById(id: String!): TeacherResult!
+  getTeachers(page: PageInput!, name: String): TeacherResults!
 }
 
 input PageInput {
@@ -658,6 +710,8 @@ type Mutation {
   deleteOrder(id: String!): Result!
   deleteWxorder(id: String!): Result!
   deleteCardRecord(id: String!): Result!
+  saveTeacher(params: TeacherInput!, id: String): TeacherResult!
+  deleteTeacher(id: String!): Result!
 }
 
 input UserInput {
@@ -802,6 +856,9 @@ input PartialCourseInput {
 
   """封面图"""
   coverUrl: String
+
+  """任课老师"""
+  teachers: [String!]
 }
 
 input ReducibleTimeInput {
@@ -870,4 +927,30 @@ input PartialProductInput {
 
   """消费卡"""
   cards: [String!]
+}
+
+input TeacherInput {
+  """名称"""
+  name: String!
+
+  """照片"""
+  photoUrl: String!
+
+  """教龄"""
+  teacherTime: Float
+
+  """风格标签，以，隔开"""
+  tags: String
+
+  """学历"""
+  education: String
+
+  """资历"""
+  seniority: String
+
+  """职业经验"""
+  experience: String
+
+  """获奖经历"""
+  carryPrize: String
 }

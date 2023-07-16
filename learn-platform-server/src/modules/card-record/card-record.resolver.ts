@@ -27,7 +27,7 @@ export class CardRecordResolver {
   constructor(private readonly cardRecordService: CardRecordService) {}
 
   @Query(() => CardRecordResult)
-  async getCardRecordInfo(@Args('id') id: string): Promise<CardRecordResult> {
+  async getCardRecordById(@Args('id') id: string): Promise<CardRecordResult> {
     const result = await this.cardRecordService.findById(id);
     if (result) {
       return {

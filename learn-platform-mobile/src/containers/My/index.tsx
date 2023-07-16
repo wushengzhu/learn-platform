@@ -23,7 +23,7 @@ const My = () => {
       <List.Item prefix={<FaceRecognitionOutline />} onClick={() => go(ROUTE_KEY.ORDER_COURSE)}>预约课程</List.Item>
       <List.Item prefix={<UnorderedListOutline />} onClick={() => go(ROUTE_KEY.MY_COURSE)}>我的课程表</List.Item>
       <List.Item prefix={<BankcardOutline />} onClick={() => go(ROUTE_KEY.MY_CARD)}>我的消费卡</List.Item>
-      <List.Item prefix={<SetOutline />} onClick={() => go(ROUTE_KEY.MY_CARD)}>设置</List.Item>
+      <List.Item prefix={<SetOutline />} onClick={() => go(ROUTE_KEY.SETTING)}>设置</List.Item>
     </List>
   </div>
 };

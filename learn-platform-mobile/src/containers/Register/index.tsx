@@ -64,7 +64,7 @@ const Register = () => {
   });
   const uploadHandler = useUploadOSS();
   const onChange = async (values: any) => {
-    if (values && values?.length > 0) {
+    if (values && values.length > 0) {
       setAvatarImage(values[0].url);
     }
   };
