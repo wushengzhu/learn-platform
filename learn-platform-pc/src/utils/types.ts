@@ -217,3 +217,22 @@ export type TTeachersQuery = {
 export type TTeacherQuery = {
     [key: string]: { __typename?: "Query"; data: ITeacher };
 };
+
+
+export interface IScheduleRecord {
+    id: string;
+    status: string;
+    student: IStudent;
+  }
+  export interface ISchedule {
+    id: string;
+    schoolDay: string;
+    startTime: string;
+    endTime: string;
+    limitNumber: number; // 限制上课人数
+    course: ICourse;
+    shop: IShop;
+    scheduleRecords: IScheduleRecord[];
+  }
+
+  export type TSchedulesQuery = { [key: string]: { __typename?: 'Query', data: ISchedule[] } };

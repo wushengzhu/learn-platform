@@ -3,6 +3,7 @@ import { Tag } from "antd";
 export const AUTH_TOKEN = "auth_token";
 export const DEFAULT_PAGE_SIZE = 10;
 export const LOCAL_CURRENT_SHOP = "LOCAL_CURRENT_SHOP";
+export const DAY_FORMAT = 'YYYY-MM-DD';
 
 // 卡类型
 export const CARD_TYPE = {

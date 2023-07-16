@@ -1,8 +1,4 @@
-lockfileVersion: '6.1'
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
+lockfileVersion: '6.0'
 
 dependencies:
   '@ant-design/icons':
@@ -58,6 +54,9 @@ devDependencies:
   '@types/lodash':
     specifier: ^4.14.194
     version: registry.npmmirror.com/@types/lodash@4.14.194
+  '@types/md5':
+    specifier: ^2.3.2
+    version: registry.npmmirror.com/@types/md5@2.3.2
   '@types/node':
     specifier: ^20.2.1
     version: registry.npmmirror.com/@types/node@20.2.1
@@ -1394,6 +1393,12 @@ packages:
     resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.194.tgz}
     name: '@types/lodash'
     version: 4.14.194
+    dev: true
+
+  registry.npmmirror.com/@types/md5@2.3.2:
+    resolution: {integrity: sha512-v+JFDu96+UYJ3/UWzB0mEglIS//MZXgRaJ4ubUPwOM0gvLc/kcQ3TWNYwENEK7/EcXGQVrW8h/XqednSjBd/Og==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/md5/-/md5-2.3.2.tgz}
+    name: '@types/md5'
+    version: 2.3.2
     dev: true
 
   registry.npmmirror.com/@types/node@20.2.1:
@@ -4499,3 +4504,7 @@ packages:
     name: zen-observable
     version: 0.8.15
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

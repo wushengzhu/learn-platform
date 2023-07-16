@@ -24,7 +24,7 @@ export class ScheduleRecordService {
       where: {
         id,
       },
-      relations: ['schedule', 'cardRecord'],
+      relations: ['schedule', 'card_record'],
     });
   }
 

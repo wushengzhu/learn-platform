@@ -9,7 +9,7 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 /**
  * 课程表记录
  */
-@Entity('scheduleRecord')
+@Entity('schedule_record')
 export class ScheduleRecord extends CommonEntity {
   @Column({
     comment: '预约时间',

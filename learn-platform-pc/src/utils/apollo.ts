@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === "production") {
  */
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-        message.info("请求参数或者返回的数据格式不对");
+        // message.info("请求参数或者返回的数据格式不对");
         graphQLErrors.forEach((item) => {
             if (item.message === "Unauthorized") {
                 message.destroy();

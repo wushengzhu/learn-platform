@@ -8,7 +8,6 @@ import {
     Form,
     Input,
     Row,
-    Select,
     Spin,
     UploadFile,
 } from "antd";
@@ -36,19 +35,19 @@ const ShopEdit = ({ id, onClose }: IProp) => {
         () =>
             data
                 ? {
-                      ...data,
-                      tags: data.tags?.split(","),
-                      logo: [{ url: data.logo }],
-                      establishmentDate: dayjs(
-                          data?.establishmentDate,
-                          "YYYY-MM-DD"
-                      ),
-                      identityCardBackImg: [{ url: data.identityCardBackImg }],
-                      identityCardFrontImg: [
-                          { url: data.identityCardFrontImg },
-                      ],
-                      businessLicense: [{ url: data.businessLicense }],
-                  }
+                    ...data,
+                    tags: data.tags?.split(","),
+                    logo: [{ url: data.logo }],
+                    establishmentDate: dayjs(
+                        data?.establishmentDate,
+                        "YYYY-MM-DD"
+                    ),
+                    identityCardBackImg: [{ url: data.identityCardBackImg }],
+                    identityCardFrontImg: [
+                        { url: data.identityCardFrontImg },
+                    ],
+                    businessLicense: [{ url: data.businessLicense }],
+                }
                 : {},
         [data]
     );
@@ -239,7 +238,7 @@ const ShopEdit = ({ id, onClose }: IProp) => {
                         <DictSelect
                             dictCode="shop_tag"
                             mode="tags"
-                            // value={data?.tags}
+                        // value={data?.tags}
                         />
                     </Form.Item>
                     <Row gutter={20}>
