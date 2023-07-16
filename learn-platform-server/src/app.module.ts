@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { ScheduleRecordModule } from './modules/schedule-record/schedule-record.module';
+import { ScheduleModule } from './modules/schedule/schedule.module';
 import { TeacherModule } from './modules/teacher/teacher.module';
 import { CardRecordModule } from './modules/card-record/card-record.module';
 import { WxorderModule } from './modules/wxorder/wxorder.module';
@@ -50,6 +52,8 @@ import { CardModule } from './modules/card/card.module';
     WxorderModule,
     CardRecordModule,
     TeacherModule,
+    ScheduleModule,
+    ScheduleRecordModule,
   ],
   controllers: [AppController],
   providers: [AppService],

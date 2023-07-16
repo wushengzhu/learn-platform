@@ -1,4 +1,5 @@
 import { CommonType } from '@/common/dto/common.type';
+import { CourseType } from '@/modules/course/dto/course.type';
 import { ShopImageType } from '@/modules/shop-image/dto/shopImage.output';
 import { Field, ObjectType } from '@nestjs/graphql';
 
@@ -92,4 +93,7 @@ export class ShopType extends CommonType {
 
   @Field(() => [ShopImageType], { nullable: true, description: '其他图' })
   shopOtherImg?: ShopImageType[];
+
+  @Field(() => [CourseType], { nullable: true, description: '门店的课程' })
+  courses?: CourseType[];
 }

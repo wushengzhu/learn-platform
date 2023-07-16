@@ -14,6 +14,53 @@ type Result {
   data: String
 }
 
+type StudentType {
+  id: String!
+
+  """昵称"""
+  name: String
+
+  """手机号"""
+  tel: String
+
+  """头像"""
+  avatar: String
+
+  """账号"""
+  account: String
+
+  """密码"""
+  password: String
+
+  """简介"""
+  desc: String
+
+  """性别"""
+  gender: Boolean
+
+  """openid"""
+  openid: String
+}
+
+type OrderTimeType {
+  """开始时间"""
+  startTime: String!
+
+  """结束时间"""
+  endTime: String!
+
+  """key"""
+  key: Float!
+}
+
+type ReducibleTimeType {
+  """周几"""
+  week: String!
+
+  """可约时间 json"""
+  orderTime: [OrderTimeType!]!
+}
+
 type TeacherType {
   id: String!
   createdAt: DateTime!
@@ -53,38 +100,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type TeacherResult {
-  code: Int!
-  message: String!
-  data: TeacherType
-}
-
-type TeacherResults {
-  code: Int!
-  message: String
-  data: [TeacherType!]
-  page: Page
-}
-
-type OrderTimeType {
-  """开始时间"""
-  startTime: String!
-
-  """结束时间"""
-  endTime: String!
-
-  """key"""
-  key: Float!
-}
-
-type ReducibleTimeType {
-  """周几"""
-  week: String!
-
-  """可约时间 json"""
-  orderTime: [OrderTimeType!]!
-}
-
 type CourseType {
   id: String!
   createdAt: DateTime!
@@ -111,58 +126,6 @@ type CourseType {
 
   """任课老师"""
   teachers: [TeacherType!]
-}
-
-type CardType {
-  """id"""
-  id: String!
-
-  """名字"""
-  name: String!
-
-  """
-  卡类型 
-       TIME = "time",
-      DURATION = "duration"
-  """
-  type: String!
-
-  """上课次数"""
-  time: Float!
-
-  """有效期 （天）"""
-  validityDay: Float!
-
-  """课程"""
-  course: CourseType!
-}
-
-type StudentType {
-  id: String!
-
-  """昵称"""
-  name: String
-
-  """手机号"""
-  tel: String
-
-  """头像"""
-  avatar: String
-
-  """账号"""
-  account: String
-
-  """密码"""
-  password: String
-
-  """简介"""
-  desc: String
-
-  """性别"""
-  gender: Boolean
-
-  """openid"""
-  openid: String
 }
 
 type ShopImageType {
@@ -227,6 +190,103 @@ type ShopType {
 
   """其他图"""
   shopOtherImg: [ShopImageType!]
+
+  """门店的课程"""
+  courses: [CourseType!]
+}
+
+type ScheduleType {
+  id: String!
+  createdAt: DateTime!
+  createdBy: String
+  updatedAt: DateTime
+  updatedBy: String
+  deletedAt: DateTime
+  deletedBy: String
+
+  """上课日期"""
+  schoolDay: DateTime
+
+  """开始时间"""
+  startTime: String
+
+  """结束时间"""
+  endTime: String
+
+  """人数限制"""
+  limitNumber: Float
+
+  """课程实体信息"""
+  course: CourseType
+
+  """机构信息"""
+  shop: ShopType
+
+  """老师"""
+  teacher: TeacherType
+
+  """预约记录"""
+  scheduleRecords: [ScheduleRecordType!]
+}
+
+type ScheduleRecordType {
+  """id"""
+  id: String!
+
+  """状态"""
+  status: String
+
+  """预约时间"""
+  subscribeTime: DateTime
+
+  """学员"""
+  student: StudentType
+
+  """课程表"""
+  schedule: ScheduleType
+
+  """机构信息"""
+  shop: ShopType
+
+  """课程"""
+  course: CourseType
+}
+
+type ScheduleRecordResult {
+  code: Int!
+  message: String!
+  data: ScheduleRecordType
+}
+
+type ScheduleRecordResults {
+  code: Int!
+  message: String
+  data: [ScheduleRecordType!]
+  page: Page
+}
+
+type CardType {
+  """id"""
+  id: String!
+
+  """名字"""
+  name: String!
+
+  """
+  卡类型 
+       TIME = "time",
+      DURATION = "duration"
+  """
+  type: String!
+
+  """上课次数"""
+  time: Float!
+
+  """有效期 （天）"""
+  validityDay: Float!
+
+  """课程"""
+  course: CourseType!
 }
 
 type CardRecordType {
@@ -297,6 +357,58 @@ type StudentResults {
   code: Int!
   message: String
   data: [StudentType!]
+  page: Page
+}
+
+type ScheduleResult {
+  code: Int!
+  message: String!
+  data: ScheduleType
+}
+
+type ScheduleResults {
+  code: Int!
+  message: String
+  data: [ScheduleType!]
+  page: Page
+}
+
+type ShopResult {
+  code: Int!
+  message: String!
+  data: ShopType
+}
+
+type ShopResults {
+  code: Int!
+  message: String
+  data: [ShopType!]
+  page: Page
+}
+
+type CourseResult {
+  code: Int!
+  message: String!
+  data: CourseType
+}
+
+type CourseResults {
+  code: Int!
+  message: String
+  data: [CourseType!]
+  page: Page
+}
+
+type TeacherResult {
+  code: Int!
+  message: String!
+  data: TeacherType
+}
+
+type TeacherResults {
+  code: Int!
+  message: String
+  data: [TeacherType!]
   page: Page
 }
 
@@ -558,19 +670,6 @@ type OSSType {
   dir: String!
 }
 
-type ShopResult {
-  code: Int!
-  message: String!
-  data: ShopType
-}
-
-type ShopResults {
-  code: Int!
-  message: String
-  data: [ShopType!]
-  page: Page
-}
-
 type DictType {
   id: String!
 
@@ -600,19 +699,6 @@ type DictResults {
   code: Int!
   message: String
   data: [DictType!]
-  page: Page
-}
-
-type CourseResult {
-  code: Int!
-  message: String!
-  data: CourseType
-}
-
-type CourseResults {
-  code: Int!
-  message: String
-  data: [CourseType!]
   page: Page
 }
 
@@ -659,6 +745,18 @@ type Query {
   getUseCardRecordsByCourse(courseId: String!): CardRecordResults!
   getTeacherById(id: String!): TeacherResult!
   getTeachers(page: PageInput!, name: String): TeacherResults!
+  getScheduleInfo(id: String!): ScheduleResult!
+  getSchedules(today: String!): ScheduleResults!
+
+  """获得当前学员可以约的课程"""
+  getCanSubscribeCourses: ShopResults!
+
+  """获取某一个课程的近七天的课程表"""
+  getSchedulesByCourse(courseId: String!): ScheduleResults!
+  getScheduleRecordInfo(id: String!): ScheduleRecordResult!
+
+  """获取某人的课程表"""
+  getScheduleRecords(page: PageInput!): ScheduleRecordResults!
 }
 
 input PageInput {
@@ -712,6 +810,17 @@ type Mutation {
   deleteCardRecord(id: String!): Result!
   saveTeacher(params: TeacherInput!, id: String): TeacherResult!
   deleteTeacher(id: String!): Result!
+
+  """开始排课"""
+  autoCreateSchedule(startDay: String!, endDay: String!): Result!
+  deleteSchedule(id: String!): Result!
+
+  """确认预约课程"""
+  subscribeCourse(scheduleId: String!, cardId: String!): Result!
+  deleteScheduleRecord(id: String!): Result!
+
+  """取消已经预约的课程"""
+  cancelSubscribeCourse(scheduleRecordId: String!): Result!
 }
 
 input UserInput {
