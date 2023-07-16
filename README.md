@@ -38,7 +38,8 @@ pnpm install
 ```
 注意地：
 
-> ^0.3.16 版本的 typeorm 会触发自动删除 id，会有一些 bug，暂时未知什么原因
+> ^0.3.16 版本的 typeorm 会触发自动删除 id，官方issues：https://github.com/typeorm/typeorm/issues/10087
+
 
 ## learn-platform-server （服务端）
 启动本地后端服务：
