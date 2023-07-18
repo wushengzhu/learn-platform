@@ -3,7 +3,7 @@ import { useDeleteShop, useShops } from "@/services/shop";
 import { DEFAULT_PAGE_SIZE } from "@/utils/constants";
 import { PlusOutlined } from "@ant-design/icons";
 import { ProList } from "@ant-design/pro-components";
-import { Button, Popconfirm, Progress, Tag } from "antd";
+import { Button, Popconfirm, Tag } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 

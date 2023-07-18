@@ -2,9 +2,9 @@ export interface IPropChild {
     children: React.ReactNode;
 }
 
-export interface IValue{
-  label:string,
-  value:string,
+export interface IValue {
+    label: string;
+    value: string;
 }
 
 export interface IUser {
@@ -143,6 +143,7 @@ export interface ICourse {
     refundInfo?: string;
     otherInfo?: string;
     reducibleTime: IWeekCourse[];
+    teachers: ITeacher[];
 }
 
 export type TCoursesQuery = {
@@ -218,13 +219,12 @@ export type TTeacherQuery = {
     [key: string]: { __typename?: "Query"; data: ITeacher };
 };
 
-
 export interface IScheduleRecord {
     id: string;
     status: string;
     student: IStudent;
-  }
-  export interface ISchedule {
+}
+export interface ISchedule {
     id: string;
     schoolDay: string;
     startTime: string;
@@ -233,6 +233,8 @@ export interface IScheduleRecord {
     course: ICourse;
     shop: IShop;
     scheduleRecords: IScheduleRecord[];
-  }
+}
 
-  export type TSchedulesQuery = { [key: string]: { __typename?: 'Query', data: ISchedule[] } };
+export type TSchedulesQuery = {
+    [key: string]: { __typename?: "Query"; data: ISchedule[] };
+};
