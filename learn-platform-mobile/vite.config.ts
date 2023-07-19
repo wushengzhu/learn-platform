@@ -1,4 +1,5 @@
-import { defineConfig } from 'vite';
+// import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 // import eslint from 'vite-plugin-eslint';
 import WindiCSS from 'vite-plugin-windicss';
@@ -22,7 +23,7 @@ export default defineConfig({
     https: false,
     open: true, // 自动打开浏览器
     cors: true, // 允许跨域
-    hmr: true,
+    proxy: { '/grapal': 'http://localhost:1024' },
   },
   css: {
     postcss: {
@@ -44,5 +45,9 @@ export default defineConfig({
         }),
       ],
     },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
   },
 });
