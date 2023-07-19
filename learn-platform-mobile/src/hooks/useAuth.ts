@@ -24,7 +24,7 @@ export const useGetStudent = () => {
       if (token) {
         nav(`/`);
       } else {
-        nav(`/login?orgUrl=${location.pathname}`);
+        nav(`/login?shopUrl=${location.pathname}`);
       }
     }
   };

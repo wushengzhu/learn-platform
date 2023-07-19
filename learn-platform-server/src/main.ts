@@ -2,9 +2,11 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 import { NestFactory } from '@nestjs/core';
 import { config } from 'dotenv'; // 注意这里必须引用在AppModule前
 import { AppModule } from './app.module';
+import { getEnvConfig } from './shared/utils';
 
-// 加载.env配置
-config();
+config({
+  path: getEnvConfig(),
+});
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const corsOptions: CorsOptions = {

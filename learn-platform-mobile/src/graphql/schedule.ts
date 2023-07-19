@@ -68,7 +68,7 @@ export const GET_SCHEDULE_RECORD = gql`
           name
           coverUrl
         }
-        org {
+        shop {
           name
           id
           logo

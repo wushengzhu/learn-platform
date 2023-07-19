@@ -7,7 +7,7 @@ import { OSSType } from './dto/oss.type';
 export class OSSService {
   async getSignture(): Promise<OSSType> {
     const config = {
-      accessKeyId: process.env.ACCESS_KEY_ID,
+      accessKeyId: process.env.ACCESS_KEY,
       accessKeySecret: process.env.ACCESS_KEY_SECRET,
       bucket: process.env.BUCKET,
       dir: 'images/',

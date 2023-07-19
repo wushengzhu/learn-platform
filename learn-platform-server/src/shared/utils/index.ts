@@ -35,3 +35,6 @@ export const accountAndPwdValidate = (
     code: SUCCESS,
   };
 };
+
+export const getEnvConfig = () =>
+  process.env.NODE_ENV === 'development' ? '.env' : '/etc/server.conf/.env';
