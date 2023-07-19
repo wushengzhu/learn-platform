@@ -12,7 +12,8 @@ module.exports = {
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   plugins: ['react-refresh'],
   rules: {
-    'perfer-const':0,
+    'perfer-const': 0,
+    '@typescript-eslint/no-empty-function': 0,
     // 'react-refresh/only-export-components': 'warn',
     // 'react/function-component-definition':0,
     // 'import/prefer-in-jsx-scope':0,
@@ -26,12 +27,12 @@ module.exports = {
     // 'react/jsx-closing-bracket-location':0,
     // 'react/jsx-no-useless-fragment':0
   },
-  parserOptions:{
-     project:require.resolve('./tsconfig.json')
+  parserOptions: {
+    project: require.resolve('./tsconfig.json'),
   },
-  settings:{
-    react:{
-      'verison':'detect'
-    }
-  }
-}
+  settings: {
+    react: {
+      verison: 'detect',
+    },
+  },
+};
