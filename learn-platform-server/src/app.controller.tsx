@@ -1,9 +1,10 @@
 import { Controller, Get, Res } from '@nestjs/common';
 import { User } from './modules/user/models/user.entity';
 import { UserService } from './modules/user/user.service';
-import * as ReactDOMServer from 'react-dom;
+import * as ReactDOMServer from 'react-dom';
 import { HelloWorld } from './HelloWorld';
 import { AppService } from './app.service';
+import React from 'react';
 
 @Controller()
 export class AppController {
@@ -50,10 +51,11 @@ export class AppController {
 
   @Get('/html')
   async html(@Res() res) {
-    const name = 'water-drop';
+    const name = 'learn-platform';
     const message = 'Hello World!！！！';
-    const html = ReactDOMServer.renderToString(
+    const html = ReactDOMServer.render(
       <HelloWorld name={name} message={message} />,
+      null,
     );
     res.send(`
       <!DOCTYPE html>
