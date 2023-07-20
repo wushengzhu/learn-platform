@@ -23,7 +23,7 @@ export default defineConfig({
     https: false,
     open: true, // 自动打开浏览器
     cors: true, // 允许跨域
-    proxy: { '/grapal': 'http://localhost:1024' },
+    proxy: { '/graphql': 'http://localhost:1024' },
   },
   css: {
     postcss: {

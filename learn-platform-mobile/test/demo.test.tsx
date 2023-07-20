@@ -26,7 +26,7 @@ describe('测试', () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     await waitFor(() => {});
     // 断言
-    expect(result.current.data).toBe(true);
+    expect(result.current).toBe(true);
   });
 
   it('组件测试', async () => {

@@ -1,0 +1,5 @@
+node_modules
+mock
+dist
+.vscode
+test

@@ -42,8 +42,8 @@ const useRequest = (
     [service],
   );
   useMount(() => {
-    if (!options.manual) {
-      init(options.params);
+    if (!options.manual && options?.params) {
+      init(options?.params);
     }
   });
 
