@@ -11,7 +11,7 @@ const NoShop = () => {
     if (store.currentShop) {
       go()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [store.currentShop])
   return (
     <Result

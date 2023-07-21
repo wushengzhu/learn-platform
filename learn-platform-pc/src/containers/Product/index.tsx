@@ -11,7 +11,6 @@ import { DEFAULT_PAGE_SIZE } from "@/utils/constants";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ProductEdit from "@/components/ProductEdit";
-import ConsumeCard from "@/components/ConsumeCard";
 import {
     useDeleteProduct,
     useEditProduct,

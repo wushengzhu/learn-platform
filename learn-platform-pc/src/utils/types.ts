@@ -14,7 +14,7 @@ export interface IUser {
     gender?: boolean;
     account?: string;
     desc?: string;
-    avatar: string;
+    avatar?: string;
     currentShop?: string;
     refetchHandler: () => void;
 }
@@ -162,7 +162,7 @@ export interface ICard {
     type: string;
     time: number;
     validityDay: number;
-    course: ICourse;
+    course?: ICourse;
 }
 
 export type TCardsQuery = {
