@@ -38,3 +38,8 @@ export const accountAndPwdValidate = (
 
 export const getEnvConfig = () =>
   process.env.NODE_ENV === 'development' ? '.env' : '/etc/server.conf/.env';
+
+export const getMysqlHost = () =>
+  process.env.NODE_ENV === 'development'
+    ? process.env.MYSQL_D_HOST
+    : process.env.MYSQL_P_HOST;
