@@ -6,12 +6,7 @@ import { currentShop } from ".";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 
-let uri = `http://${window.location.hostname}:1024/graphql`;
-// uri: 'http://192.168.1.174:1024/graphql', // 可手机上调试的本地ip后端地址
-if (process.env.NODE_ENV === "production") {
-    uri = "";
-}
-
+const uri = `/graphql`;
 /**
  * 统一处理接口报错
  */

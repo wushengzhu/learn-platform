@@ -20,5 +20,6 @@ export default defineConfig({
         port: 1396,
         https: false,
         hmr: true,
+        proxy: { "/graphql": "http://localhost:1024" },
     },
 });
