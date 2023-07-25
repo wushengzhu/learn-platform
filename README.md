@@ -41,7 +41,7 @@ pnpm install
 注意地：
 
 > ^0.3.16 版本的 typeorm 会触发自动删除 id，官方 issues：https://github.com/typeorm/typeorm/issues/10087
-
+## learn-platform-deploy （部署）
 ## learn-platform-server （服务端）
 
 启动本地后端服务：
@@ -63,7 +63,6 @@ pnpm temp
 - 安装所需的包：pnpm i sqlite3 -D
 - nestjs 测试文档：https://docs.nestjs.com/fundamentals/testing#testing-utilities
 
-## learn-platform-deploy （部署文件）
 
 ## learn-platform-pc （网页端）
 
