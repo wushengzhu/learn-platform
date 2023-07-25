@@ -63,6 +63,8 @@ pnpm temp
 - 安装所需的包：pnpm i sqlite3 -D
 - nestjs 测试文档：https://docs.nestjs.com/fundamentals/testing#testing-utilities
 
+## learn-platform-deploy （部署文件）
+
 ## learn-platform-pc （网页端）
 
 启动本地 pc 端：

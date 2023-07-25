@@ -4,21 +4,21 @@ import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { currentShop } from ".";
 import { message } from "antd";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const uri = `/graphql`;
 /**
  * 统一处理接口报错
  */
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-    const nav = useNavigate();
+    // const nav = useNavigate();
     if (graphQLErrors) {
         // message.info("请求参数或者返回的数据格式不对");
         graphQLErrors.forEach((item) => {
             if (item.message === "Unauthorized") {
                 message.destroy();
                 message.error("登录失效，请登录");
-                nav("/login");
+                // nav("/login");
             }
         });
     }
