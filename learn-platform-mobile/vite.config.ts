@@ -5,10 +5,19 @@ import react from '@vitejs/plugin-react';
 import WindiCSS from 'vite-plugin-windicss';
 import path from 'path';
 import postCssPxToViewport from 'postcss-px-to-viewport';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), , WindiCSS()],
+  plugins: [
+    react(),
+    WindiCSS(),
+    visualizer({
+      open: true, // 注意这里要设置为true，否则无效
+      gzipSize: true, // 打包压缩
+      brotliSize: true, // 收集 brotli 大小并将其显示
+    }) as Plugin,
+  ],
   resolve: {
     alias: [
       {
