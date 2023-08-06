@@ -1,27 +1,27 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    /* Bundler mode */
-    "moduleResolution": "node",
-    // "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    "compilerOptions": {
+        "target": "ESNext",
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "module": "ESNext",
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        /* Bundler mode */
+        "moduleResolution": "node",
+        // "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
 
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": false, // 取消无用引入检测
+        "noUnusedParameters": false,
+        "noFallthroughCasesInSwitch": true,
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["src"],
+    "references": [{ "path": "./tsconfig.node.json" }]
 }
