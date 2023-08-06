@@ -12,8 +12,8 @@ export const GET_PRODUCT_TYPES = gql`
 `;
 
 export const GET_PRODUCTS_BY_SHOP_ID = gql`
-  query getProductsByShopIdForH5($orgId: String!) {
-    getProductsByShopIdForH5(orgId: $orgId) {
+  query getProductsByShopIdForH5($shopId: String!) {
+    getProductsByShopIdForH5(shopId: $shopId) {
       code
       message
       data {

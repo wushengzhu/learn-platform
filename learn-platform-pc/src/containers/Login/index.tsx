@@ -22,7 +22,7 @@ import { AUTH_TOKEN } from "@/utils/constants";
 import { Link, useNavigate } from "react-router-dom";
 import Register from "../Register";
 import { useTitle } from "@/hooks/useTitle";
-import * as md5 from "md5";
+import md5 from "md5";
 import { useUserContext } from "@/hooks/useHooks";
 
 type LoginType = "phone" | "account";

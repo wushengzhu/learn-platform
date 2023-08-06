@@ -33,16 +33,19 @@
 </p>
 
 安装 pnpm：
+
 ```
 pnpm install
 ```
+
 注意地：
 
-> ^0.3.16 版本的 typeorm 会触发自动删除 id，官方issues：https://github.com/typeorm/typeorm/issues/10087
-
-
+> ^0.3.16 版本的 typeorm 会触发自动删除 id，官方 issues：https://github.com/typeorm/typeorm/issues/10087
+## learn-platform-deploy （部署）
 ## learn-platform-server （服务端）
+
 启动本地后端服务：
+
 ```
 pnpm dev
 ```
@@ -50,27 +53,41 @@ pnpm dev
 打开 graphql 可视化 api 调试：http://localhost:1024/graphql
 
 生成 modules 中 api 文件模板：
+
 ```
 pnpm temp
 ```
+
+如何测试：
+
+- 安装所需的包：pnpm i sqlite3 -D
+- nestjs 测试文档：https://docs.nestjs.com/fundamentals/testing#testing-utilities
+
+
 ## learn-platform-pc （网页端）
+
 启动本地 pc 端：
+
 ```
 pnpm dev
 ```
+
 打开 pc 端页面：http://localhost:1396
 
 ## learn-platform-mobile（手机端）
 
 启动本地 mobile 端：
+
 ```
 pnpm dev
 ```
+
 打开 mobile 端页面：http://localhost:1398
 
-手机上本地调试H5：
+手机上本地调试 H5：
 
-- 先配置vite的server：
+- 先配置 vite 的 server：
+
 ```
   server: {
     host: '0.0.0.0', // 打开通过IP地址访问的开关
@@ -78,10 +95,11 @@ pnpm dev
     https: false,
     open: true, // 自动打开浏览器
     cors: true, // 允许跨域
-    hmr: true,
   },
 ```
-- 配置代理的后端服务的uri为自己的ip地址：
+
+- 配置代理的后端服务的 uri 为自己的 ip 地址：
+
 ```
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
@@ -108,6 +126,13 @@ export const client = new ApolloClient({
 });
 
 ```
+
 - 手机与电脑处于同一个局域网下
-- 安装一个谷歌二维码生成插件，开启二维码插件后把上面url的localhost部分换成本地ip地址
-- 通过手机扫一扫，就可以打开mobile端，注意地，打不开可能需要关闭电脑防火墙。
+- 安装一个谷歌二维码生成插件，开启二维码插件后把上面 url 的 localhost 部分换成本地 ip 地址
+- 通过手机扫一扫，就可以打开 mobile 端，注意地，打不开可能需要关闭电脑防火墙。
+
+单元测试:jest
+
+- 安装包：pnpm i vitest jsdom @testing-library/react -D
+- vitest 文档：https://vitest.dev/api/
+- react-testing-library 文档：https://testing-library.com/docs/react-testing-library/api

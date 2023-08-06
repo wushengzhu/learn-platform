@@ -44,7 +44,7 @@ const DataDict = () => {
     const [expandKeys, setExpandKeys] = useState("0");
     const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
     const [treeData, setTreeData] = useState<DataNode[]>([]);
-    const [curNode, setCurNode] = useState(treeData[0]);
+    const [curNode, setCurNode] = useState({ ...treeData[0], code: "" });
 
     useEffect(() => {
         if (listData) {
@@ -180,7 +180,7 @@ const DataDict = () => {
         } else {
             refetchByParentId(keys[0].toString());
         }
-        setCurNode(info.node);
+        setCurNode(info.node as any);
     };
 
     const onExpand: DirectoryTreeProps["onExpand"] = (keys, info) => {

@@ -19,12 +19,13 @@ import { ShopModule } from './modules/shop/shop.module';
 import { DictModule } from './modules/dict/dict.module';
 import { CourseModule } from './modules/course/course.module';
 import { CardModule } from './modules/card/card.module';
+import { getMysqlHost } from './shared/utils';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.MYSQL_HOST,
+      host: getMysqlHost(),
       port: parseInt(process.env.MYSQL_PORT),
       username: process.env.MYSQL_USERNAME,
       password: process.env.MYSQL_PWD,

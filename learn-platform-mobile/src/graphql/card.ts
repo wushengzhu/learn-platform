@@ -1,41 +1,41 @@
 import { gql } from '@apollo/client';
 
 export const GET_CARDS = gql`
-query getCardRecordsForH5($page: PageInput!){
-  getCardRecordsForH5(page: $page){
-    code
-    page {
-      total
-      pageNum
-      pageSize
-    }
-    data {
-      id
-      startTime
-      endTime
-      buyTime
-      status
-      residueTime
-      card {
-        id
-        name
-        type
-        validityDay
+  query getCardRecordsForH5($page: PageInput!) {
+    getCardRecordsForH5(page: $page) {
+      code
+      page {
+        total
+        pageNum
+        pageSize
       }
-      org {
+      data {
         id
-        name
+        startTime
+        endTime
+        buyTime
+        status
+        residueTime
+        card {
+          id
+          name
+          type
+          validityDay
+        }
+        shop {
+          id
+          name
+        }
       }
+      message
     }
-    message
   }
-}
 `;
 
 // 获取某个课程有用的消费卡
 export const GET_USE_CARDS = gql`
-  query getUseCardRecordsByCourse($courseId: String!){
-    getUseCardRecordsByCourse(courseId: $courseId){
+  query getUseCardRecordsByCourse($courseId: String!) {
+    getUseCardRecordsByCourse(courseId: $courseId) {
       code
       message
       data {
@@ -55,4 +55,5 @@ export const GET_USE_CARDS = gql`
         total
       }
     }
-  }`;
+  }
+`;

@@ -1,13 +1,23 @@
-import { defineConfig } from 'vite';
+// import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 // import eslint from 'vite-plugin-eslint';
 import WindiCSS from 'vite-plugin-windicss';
 import path from 'path';
 import postCssPxToViewport from 'postcss-px-to-viewport';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), , WindiCSS()],
+  plugins: [
+    react(),
+    WindiCSS(),
+    visualizer({
+      open: true, // 注意这里要设置为true，否则无效
+      gzipSize: true, // 打包压缩
+      brotliSize: true, // 收集 brotli 大小并将其显示
+    }) as Plugin,
+  ],
   resolve: {
     alias: [
       {
@@ -22,7 +32,7 @@ export default defineConfig({
     https: false,
     open: true, // 自动打开浏览器
     cors: true, // 允许跨域
-    hmr: true,
+    proxy: { '/graphql': 'http://localhost:1024' },
   },
   css: {
     postcss: {
@@ -44,5 +54,9 @@ export default defineConfig({
         }),
       ],
     },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
   },
 });

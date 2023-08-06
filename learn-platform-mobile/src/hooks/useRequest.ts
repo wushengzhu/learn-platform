@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import useMount from './useMount';
 
 interface IOptions {
-  params: Record<string, string>;
+  params?: Record<string, string>;
   manual?: boolean;
   onSuccess?: (res: unknown) => void;
   onError?: (err: unknown) => void;
@@ -42,8 +42,8 @@ const useRequest = (
     [service],
   );
   useMount(() => {
-    if (!options.manual) {
-      init(options.params);
+    if (!options.manual && options?.params) {
+      init(options?.params);
     }
   });
 

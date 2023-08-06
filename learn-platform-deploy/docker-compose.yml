@@ -1,0 +1,44 @@
+version: '3'
+services:
+  pc:
+    build: ../learn-platform-pc
+    platform: linux/amd64
+    container_name: 'pc'
+    image: 'registry.cn-guangzhou.aliyuncs.com/wushengzhu/learn-platform-pc::v1'
+    ports:
+      - '4000:80'
+    volumes:
+      - './nginx:/etc/nginx/conf.d'
+    depends_on:
+      - server
+  mobile:
+    build: ../learn-platform-mobile
+    platform: linux/amd64
+    container_name: 'mobile'
+    image: 'registry.cn-guangzhou.aliyuncs.com/wushengzhu/learn-platform-mobile:v1'
+    ports:
+      - '3000:80'
+    volumes:
+      - './nginx:/etc/nginx/conf.d'
+    depends_on:
+      - server
+  server:
+    build: ../learn-platform-server
+    platform: linux/amd64
+    container_name: 'server'
+    image: 'registry.cn-guangzhou.aliyuncs.com/wushengzhu/learn-platform-server:v1'
+    ports:
+      - '3333:3000'
+    volumes:
+      - './server:/etc/server.conf'
+    depends_on:
+      - mysqlserver
+  mysqlserver:
+    container_name: 'mysqlserver'
+    platform: linux/amd64
+    image: 'mysql:8.0.33'
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=123456'
+      - 'MYSQL_DATABASE=learn-platform'
+    volumes:
+      - './db:/docker-entrypoint-initdb.d'

@@ -1,4 +1,4 @@
-import { Form, Modal, Spin, message } from "antd";
+import { Form, Modal, message } from "antd";
 import {
     ProForm,
     ProFormInstance,
@@ -11,8 +11,7 @@ import { UPDATE_USER } from "@/graphql/user";
 import { useEffect, useRef, useState } from "react";
 import ImageUpload from "../ImageUpload";
 import { useUserContext } from "@/hooks/useHooks";
-import { useStudent, useUser } from "@/services/account";
-import { COMMIT_STUDENT } from "@/graphql/student";
+import { useUser } from "@/services/account";
 
 interface IModalParams {
     id?: string;
@@ -28,21 +27,9 @@ interface IModalParams {
 const AccountEdit = ({ title, id, width, onClose, type }: IModalParams) => {
     const { store } = useUserContext();
     const formRef = useRef<ProFormInstance>();
-    const [updateAccount] = useMutation(
-        type === "user"
-            ? UPDATE_USER
-            : type === "student"
-            ? COMMIT_STUDENT
-            : COMMIT_STUDENT
-    );
+    const [updateAccount] = useMutation(UPDATE_USER);
     const [isModalOpen, setIsModalOpen] = useState(true);
-    const run =
-        type === "user"
-            ? useUser
-            : type === "student"
-            ? useStudent
-            : useStudent;
-    const { data } = run(id ? id : "");
+    const { data } = useUser(id ? id : "");
 
     const handleOk = async () => {
         const values = Object.assign(
@@ -59,18 +46,13 @@ const AccountEdit = ({ title, id, width, onClose, type }: IModalParams) => {
                 },
             },
         });
-        if (
-            res.data.updateUserInfo.code === 200 ||
-            res.data.commitStudent.code === 200
-        ) {
+        if (res.data.updateUserInfo.code === 200) {
             store.refetchHandler();
             message.success("更新成功！");
             setIsModalOpen(false);
             return;
         }
-        message.error(
-            res.data.updateUserInfo.message || res.data.commitStudent.message
-        );
+        message.error(res.data.updateUserInfo.message);
     };
 
     const afterClose = () => {
@@ -81,20 +63,15 @@ const AccountEdit = ({ title, id, width, onClose, type }: IModalParams) => {
     useEffect(() => {
         if (data && id) {
             formRef.current?.setFieldsValue({
-                tel: data?.tel,
-                name: data?.name,
-                account: data?.account,
-                desc: data?.desc,
-                gender: data?.gender,
+                ...data,
                 avatar:
                     [
                         {
-                            url: data?.avatar || "",
+                            url: data?.avatar || null,
                         },
                     ] || [],
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
     const formItemLayout = {
         labelCol: { span: 5 },
