@@ -42,7 +42,7 @@ export const accountAndPwdValidate = (
  */
 export const getEnvConfig = () =>
   process.env.NODE_ENV === 'development' ? '.env' : '/etc/server.conf/.env';
-//  process.env.NODE_ENV === 'development' ? '.env' : '.env';
+// process.env.NODE_ENV === 'development' ? '.env' : '.env';
 
 export const getMysqlHost = () =>
   process.env.NODE_ENV === 'development'
@@ -53,3 +53,8 @@ export const getMysqlPwd = () =>
   process.env.NODE_ENV === 'development'
     ? process.env.MYSQL_D_PWD
     : process.env.MYSQL_P_PWD;
+
+export const getHostIp = () =>
+  process.env.NODE_ENV === 'development'
+    ? process.env.DEVALOPMENT_IP
+    : process.env.PRODUCTION_IP;

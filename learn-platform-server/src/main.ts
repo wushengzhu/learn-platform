@@ -1,7 +1,7 @@
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
 import { config } from 'dotenv'; // 注意这里必须引用在AppModule前
-import { getEnvConfig } from './shared/utils';
+import { getEnvConfig, getHostIp } from './shared/utils';
 import { AppModule } from './app.module';
 
 config({
@@ -20,6 +20,6 @@ async function bootstrap() {
   };
   // 允许跨域
   app.enableCors(corsOptions);
-  await app.listen(1024);
+  await app.listen(1024, getHostIp());
 }
 bootstrap();
