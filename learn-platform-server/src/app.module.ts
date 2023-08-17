@@ -19,7 +19,7 @@ import { ShopModule } from './modules/shop/shop.module';
 import { DictModule } from './modules/dict/dict.module';
 import { CourseModule } from './modules/course/course.module';
 import { CardModule } from './modules/card/card.module';
-import { getMysqlHost } from './shared/utils';
+import { getMysqlHost, getMysqlPwd } from './shared/utils';
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ import { getMysqlHost } from './shared/utils';
       host: getMysqlHost(),
       port: parseInt(process.env.MYSQL_PORT),
       username: process.env.MYSQL_USERNAME,
-      password: process.env.MYSQL_PWD,
+      password: getMysqlPwd(),
       database: process.env.MYSQL_DB,
       entities: [`${__dirname}/../modules/**/*.entity{.ts,.js}`],
       logging: true,

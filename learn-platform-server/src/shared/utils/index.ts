@@ -36,10 +36,20 @@ export const accountAndPwdValidate = (
   };
 };
 
+/**
+ *  process.env.NODE_ENV === 'development'出现false，暂时不知什么问题
+ * @returns
+ */
 export const getEnvConfig = () =>
   process.env.NODE_ENV === 'development' ? '.env' : '/etc/server.conf/.env';
+//  process.env.NODE_ENV === 'development' ? '.env' : '.env';
 
 export const getMysqlHost = () =>
   process.env.NODE_ENV === 'development'
     ? process.env.MYSQL_D_HOST
     : process.env.MYSQL_P_HOST;
+
+export const getMysqlPwd = () =>
+  process.env.NODE_ENV === 'development'
+    ? process.env.MYSQL_D_PWD
+    : process.env.MYSQL_P_PWD;
