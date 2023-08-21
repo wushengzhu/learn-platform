@@ -37,7 +37,9 @@ export const accountAndPwdValidate = (
 };
 
 /**
- *  process.env.NODE_ENV === 'development'出现false，暂时不知什么问题
+ *  process.env.NODE_ENV === 'development'出现false，由于配置时多了一个空格
+ *  解决方式一：process.env.NODE_ENV.trim()
+ *  解决方式二：set NODE_ENV=production&& node dist/main 注意&&前面已去掉对应的空格
  * @returns
  */
 export const getEnvConfig = () =>

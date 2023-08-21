@@ -1,0 +1,6 @@
+# compiled output
+/dist
+/node_modules
+
+# secret constant
+/server/.env
