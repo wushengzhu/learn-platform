@@ -1,3 +1,14 @@
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://react.dev/images/home/conf2021/cover.svg" width="200" alt="React Logo" /></a>
+</p>
+
+## 使用百度地图定位门店
+
+-   认证百度开放平台开发者，添加应用，相关配置请看官方文档
+-   下载 react-bmapgl
+-   封装组件
+
+```react
 import { Map, Marker, NavigationControl, InfoWindow } from "react-bmapgl";
 
 interface IProps {
@@ -22,3 +33,14 @@ const BaiduMap = ({ onChange, lng, lat }: IProps) => {
 };
 
 export default BaiduMap;
+```
+
+> 由于百度地图定位精确度不太好，所以需要额外插件精度化，所以不推荐使用
+
+## 使用高德地图定位门店
+
+-   以本项目 GaodeMap 组件为例子
+
+## License
+
+Nest is [MIT licensed](LICENSE).

@@ -16,8 +16,8 @@ import { useEffect, useMemo, useState } from "react";
 import ImageUpload from "../ImageUpload";
 import { IShop } from "@/utils/types";
 import dayjs from "dayjs";
-import BaiduMap from "../BaiduMap";
 import DictSelect from "../DictSelect";
+import GaoDeMap from "../GaodeMap";
 
 interface IProp {
     id: string;
@@ -35,19 +35,19 @@ const ShopEdit = ({ id, onClose }: IProp) => {
         () =>
             data
                 ? {
-                    ...data,
-                    tags: data.tags?.split(","),
-                    logo: [{ url: data.logo }],
-                    establishmentDate: dayjs(
-                        data?.establishmentDate,
-                        "YYYY-MM-DD"
-                    ),
-                    identityCardBackImg: [{ url: data.identityCardBackImg }],
-                    identityCardFrontImg: [
-                        { url: data.identityCardFrontImg },
-                    ],
-                    businessLicense: [{ url: data.businessLicense }],
-                }
+                      ...data,
+                      tags: data.tags?.split(","),
+                      logo: [{ url: data.logo }],
+                      establishmentDate: dayjs(
+                          data?.establishmentDate,
+                          "YYYY-MM-DD"
+                      ),
+                      identityCardBackImg: [{ url: data.identityCardBackImg }],
+                      identityCardFrontImg: [
+                          { url: data.identityCardFrontImg },
+                      ],
+                      businessLicense: [{ url: data.businessLicense }],
+                  }
                 : {},
         [data]
     );
@@ -135,7 +135,7 @@ const ShopEdit = ({ id, onClose }: IProp) => {
     };
 
     const onChangeMap = (map: any) => {
-        const { lng, lat } = map.latlng || {
+        const { lng, lat } = map.lnglat || {
             lng: 113.37069466999039,
             lat: 23.131782278003545,
         };
@@ -238,7 +238,7 @@ const ShopEdit = ({ id, onClose }: IProp) => {
                         <DictSelect
                             dictCode="shop_tag"
                             mode="tags"
-                        // value={data?.tags}
+                            // value={data?.tags}
                         />
                     </Form.Item>
                     <Row gutter={20}>
@@ -284,7 +284,7 @@ const ShopEdit = ({ id, onClose }: IProp) => {
                         </Col>
                     </Row>
                     <Form.Item label="地图">
-                        <BaiduMap onChange={onChangeMap} lng={lng} lat={lat} />
+                        <GaoDeMap onChange={onChangeMap} lng={lng} lat={lat} />
                     </Form.Item>
                     <Row gutter={20}>
                         <Col sm={10}>
