@@ -1,7 +1,7 @@
 {
-  "name": "learn-platform",
+  "name": "learn-platform-server",
   "version": "0.0.1",
-  "description": "",
+  "description": "learn-platform-server",
   "author": "ws_zhu@foxmail.com",
   "private": true,
   "license": "UNLICENSED",
@@ -19,7 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "pm2:prod":"pm2 start npm --name xxxxx -- run prod"
+    "pm2:prod":"pm2 start npm --name learn-platform-server -- run prod"
   },
   "dependencies": {
     "@alicloud/dysmsapi20170525": "^2.0.23",

@@ -38,6 +38,15 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                         </Route>
                     </Routes>
                 </UserInfo>
+                <footer>
+                    <span>
+                        Copyright&nbsp;&copy; 2023 -{new Date().getFullYear()}
+                    </span>
+                    &nbsp; &#124; &nbsp;
+                    <a href="https://beian.miit.gov.cn" target="_blank">
+                        {"粤ICP备2023094742号-1"}
+                    </a>
+                </footer>
             </BrowserRouter>
         </ApolloProvider>
     </ConfigProvider>

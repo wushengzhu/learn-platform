@@ -6,7 +6,7 @@ import path from "path";
 import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
-export default ({ mode }) =>
+export default ({ mode }: any) =>
     defineConfig({
         plugins: [
             react(),
