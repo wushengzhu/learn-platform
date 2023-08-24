@@ -15,7 +15,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+      - name: SSH scan for gitee.com
+        run: |
+          ssh-keyscan gitee.com >> ~/.ssh/id_rsa
       - name: Sync to Gitee
         run: |
           git remote add gitee git@gitee.com:wushengzhu/learn-platform.git  # 替换为你的 Gitee 仓库地址
