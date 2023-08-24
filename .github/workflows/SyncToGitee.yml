@@ -5,6 +5,7 @@ on:
     branches:
       - main
 
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -12,9 +13,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Sync code to Gitee
         env:
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+          GITEE_USERNAME: wushengzhu
+          GITEE_ACCESS_TOKEN: ${{ secrets.GITEE_TOKEN }}
         run: |
-          git remote add gitee https://gitee.com/wushengzhu/learn-platform.git
+          git remote add gitee https://wushengzhu:${GITEE_TOKEN}@gitee.com/wushengzhu/learn-platform.git
           git push gitee HEAD:main --force
