@@ -14,7 +14,7 @@ jobs:
       uses: Yikun/hub-mirror-action@v1.1  # 使用Yikun/hub-mirror-action
       with:
         src: github/wushengzhu  # 源端账户名(github)
-        dst: gitee/wushengzhu  # 目的端账户名(gitee)
+        dst: gitee/wszhu  # 目的端账户名(gitee)
         dst_key: secrets.GITEE_PRIVATE_KEY  # SSH密钥对中的私钥
         dst_token:  secrets.GITEE_TOKEN  # Gitee账户的私人令牌
         account_type: user  # 账户类型
