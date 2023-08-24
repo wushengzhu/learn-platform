@@ -15,17 +15,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: SSH scan for gitee.com
-        run: |
-          ssh-keyscan gitee.com >> ~/.ssh/id_rsa
-      - name: Sync to Gitee
-        run: |
-          git remote add gitee git@gitee.com:wushengzhu/learn-platform.git  # 替换为你的 Gitee 仓库地址
-          git push gitee HEAD:master
 
+      - name: Sync to Gitee
+        uses: softprops/action-gh-release@latest
+        with:
+          gitee_token: ${{ secrets.GITEE_TOKEN }}
+          gitee_repository: wushengzhu/learn-platform  # Gitee 仓库名称，格式为：Owner/Repository
+        
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Sync code from GitHub to Gitee"
           commit_user_name: ${{ github.actor }}
-          commit_user_email: ${{ github.actor }}@users.noreply.github.com
+          commit_user_email: ws_zhu@foxmail.com
