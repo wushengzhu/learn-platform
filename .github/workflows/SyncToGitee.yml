@@ -1,23 +1,18 @@
-name: Sync code to Gitee
+name: Sync To Gitee
 
-on:
-  push:
-    branches:
-      - main
-
+on: [ push, delete, create ]
 
 jobs:
-  sync:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Sync code to Gitee
+      - name: Sync to Gitee
+        uses: wearerequired/git-mirror-action@master
         env:
-          GITEE_USERNAME: wushengzhu
-          GITEE_ACCESS_TOKEN: ${{  secrets.GITEE_ACCESS_TOKEN  }}
-        run: |
-          git remote add gitee https://gitee.com/wushengzhu/learn-platform.git
-          git push gitee HEAD:main --force
+          # 注意在 Settings->Secrets 配置 GITEE_PRIVATE_KEY
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
+        with:
+          # 注意替换为你的 GitHub 源仓库地址
+          source-repo: git@github.com:wushengzhu/learn-platform.git
+          # 注意替换为你的 Gitee 目标仓库地址
+          destination-repo: git@gitee.com:wushengzhu/learn-platform.git
