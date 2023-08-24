@@ -17,11 +17,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Sync to Gitee
-        uses: softprops/action-gh-release@v1
-        with:
-          gitee_token: ${{ secrets.GITEE_TOKEN }}
-          gitee_repository: wszhu/learn-platform  # Gitee 仓库名称，格式为：Owner/Repository
-        
+        run: |
+          git remote add gitee https://gitee.com/wszhu/learn-platform.git  # 替换为你的 Gitee 仓库地址
+          git push gitee HEAD:master
+
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
