@@ -19,5 +19,5 @@ jobs:
           GITEE_USERNAME: wushengzhu
           GITEE_ACCESS_TOKEN: ${{  secrets.GITEE_ACCESS_TOKEN  }}
         run: |
-          git remote add gitee https://wushengzhu:${GITEE_ACCESS_TOKEN}@gitee.com/wushengzhu/learn-platform.git
+          git remote add gitee https://gitee.com/wushengzhu/learn-platform.git
           git push gitee HEAD:main --force
