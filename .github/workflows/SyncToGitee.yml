@@ -1,30 +1,19 @@
-name: Sync to Gitee
+name: Sync code to Gitee
 
 on:
   push:
-    branches: 
+    branches:
       - main
-  # schedule:
-  #   - cron: "0 0 * * *"  # 每天 UTC 时间 00:00 执行
-  # workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Sync to Gitee
-        uses: softprops/action-gh-release@v0.1.15
-        with:
-          gitee_token: ${{ secrets.GITEE_TOKEN }}
-          gitee_repository: wushengzhu/learn-platform  # Gitee 仓库名称，格式为：Owner/Repository
-        
-      - name: Push changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "Sync code from GitHub to Gitee"
-          commit_user_name: ${{ github.actor }}
-          commit_user_email: ws_zhu@foxmail.com
+      - name: Sync code to Gitee
+        run: |
+          git remote add gitee https://gitee.com/wushengzhu/learn-platform.git
+          git push gitee HEAD:main --force
