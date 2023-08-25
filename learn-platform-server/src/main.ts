@@ -20,6 +20,7 @@ async function bootstrap() {
   };
   // 允许跨域
   app.enableCors(corsOptions);
-  await app.listen(1024, getHostIp());
+  await app.listen(1024);
+  // await app.listen(1024, getHostIp()); 一般最好不要添加getHostIp，不然会出错
 }
 bootstrap();
