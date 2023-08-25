@@ -8,7 +8,7 @@ FROM node:18 AS builder
 # 第二个 . 的意思是当前启动的容器的根目录
 COPY . .
 # 在镜像中执行命令 大版本最好与本地一致
-RUN npm install pnpm -g && pnpm install && pnpm run build 
+RUN npm install pnpm -g  && pnpm install --registry=http://registry.npm.taobao.org && pnpm run build
 
 FROM nginx:1.25.1
 
