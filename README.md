@@ -47,7 +47,14 @@ pnpm install
 注意地：
 
 > ^0.3.16 版本的 typeorm 会触发自动删除 id，官方 issues：https://github.com/typeorm/typeorm/issues/10087
+
+若本项目使用普通部署，nginx配置如template.nginx.conf；若使用docker部署在服务器执行docker-compose。
 ## learn-platform-deploy （部署）
+在服务器的项目目录（比如/home/projects/learn-platform/learn-platform-deploy）下执行：
+```
+docker-compose build
+```
+> 命令执行的是docker-compose.yml配置
 ## learn-platform-server （服务端）
 
 启动本地后端服务：
@@ -94,50 +101,50 @@ pnpm dev
 
 - 先配置 vite 的 server：
 
-```
-  server: {
-    host: '0.0.0.0', // 打开通过IP地址访问的开关
-    port: 1398,
-    https: false,
-    open: true, // 自动打开浏览器
-    cors: true, // 允许跨域
-  },
-```
+	```
+	  server: {
+	    host: '0.0.0.0', // 打开通过IP地址访问的开关
+	    port: 1398,
+	    https: false,
+	    open: true, // 自动打开浏览器
+	    cors: true, // 允许跨域
+	  },
+	```
 
 - 配置代理的后端服务的 uri 为自己的 ip 地址：
 
-```
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { AUTH_TOKEN } from './constants';
+	```
+	import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+	import { setContext } from '@apollo/client/link/context';
+	import { AUTH_TOKEN } from './constants';
+	
+	const httpLink = createHttpLink({
+	  // uri: 'http://localhost:1024/graphql',
+	  uri: `${本地ip地址}:1024/graphql`, // 可手机上调试的本地ip后端地址
+	});
+	const authLink = setContext((_, { headers }) => {
+	  const token = localStorage.getItem(AUTH_TOKEN);
+	  return {
+	    headers: {
+	      ...headers,
+	      Authorization: token ? `Bearer ${token}` : '',
+	    },
+	  };
+	});
+	export const client = new ApolloClient({
+	  link: authLink.concat(httpLink),
+	  cache: new InMemoryCache({
+	    addTypename: false,
+	  }),
+	});
+	
+	```
+	注意地，
+	- 手机与电脑处于同一个局域网下
+	- 安装一个谷歌二维码生成插件，开启二维码插件后把上面 url 的 localhost 部分换成本地 ip 地址
+	- 通过手机扫一扫，就可以打开 mobile 端，注意地，打不开可能需要关闭电脑防火墙。
 
-const httpLink = createHttpLink({
-  // uri: 'http://localhost:1024/graphql',
-  uri: `${本地ip地址}:1024/graphql`, // 可手机上调试的本地ip后端地址
-});
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem(AUTH_TOKEN);
-  return {
-    headers: {
-      ...headers,
-      Authorization: token ? `Bearer ${token}` : '',
-    },
-  };
-});
-export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache({
-    addTypename: false,
-  }),
-});
-
-```
-注意地，
-- 手机与电脑处于同一个局域网下
-- 安装一个谷歌二维码生成插件，开启二维码插件后把上面 url 的 localhost 部分换成本地 ip 地址
-- 通过手机扫一扫，就可以打开 mobile 端，注意地，打不开可能需要关闭电脑防火墙。
-
-单元测试:jest
+## 单元测试:jest
 
 - 安装包：pnpm i vitest jsdom @testing-library/react -D
 - vitest 文档：https://vitest.dev/api/
