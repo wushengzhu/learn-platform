@@ -1,4 +1,4 @@
-FROM node:18 AS builder 
+FROM node:18 AS builder
 
 COPY . .
 
@@ -7,7 +7,7 @@ RUN npm install pnpm -g  && pnpm install --registry=http://registry.npm.taobao.o
 
 FROM node:18
 
-WORKDIR /home/projects/learn-platform-server
+WORKDIR /home/projects/learn-platform/learn-platform-server
 
 COPY --from=builder ./node_modules ./node_modules
 COPY --from=builder ./dist ./dist
