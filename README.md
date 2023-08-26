@@ -30,6 +30,12 @@
     <a href="hhttps://dayjs.gitee.io/zh-CN/"  target="_blank">
       <img src="https://img.shields.io/badge/dayjs-%5E1.11.7-blue">
     </a>
+   <a href="hhttps://dayjs.gitee.io/zh-CN/"  target="_blank">
+      <img src="https://img.shields.io/badge/vite-%5E4.3.2-blue">
+    </a>
+      <a href="hhttps://dayjs.gitee.io/zh-CN/"  target="_blank">
+      <img src="https://img.shields.io/badge/windicss-%5E3.5.6-blue">
+    </a>
 </p>
 
 安装 pnpm：
