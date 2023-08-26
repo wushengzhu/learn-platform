@@ -126,7 +126,7 @@ export const client = new ApolloClient({
 });
 
 ```
-
+注意地，
 - 手机与电脑处于同一个局域网下
 - 安装一个谷歌二维码生成插件，开启二维码插件后把上面 url 的 localhost 部分换成本地 ip 地址
 - 通过手机扫一扫，就可以打开 mobile 端，注意地，打不开可能需要关闭电脑防火墙。
