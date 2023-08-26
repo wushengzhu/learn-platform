@@ -2,77 +2,78 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+<p align="center">
+	<a href="https://pnpm.io/" target="_blank">
+    <img src="https://img.shields.io/badge/pnpm-8.6.1-blue">
+    </a>
+	<a href="https://nodejs.org"  target="_blank">
+      <img src="https://img.shields.io/badge/node-16.15.0-blue">
+    </a>
+    <a href="https://www.mysql.com/cn/downloads/" target="_blank">
+    <img src="https://img.shields.io/badge/mysql2-%5E3.3.1-blue">
+    </a>
+    <a href="https://nestjs.com/"  target="_blank">
+      <img src="https://img.shields.io/badge/nestjs-%5E9.0.0-blue">
+    </a>
+        <a href="https://graphql.org/"  target="_blank">
+      <img src="https://img.shields.io/badge/graphql-%5E16.6.0-blue">
+    </a>
+    <a href="https://typeorm.io/"  target="_blank">
+      <img src="https://img.shields.io/badge/typeorm-%5E0.3.10-blue">
+    </a>
+    <a href="hhttps://dayjs.gitee.io/zh-CN/"  target="_blank">
+      <img src="https://img.shields.io/badge/dayjs-%5E1.11.7-blue">
+    </a>
+    <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/md5-%5E2.3.0-blue">
+    </a>
+    <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/dotenv-%5E16.3.1-blue">
+    </a>
+    <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/rxjs-%5E7.2.0-blue">
+    </a>
+    <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/uuid-%5E9.0.0-blue">
+    </a>
+    <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/passport--jwt-%5E4.0.1-blue">
+    </a>
+   <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/ali--oss-%5E6.17.1-blue">
+    </a>
+     <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/plop-%5E3.1.2-blue">
+    </a>
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+> 注意地，需要创建.env，模板参考.env.template
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+## 安装
 
 ```bash
-$ npm install
+$ pnpm install
 ```
 
-## Running the app
+## 生成 api 模板
+
+```bash
+$ pnpm temp
+```
+
+## 运行
 
 ```bash
 # development
-$ npm run start
+$ pnpm dev
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## docker build
 
 ```
+// 单镜像部署
 docker build -t server:v1 .
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## 注意地
 
