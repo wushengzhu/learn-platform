@@ -17,4 +17,6 @@ EXPOSE 1024
 
 ENV NODE_ENV=production
 
-CMD ["node", "dist/main"]
+# CMD ["node", "dist/main"]
+# 持久化后台服务
+CMD ["pnpm","pm2:prod"]
