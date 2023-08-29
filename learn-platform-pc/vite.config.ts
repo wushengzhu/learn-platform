@@ -1,7 +1,6 @@
 import { PluginOption, defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import eslint from "vite-plugin-eslint";
-import WindiCSS from "vite-plugin-windicss";
 import path from "path";
 import { visualizer } from "rollup-plugin-visualizer";
 
@@ -11,7 +10,6 @@ export default ({ mode }: any) =>
         plugins: [
             react(),
             eslint(),
-            WindiCSS(),
             visualizer({
                 open: true, // 注意这里要设置为true，否则无效
                 gzipSize: true, // 打包压缩

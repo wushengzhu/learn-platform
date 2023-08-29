@@ -13,8 +13,8 @@ import { ROUTE_COMPONENT } from "./routes/index";
 
 import "dayjs/locale/zh-cn";
 import zhCN from "antd/locale/zh_CN";
-import "./index.css";
-import "virtual:windi.css";
+import "./index.less";
+import config from "../package.json";
 
 dayjs.locale("zh-cn");
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
@@ -39,12 +39,12 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                     </Routes>
                 </UserInfo>
                 <footer>
-                    <span>
-                        Copyright&nbsp;&copy; 2023 -{new Date().getFullYear()}
-                    </span>
+                    Copyright&nbsp;&copy; 2023 -{new Date().getFullYear()}
+                    &nbsp; &#124; &nbsp; Made By &nbsp;
+                    <a href={config.author.url}>{config.author.name}</a>
                     &nbsp; &#124; &nbsp;
                     <a href="https://beian.miit.gov.cn" target="_blank">
-                        {"粤ICP备2023094742号-1"}
+                        粤ICP备2023094742号-1
                     </a>
                 </footer>
             </BrowserRouter>

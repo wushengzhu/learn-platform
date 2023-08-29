@@ -8,17 +8,19 @@ import {
   Toast,
 } from 'antd-mobile';
 import {
-  EyeInvisibleOutline,
-  EyeOutline,
+  LockOutline,
+  UserOutline,
+  PhonebookOutline,
   PictureOutline,
 } from 'antd-mobile-icons';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useUploadOSS from '@/hooks/useUploadOSS';
 import md5 from 'md5';
 import { useMutation } from '@apollo/client';
 import { STUDENT_REGISTER, USER_REGISTER } from '@/graphql/user';
 import { fail, success } from '@/utils/toast';
+import styles from './index.module.less';
 
 interface IValue {
   account: string;
@@ -68,6 +70,7 @@ const Register = () => {
       setAvatarImage(values[0].url);
     }
   };
+  const nav = useNavigate();
   const [register] = useMutation(STUDENT_REGISTER);
   const [form] = Form.useForm();
   const onSubmit = async () => {
@@ -89,80 +92,84 @@ const Register = () => {
     }
   };
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center mt-4 mb-4">
-        {/* <div className="mb-4">手机注册</div> */}
-        <ImageUploader upload={uploadHandler} maxCount={1} onChange={onChange}>
-          <div
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius: 40,
-              backgroundColor: '#f5f5f5',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: '#999999',
-            }}
+    <div className={styles['register-container']}>
+      <div className={styles['form-container']}>
+        <div className="flex flex-col justify-center items-center mt-4 mb-4">
+          <ImageUploader
+            upload={uploadHandler}
+            maxCount={1}
+            onChange={onChange}
           >
-            <PictureOutline style={{ fontSize: 32 }} />
-          </div>
-        </ImageUploader>
-      </div>
-      <Form
-        form={form}
-        layout="horizontal"
-        footer={
-          <div>
-            {/* <Button block onClick={() => { }} shape='rounded' size="middle" >
-              返回
-            </Button> */}
-            <Button
-              block
-              shape="rounded"
-              type="submit"
-              color="primary"
-              size="middle"
-              className="mt-10"
-              onClick={onSubmit}
+            <div
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: 40,
+                backgroundColor: '#f5f5f5',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#999999',
+              }}
             >
-              注 册
-            </Button>
-          </div>
-        }
-      >
-        <Form.Item label="用户名" name="account" rules={rules.account}>
-          <Input placeholder="请输入用户名" clearable />
-        </Form.Item>
-        <Form.Item label="电话" name="tel" rules={rules.tel}>
-          <Input placeholder="请输入电话" clearable />
-        </Form.Item>
-        <Form.Item
-          label="密码"
-          name="password"
-          rules={rules.password}
-          extra={
-            <div>
-              {!visible ? (
-                <EyeInvisibleOutline onClick={() => setVisible(true)} />
-              ) : (
-                <EyeOutline onClick={() => setVisible(false)} />
-              )}
+              <PictureOutline fontSize={32} />
             </div>
-          }
+          </ImageUploader>
+        </div>
+        <div className={styles['form-item']}>
+          <label>
+            <UserOutline fontSize={25} />
+          </label>
+          <input id="phone" type="text" placeholder="账户" />
+        </div>
+        <div className={styles['form-item']}>
+          <label>
+            <PhonebookOutline fontSize={25} />
+          </label>
+          <input id="phone" type="text" placeholder="请输入手机号" />
+        </div>
+        <div className={styles['form-item']}>
+          <label>
+            <LockOutline fontSize={25} />
+          </label>
+          <input id="password" type="text" placeholder="请填写密码" />
+        </div>
+        <div className={styles['form-item']}>
+          <label>
+            <LockOutline fontSize={25} />
+          </label>
+          <input id="respassword" type="text" placeholder="请确认密码" />
+        </div>
+      </div>
+      <div className={styles['button-area']}>
+        <button className={styles['login-btn']}>注&nbsp;册</button>
+      </div>
+      <div className={styles.authorization}>
+        <input type="checkbox" />
+        <span className={styles['ml-5']}>注册使用即表示同意</span>
+        <span className={styles['protocol']}>用户协议及版权声明</span>
+      </div>
+      <div className={styles['go-login']}>
+        已经有账号？去
+        <a
+          href="#"
+          onClick={() => nav('/login')}
+          className={styles['protocol']}
         >
-          <Input
-            type={visible ? 'text' : 'password'}
-            placeholder="请输入密码"
-            clearable
-          />
-        </Form.Item>
-      </Form>
-      <div className="flex justify-center">
-        <Space>
-          有账号了？去
-          <Link to="/login">登录</Link>
-        </Space>
+          登录
+        </a>
+      </div>
+      <div className={styles.tourism}>
+        <img src="images/tourism.png" alt="" />
+        <img src="images/tourism2.png" alt="" />
+        <img src="images/tourism3.png" alt="" />
+      </div>
+      <div className={styles.copyright}>
+        Copyright&nbsp;&copy;{new Date().getFullYear()}
+        &nbsp;
+        <a href="https://beian.miit.gov.cn" target="_blank">
+          粤ICP备2023094742号-1
+        </a>
       </div>
     </div>
   );

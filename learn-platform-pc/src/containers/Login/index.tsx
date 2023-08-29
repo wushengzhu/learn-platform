@@ -16,25 +16,16 @@ import { Button, message, Space, Tabs } from "antd";
 import type { CSSProperties } from "react";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import "./index.less";
 import { SEND_CODE_MSG, TEL_LOGIN, USER_LOGIN } from "@/graphql/auth";
 import { AUTH_TOKEN } from "@/utils/constants";
 import { Link, useNavigate } from "react-router-dom";
-import Register from "../Register";
 import { useTitle } from "@/hooks/useTitle";
 import md5 from "md5";
 import { useUserContext } from "@/hooks/useHooks";
+import styles from "./index.module.less";
+import classNames from "classnames";
 
 type LoginType = "phone" | "account";
-
-const iconStyles: CSSProperties = {
-    boxSizing: "border-box",
-    marginInlineStart: "16px",
-    color: "rgba(0, 0, 0, 0.2)",
-    fontSize: "16px",
-    verticalAlign: "middle",
-    cursor: "pointer",
-};
 
 interface IValueT {
     tel: string;
@@ -53,7 +44,13 @@ export default () => {
     const { store } = useUserContext();
     const [loginType, setLoginType] = useState<LoginType>("account");
     const nav = useNavigate();
-    const [isRegistered, setIsRegistered] = useState(false);
+    const [loginForm, setLoginForm] = useState({
+        account: "",
+        password: "",
+        tel: "",
+    });
+    const [isSignUp, setISignUp] = useState(false);
+    const [isVerifyCode, setIsVerifyCode] = useState(false);
     const [rules] = useState({
         account: [
             {
@@ -133,188 +130,151 @@ export default () => {
     };
 
     return (
-        <div className="login-container">
-            <div className="form-container">
-                <div className="left">
-                    <video src={videoFileUrl} muted loop autoPlay></video>
+        <div className={styles["login-container"]}>
+            <div
+                className={classNames({
+                    [styles["form-container"]]: true,
+                    [styles["right-panel-active"]]: isSignUp,
+                })}
+            >
+                <div className={styles["sign-up-container"]}>
+                    <form>
+                        <h1>账号注册</h1>
+                        {/* <div className={styles["social-links"]}>
+                            <div>
+                                <a href="#">
+                                    <i
+                                        className="fa fa-facebook"
+                                        aria-hidden="true"
+                                    ></i>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="#">
+                                    <i
+                                        className="fa fa-twitter"
+                                        aria-hidden="true"
+                                    ></i>
+                                </a>
+                            </div>
+                        </div>
+                        <span>或者使用您的邮箱</span> */}
+                        <input
+                            type="text"
+                            placeholder="账户名"
+                            className={styles["form-input"]}
+                            value={loginForm.account}
+                        />
+                        <input
+                            type="tel"
+                            placeholder="电话"
+                            className={styles["form-input"]}
+                            value={loginForm.tel}
+                        />
+                        <input
+                            type="password"
+                            placeholder="密码"
+                            className={styles["form-input"]}
+                            value={loginForm.password}
+                        />
+                        <button className={styles["form_btn"]}>
+                            注&nbsp;册
+                        </button>
+                    </form>
                 </div>
-                <div className="right">
-                    {isRegistered && (
-                        <Register setIsRegistered={setIsRegistered}></Register>
-                    )}
-                    {!isRegistered && (
-                        <ProConfigProvider hashed={false}>
-                            <div style={{ backgroundColor: "white" }}>
-                                <LoginForm
-                                    onFinish={loginHandler}
-                                    logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
-                                    title="LearnPlatform"
-                                    subTitle="在线兴趣学习平台"
-                                    initialValues={{ tel: "15627512936" }}
-                                    actions={
-                                        <div>
-                                            <div className="flex justify-center items-center mb-2">
-                                                没有账号？去
-                                                <Button
-                                                    type="link"
-                                                    onClick={() =>
-                                                        setIsRegistered(true)
-                                                    }
-                                                >
-                                                    注册
-                                                </Button>
-                                            </div>
-                                            <Space>
-                                                其他登录方式
-                                                <WechatOutlined
-                                                    style={iconStyles}
-                                                    rev={undefined}
-                                                />
-                                                <QqOutlined
-                                                    style={iconStyles}
-                                                    rev={undefined}
-                                                />
-                                            </Space>
-                                        </div>
+                <div className={styles["sign-in-container"]}>
+                    <form>
+                        <h1>在线兴趣学习平台</h1>
+                        <div className={styles["login-form"]}>
+                            {isVerifyCode && (
+                                <div>
+                                    <input
+                                        type="tel"
+                                        placeholder="手机号"
+                                        className={styles["form-input"]}
+                                        value={loginForm.tel}
+                                    />
+                                    <div className={styles["verify-code"]}>
+                                        <input
+                                            type="number"
+                                            placeholder="验证码"
+                                            className={styles["form-input"]}
+                                            style={{ width: "70%" }}
+                                        />
+                                        <input
+                                            type="button"
+                                            value="发送"
+                                            className={styles["send-code"]}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                            {!isVerifyCode && (
+                                <div>
+                                    <input
+                                        type="email"
+                                        placeholder="用户名"
+                                        className={styles["form-input"]}
+                                        value={loginForm.account}
+                                    />
+                                    <input
+                                        type="password"
+                                        placeholder="密码"
+                                        className={styles["form-input"]}
+                                        value={loginForm.account}
+                                    />
+                                </div>
+                            )}
+
+                            <div className={styles["other-login"]}>
+                                <div
+                                    className={styles["login-type"]}
+                                    onClick={() =>
+                                        setIsVerifyCode(!isVerifyCode)
                                     }
                                 >
-                                    <Tabs
-                                        centered
-                                        items={items}
-                                        activeKey={loginType}
-                                        onChange={(activeKey) =>
-                                            setLoginType(activeKey as LoginType)
-                                        }
-                                    ></Tabs>
-                                    {loginType === "account" && (
-                                        <>
-                                            <ProFormText
-                                                name="account"
-                                                fieldProps={{
-                                                    size: "large",
-                                                    prefix: (
-                                                        <UserOutlined
-                                                            className={
-                                                                "prefixIcon"
-                                                            }
-                                                            rev={undefined}
-                                                        />
-                                                    ),
-                                                }}
-                                                placeholder={"用户名"}
-                                                rules={rules.account}
-                                            />
-                                            <ProFormText.Password
-                                                name="password"
-                                                fieldProps={{
-                                                    size: "large",
-                                                    prefix: (
-                                                        <LockOutlined
-                                                            className={
-                                                                "prefixIcon"
-                                                            }
-                                                            rev={undefined}
-                                                        />
-                                                    ),
-                                                }}
-                                                placeholder={"密码"}
-                                                rules={rules.password}
-                                            />
-                                        </>
-                                    )}
-                                    {loginType === "phone" && (
-                                        <>
-                                            <ProFormText
-                                                fieldProps={{
-                                                    size: "large",
-                                                    prefix: (
-                                                        <MobileOutlined
-                                                            className={
-                                                                "prefixIcon"
-                                                            }
-                                                            rev={undefined}
-                                                        />
-                                                    ),
-                                                }}
-                                                name="tel"
-                                                placeholder={"手机号"}
-                                                rules={rules.phone}
-                                            />
-                                            <ProFormCaptcha
-                                                fieldProps={{
-                                                    size: "large",
-                                                    prefix: (
-                                                        <LockOutlined
-                                                            className={
-                                                                "prefixIcon"
-                                                            }
-                                                            rev={undefined}
-                                                        />
-                                                    ),
-                                                }}
-                                                captchaProps={{
-                                                    size: "large",
-                                                }}
-                                                placeholder={"请输入验证码"}
-                                                captchaTextRender={(
-                                                    timing,
-                                                    count
-                                                ) => {
-                                                    if (timing) {
-                                                        return `${count} ${"获取验证码"}`;
-                                                    }
-                                                    return "获取验证码";
-                                                }}
-                                                phoneName="tel"
-                                                name="code"
-                                                rules={rules.captcha}
-                                                onGetCaptcha={async (
-                                                    tel: string
-                                                ) => {
-                                                    const res = await run({
-                                                        variables: {
-                                                            tel,
-                                                        },
-                                                    });
-                                                    if (
-                                                        res?.data?.sendCodeMsg
-                                                            .code === 200
-                                                    ) {
-                                                        message.success(
-                                                            "获取验证码成功！"
-                                                        );
-                                                    } else {
-                                                        message.error(
-                                                            "获取验证码失败！"
-                                                        );
-                                                    }
-                                                }}
-                                            />
-                                        </>
-                                    )}
-                                    <div
-                                        style={{
-                                            marginBlockEnd: 24,
-                                        }}
-                                    >
-                                        <ProFormCheckbox
-                                            noStyle
-                                            name="autoLogin"
-                                        >
-                                            自动登录
-                                        </ProFormCheckbox>
-                                        <a
-                                            style={{
-                                                float: "right",
-                                            }}
-                                        >
-                                            忘记密码
-                                        </a>
-                                    </div>
-                                </LoginForm>
+                                    {isVerifyCode ? "密码登录" : "验证码登录"}
+                                </div>
+                                <div className={styles["auto-login"]}>
+                                    <input type="checkbox" />
+                                    <span>&nbsp;自动登录</span>
+                                </div>
                             </div>
-                        </ProConfigProvider>
-                    )}
+                            <button className={styles["form_btn"]}>
+                                登&nbsp;录
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div className={styles["overlay-container"]}>
+                    <div className={styles["overlay-left"]}>
+                        <h1>欢迎回来</h1>
+                        <p>
+                            To keep connected with us please login with your
+                            personal info
+                        </p>
+                        <button
+                            id="signIn"
+                            className={styles["overlay_btn"]}
+                            onClick={() => setISignUp(false)}
+                        >
+                            登&nbsp;录
+                        </button>
+                    </div>
+                    <div className={styles["overlay-right"]}>
+                        <h1>Hello, 朋友</h1>
+                        <p>
+                            Enter your personal details and start journey with
+                            us
+                        </p>
+                        <button
+                            id="signUp"
+                            className={styles["overlay_btn"]}
+                            onClick={() => setISignUp(true)}
+                        >
+                            注&nbsp;册
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,117 +1,97 @@
-.lg() {
-  width: 100%;
-  min-height: 100vh;
-  text-align: center;
-  box-sizing: border-box;
-  /* background-image: linear-gradient(to left,#9c88ff,#3cadeb); */
-  background-image: linear-gradient(
-    to left top,
-    #d16ba5,
-    #c777b9,
-    #ba83ca,
-    #aa8fd8,
-    #9a9ae1,
-    #8aa7ec,
-    #79b3f4,
-    #69bff8,
-    #52cffe,
-    #41dfff,
-    #46eefa,
-    #5ffbf1
-  );
-  @apply flex justify-center items-center flex-col;
-}
-
-.prefixIcon {
-  width: 16px;
-}
+@import '@/styles/form-common.less'; 
 
 .login-container {
-  .lg;
-  .form-title {
-    color: #000;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.login-header {
+  height: 16%;
+  display: flex;
+  justify-content: center;
+  padding: 5%;
+
+  h1{
+    font-size: 1.2rem;
+    color: #ffffff;
+    text-align: center;
+  }
+}
+
+.login-logo {
+  font-size: 1.5rem;
+  padding: 5%;
+  text-align: center;
+
+  img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+  }
+
+  p {
+    color: #ffffff;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-top: 2%;
+  }
+}
+
+
+.casual {
+  text-align: center;
+
+  a {
+    color: #ffffff;
     font-size: 18px;
-    font-weight: bold;
-  }
-  .register-btn {
-    background-color: rgba(0, 0, 0, 0.5) !important;
-  }
-  .form-item {
-    margin: 10px 0;
   }
 }
+.order-login {
+  padding: 5%;
 
-.form-container {
-  position: relative;
-  width: 90vw;
-  // height: 70vh;
-  // border-radius: 20px;
-  :global {
-    .adm-list-body {
-      background-color: transparent !important;
-    }
-
-    .adm-form {
-      width: 80vw;
-      height: 100%;
-    }
-
-    .adm-list-item-content-main {
-      box-sizing: border-box;
-    }
-    .adm-list-item-content {
-      display: flex;
-      align-items: center;
-      border: 0;
-    }
-
-    .adm-list-item {
-      position: relative;
-      height: 50px;
-      // border: 1px solid #efefef;
-      // box-sizing: border-box;
-      border-radius: 25px;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .adm-list-default .adm-list-body {
-      border: 0;
-    }
-
-    .adm-form-item-feedback-error {
-      position: absolute;
-      width: 80%;
-      margin: 0 auto;
-      // bottom: -20px;
-      // z-index: 999;
-      // padding-top: 0px;
-    }
-    .adm-list-item-description {
-      width: 100%;
-      text-align: center;
-    }
-
-    .adm-list-body-inner {
-      margin-top: 10px;
-    }
-
-    .adm-input-element {
-      color: #fff;
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .adm-form .adm-form-footer {
-      margin-top: 20px;
-      padding: 0px 12px;
-    }
-  }
-}
-
-.eye {
-  cursor: pointer;
-  svg {
+  p {
     display: block;
-    font-size: var(--adm-font-size-7);
+    /*设置为块级元素会独占一行形成上下居中的效果*/
+    position: relative;
+    /*定位横线（当横线的父元素）*/
+    text-align: center;
+    font-size: 14px;
+    color: #cccccc;
   }
+
+  ul {
+    margin-left: 25%;
+    margin-top: 5%;
+    height: 40px;
+  }
+
+  ul li {
+    width: 25%;
+    float: left;
+  }
+
+  ul li a img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.order-login p:before,
+.order-login p:after {
+  content: '';
+  position: absolute;
+  /*定位背景横线的位置*/
+  top: 50%;
+  background: #cccccc;
+  /*背景横线颜色*/
+  width: 20%;
+  /*单侧横线的长度*/
+  height: 1px;
+}
+.order-login p:before {
+  left: 10%;
+  /*调整背景横线的左右距离*/
+}
+.order-login p:after {
+  right: 10%;
 }
