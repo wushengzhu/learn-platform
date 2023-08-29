@@ -1,6 +1,6 @@
 import React, { RefObject, useRef, useState } from 'react';
 import { Form, Input, Button, Space } from 'antd-mobile';
-import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons';
+import { LockOutline, UserOutline, PhonebookOutline } from 'antd-mobile-icons';
 import styles from './index.module.less';
 import { Link, Route, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -33,7 +33,7 @@ const Login = () => {
     }
   };
 
-  const [visible, setVisible] = useState(false);
+  const [isVerifyCode, setIsVerifyCode] = useState(true);
   const [rules] = useState({
     account: [
       {
@@ -51,68 +51,62 @@ const Login = () => {
   return (
     <>
       <div className={styles['login-container']}>
-        <div className="w-30">
-          <img
-            src={
-              'https://github.githubassets.com/images/modules/logos_page/Octocat.png'
-            }
-          />
+        <div className={styles['login-header']}>
+          <h1>欢迎登录</h1>
         </div>
-        <Form
-          form={form}
-          layout="horizontal"
-          className={styles['form-container']}
-          footer={
-            <div className="flex justify-center">
-              <Button
-                block
-                shape="rounded"
-                type="submit"
-                color="primary"
-                size="middle"
-                onClick={() => onLogin()}
-              >
-                登 录
-              </Button>
-            </div>
-          }
-        >
-          <Form.Header>
-            <span className={styles['form-title']}>LearnPlatform</span>
-          </Form.Header>
-          <Form.Item
-            name="account"
-            rules={rules.account}
-            className={styles['form-item']}
+        <div className={styles['login-logo']}>
+          <h1>在线兴趣学习平台</h1>
+        </div>
+        <div className={styles['form-container']}>
+          <div className={styles['form-item']}>
+            <label>
+              <img src="images/phone.png" alt="" />
+            </label>
+            <input id="phone" type="tel" placeholder="请输入手机号" />
+          </div>
+          <div className={styles['form-item']}>
+            <label>
+              <img src="images/code.png" alt="" />
+            </label>
+            <input id="code" type="text" placeholder="请输入验证码" />
+            <button>发送验证码</button>
+          </div>
+        </div>
+        <div className={styles['button-area']}>
+          <button className={styles['login-btn']}>登录</button>
+          <button
+            className={styles['login-register']}
+            onClick={() => nav('/register')}
           >
-            <Input placeholder="请输入账号" />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            rules={rules.password}
-            className={styles['form-item']}
-            extra={
-              <div className={styles.eye}>
-                {!visible ? (
-                  <EyeInvisibleOutline onClick={() => setVisible(true)} />
-                ) : (
-                  <EyeOutline onClick={() => setVisible(false)} />
-                )}
-              </div>
-            }
-          >
-            <Input
-              type={visible ? 'text' : 'password'}
-              placeholder="请输入密码"
-              clearable
-            />
-          </Form.Item>
-        </Form>
-        <div>
-          <Space>
-            没有账号？去
-            <Link to="/register">注册</Link>
-          </Space>
+            注册
+          </button>
+        </div>
+        <div className={styles.casual}>
+          <a href="#" onClick={() => setIsVerifyCode(false)}>
+            密码登录
+          </a>
+        </div>
+        <div className={styles['order-login']}>
+          <p>使用第三方账号登录</p>
+          <ul>
+            <li>
+              <a href="#">
+                <img src="images/QQ.png" alt="" />
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <img src="images/WeChat.png" alt="" />
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className={styles.copyright}>
+          Copyright&nbsp;&copy;{new Date().getFullYear()}
+          &nbsp;
+          <a href="https://beian.miit.gov.cn" target="_blank">
+            粤ICP备2023094742号-1
+          </a>
         </div>
       </div>
     </>
