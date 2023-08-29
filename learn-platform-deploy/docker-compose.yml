@@ -1,46 +1,46 @@
-version: '1'
+version: "1"
 services:
   pc:
     build: ../learn-platform-pc
     platform: linux/amd64
-    container_name: 'pc'
-    image: 'registry.cn-guangzhou.aliyuncs.com/wushengzhu/learn-platform-pc::v1'
+    container_name: "pc"
+    image: "registry.cn-guangzhou.aliyuncs.com/wushengzhu/learn-platform-pc:v1" # 指定该容器使用的image
     ports:
-      - '80:80'
-    volumes:
-      - './nginx:/etc/nginx/conf.d'
+      - "80:80"
+    volumes: # 定义数据挂载记录，相当于docker volume create 命令
+      - "./nginx:/etc/nginx/conf.d"
     depends_on:
       - server
   mobile:
     build: ../learn-platform-mobile
     platform: linux/amd64
-    container_name: 'mobile'
-    image: 'registry.cn-guangzhou.aliyuncs.com/wushengzhu/learn-platform-mobile:v1'
+    container_name: "mobile"
+    image: "registry.cn-guangzhou.aliyuncs.com/wushengzhu/learn-platform-mobile:v1"
     ports:
-      - '8080:80'
+      - "8080:80"
     volumes:
-      - './nginx:/etc/nginx/conf.d'
+      - "./nginx:/etc/nginx/conf.d"
     depends_on:
       - server
   server:
     build: ../learn-platform-server
     platform: linux/amd64
-    container_name: 'server'
-    image: 'registry.cn-guangzhou.aliyuncs.com/wushengzhu/learn-platform-server:v1'
+    container_name: "server"
+    image: "registry.cn-guangzhou.aliyuncs.com/wushengzhu/learn-platform-server:v1"
     ports:
-      - '1024:80'
+      - "1024:80"
     volumes:
-      - './server:/etc/server.conf'
+      - "./server:/etc/server.conf"
     depends_on:
       - mysql
   mysql:
-    container_name: 'mysql'
+    container_name: "mysql"
     platform: linux/amd64
-    image: 'mysql'
+    image: "mysql"
     ports:
-      - '3307:3306'
+      - "3307:3306"
     environment:
-      - 'MYSQL_ROOT_PASSWORD=123456'
-      - 'MYSQL_DATABASE=learn_platform'
+      - "MYSQL_ROOT_PASSWORD=zws123456"
+      - "MYSQL_DATABASE=learn_platform"
     volumes:
-      - './db:/docker-entrypoint-initdb.d'
+      - "./db:/docker-entrypoint-initdb.d"

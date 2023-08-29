@@ -1,6 +1,45 @@
+<h3 align="center">网页端</h3>
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://react.dev/images/home/conf2021/cover.svg" width="200" alt="React Logo" /></a>
+	<a href="https://pnpm.io/" target="_blank">
+    <img src="https://img.shields.io/badge/pnpm-8.6.1-blue">
+    </a>
+	<a href="https://nodejs.org"  target="_blank">
+      <img src="https://img.shields.io/badge/node-16.15.0-blue">
+    </a>
+	<a href="https://react.docschina.org/"  target="_blank">
+      <img src="https://img.shields.io/badge/react-%5E18.2.0-blue">
+    </a>
+        <a href="https://graphql.org/"  target="_blank">
+      <img src="https://img.shields.io/badge/graphql-%5E16.6.0-blue">
+    </a>
+    <a href="https://ant.design/zh"  target="_blank">
+      <img src="https://img.shields.io/badge/antd-%5E5.5.0-blue">
+    </a>
+    <a href="https://dayjs.gitee.io/zh-CN/"  target="_blank">
+      <img src="https://img.shields.io/badge/dayjs-%5E1.11.7-blue">
+    </a>
+    <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/md5-%5E2.3.0-blue">
+    </a>
+    <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/lodash-%5E4.17.21-blue">
+    </a>
+    <a href="#"  target="_blank">
+      <img src="https://img.shields.io/badge/vite-%5E4.3.2-blue">
+    </a>
 </p>
+
+## 启动本地 网页 端：
+
+```
+pnpm dev
+```
+
+## 单元测试:jest
+
+-   安装包：pnpm i vitest jsdom @testing-library/react -D
+-   vitest 文档：https://vitest.dev/api/
+-   react-testing-library 文档：https://testing-library.com/docs/react-testing-library/api
 
 ## 使用百度地图定位门店
 
