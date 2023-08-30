@@ -3,15 +3,14 @@ import { Button, Form, Input, message } from "antd";
 import { useState } from "react";
 import { USER_REGISTER } from "@/graphql/auth";
 import md5 from "md5";
-import ImageUpload from "@/components/ImageUpload";
+import styles from "./index.module.less";
+import { Util } from "@/utils/util";
 
 interface IValue {
     account: string;
     password: string;
     tel: string;
-    avatar?: Array<{
-        url: string;
-    }>;
+    avatar?: string;
 }
 
 /**
@@ -57,15 +56,28 @@ const Register = ({ setIsRegistered }: any) => {
             },
         ],
     });
-
+    const [registerForm, setRegisterForm] = useState<IValue>({
+        account: "",
+        password: "",
+        tel: "",
+        avatar: "",
+    });
     const [register] = useMutation(USER_REGISTER);
-    const onFinish = async (values: IValue) => {
+    const onRegister = async (values: IValue) => {
+        if (
+            Util.isNullOrWhiteSpace(values.account) ||
+            Util.isNullOrWhiteSpace(values.tel) ||
+            Util.isNullOrWhiteSpace(values.password)
+        ) {
+            message.error("账号、密码、电话都不能为空！");
+            return;
+        }
         const res = await register({
             variables: Object.assign(
                 {},
                 { ...values },
                 {
-                    avatar: values?.avatar ? values?.avatar[0]?.url : "",
+                    // avatar: values?.avatar ? values?.avatar[0]?.url : "",
                     password: md5(values.password),
                 }
             ),
@@ -78,46 +90,58 @@ const Register = ({ setIsRegistered }: any) => {
     };
 
     return (
-        <div>
-            <Form
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 16 }}
-                style={{ maxWidth: 500 }}
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                autoComplete="off"
+        <form className={styles["form"]}>
+            <h1>账号注册</h1>
+            <input
+                type="text"
+                placeholder="账户名"
+                name="account"
+                className={styles["form-input"]}
+                value={registerForm.account}
+                onChange={(e: any) => {
+                    setRegisterForm({
+                        ...registerForm,
+                        account: e.target.value,
+                    });
+                }}
+            />
+            <input
+                type="tel"
+                placeholder="手机号"
+                name="tel"
+                className={styles["form-input"]}
+                value={registerForm.tel}
+                onChange={(e: any) => {
+                    setRegisterForm({
+                        ...registerForm,
+                        tel: e.target.value,
+                    });
+                }}
+            />
+            <input
+                type="password"
+                placeholder="密码"
+                name="password"
+                className={styles["form-input"]}
+                value={registerForm.password}
+                onChange={(e: any) => {
+                    setRegisterForm({
+                        ...registerForm,
+                        password: e.target.value,
+                    });
+                }}
+            />
+            {/* 点击出现全局刷可以使用e.preventDefault(); */}
+            <button
+                className={styles["form_btn"]}
+                onClick={(e) => {
+                    e.preventDefault();
+                    onRegister(registerForm);
+                }}
             >
-                <Form.Item
-                    label="头像"
-                    name="avatar"
-                    style={{ textAlign: "center" }}
-                >
-                    <ImageUpload />
-                </Form.Item>
-                <Form.Item label="账号" name="account" rules={rules.account}>
-                    <Input />
-                </Form.Item>
-                <Form.Item label="电话" name="tel" rules={rules.tel}>
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label="密码" name="password" rules={rules.password}>
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
-                        注册
-                    </Button>
-                </Form.Item>
-            </Form>
-            <div className="flex justify-center items-center mb-2">
-                有了账号？去
-                <Button type="link" onClick={() => setIsRegistered(false)}>
-                    登录
-                </Button>
-            </div>
-        </div>
+                注&nbsp;册
+            </button>
+        </form>
     );
 };
 

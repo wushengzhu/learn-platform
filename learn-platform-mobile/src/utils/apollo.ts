@@ -15,7 +15,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     //   content: '请求参数或者返回的数据格式不对',
     // });
     graphQLErrors.forEach((item) => {
-      if (item.message === 'Unauthorized') {
+      if (item.message === 'Unauthorized' && localStorage.getItem(AUTH_TOKEN)) {
         Toast.clear();
         Toast.show({
           content: '登录失效，请登录',

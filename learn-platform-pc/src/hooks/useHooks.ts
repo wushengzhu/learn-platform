@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppContext, connectFactory } from "../utils/contextFactory";
 import { GET_USER } from "../graphql/user";
 import { IUser } from "../utils/types";
+import { AUTH_TOKEN } from "@/utils/constants";
 
 const KEY = "userInfo";
 const DEFAULT_VALUE = {};
