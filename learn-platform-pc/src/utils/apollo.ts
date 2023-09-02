@@ -15,7 +15,11 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
         // message.info("请求参数或者返回的数据格式不对");
         graphQLErrors.forEach((item) => {
-            if (item.message === "Unauthorized") {
+            // 保证已存在token但是过期了才显示这个tip
+            if (
+                item.message === "Unauthorized" &&
+                localStorage.getItem(AUTH_TOKEN)
+            ) {
                 message.destroy();
                 message.error("登录失效，请登录");
                 // nav("/login");

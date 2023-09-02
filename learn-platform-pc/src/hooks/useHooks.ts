@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppContext, connectFactory } from "../utils/contextFactory";
 import { GET_USER } from "../graphql/user";
 import { IUser } from "../utils/types";
+import { AUTH_TOKEN } from "@/utils/constants";
 
 const KEY = "userInfo";
 const DEFAULT_VALUE = {};
@@ -15,12 +16,6 @@ export const useGetUser = () => {
     const { setStore } = useUserContext();
     const nav = useNavigate();
     const location = useLocation();
-    const checkRoute = () => {
-        // 如果不在登录页面，但是目前没有登录，那就直接跳到登录页面
-        if (location.pathname !== "/login") {
-            nav(`/login?orgUrl=${location.pathname}`);
-        }
-    };
     const { loading, refetch } = useQuery<{ getUserInfo: IUser }>(GET_USER, {
         onCompleted: (data) => {
             if (data.getUserInfo) {
@@ -36,19 +31,30 @@ export const useGetUser = () => {
                     desc,
                     refetchHandler: refetch,
                 });
-                // 当前在登录页面，且已经登录了，那就直接跳到首页
+                const userLoggedIn = true; // 根据你的后端响应数据来判断用户是否已登录
+                const lastVisitedRoute = localStorage.getItem("lastVisitedRoute");
                 if (location.pathname === "/login") {
-                    nav("/");
+                  if (userLoggedIn) {
+                    if (lastVisitedRoute) {
+                      nav(lastVisitedRoute);
+                    } else {
+                      nav("/");
+                    }
+                  }
+                } else {
+                  const routePath = location.pathname!=='/login'?location.pathname:'/';
+                  localStorage.setItem("lastVisitedRoute", routePath);
                 }
                 return;
             }
             setStore({ refetchHandler: refetch });
-            checkRoute();
         },
-        onError: () => {
+        onError: (error) => {
+            if (error.message === "Unauthorized") {
+                const routePath = location.pathname!=='/login'?location.pathname:'/';
+                localStorage.setItem("lastVisitedRoute", routePath);
+            }
             setStore({ refetchHandler: refetch });
-            // 如果不在登录页面，但是目前登录异常，那就直接跳到登录页面
-            checkRoute();
         },
     });
     return { loading };

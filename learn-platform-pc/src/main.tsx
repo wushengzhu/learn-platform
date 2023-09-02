@@ -13,7 +13,7 @@ import { ROUTE_COMPONENT } from "./routes/index";
 
 import "dayjs/locale/zh-cn";
 import zhCN from "antd/locale/zh_CN";
-import "./index.less";
+import "@/styles/index.less";
 import config from "../package.json";
 
 dayjs.locale("zh-cn");

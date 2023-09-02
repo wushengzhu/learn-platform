@@ -25,10 +25,11 @@ export const accountAndPwdValidate = (
       message: '账号或者密码不能为空',
     };
   }
-  if (!/^[a-z0-9]{6,10}$/.test(account) && account !== 'admin') {
+  // 只能输入由数字、26个英文字母或者下划线组成的字符串
+  if (!/^[a-zA-Z0-9_]{3,10}$/.test(account) && account !== 'admin') {
     return {
       code: VALIDATE_ERROR,
-      message: '账号校验失败，请重新输入账号',
+      message: '账号格式校验失败，请重新输入账号',
     };
   }
   return {

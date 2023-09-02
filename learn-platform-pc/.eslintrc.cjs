@@ -17,6 +17,7 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/ban-types": "off",
         "react/jsx-no-useless-fragment": "off",
+        "prefer-const": "off",
     },
     settings: {
         react: {

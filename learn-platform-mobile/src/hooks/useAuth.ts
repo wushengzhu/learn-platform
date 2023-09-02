@@ -15,12 +15,6 @@ export const useGetStudent = () => {
   const { setStore } = useUserContext();
   const nav = useNavigate();
   const location = useLocation();
-  const checkRoute = () => {
-    // 如果不在登录页面，但是目前没有登录，那就直接跳到登录页面
-    if (location.pathname !== '/login' && location.pathname !== '/register') {
-      nav(`/login?shopUrl=${location.pathname}`);
-    }
-  };
   const { loading, refetch } = useQuery<{
     getStudentInfoByGuard: IStudent;
   }>(GET_STUDENT_INFO, {
@@ -35,20 +29,31 @@ export const useGetStudent = () => {
           openid,
           refetchHandler: refetch,
         });
-        // 当前在登录页面，且已经登录了，那就直接跳到首页
-        if (location.pathname === '/login') {
-          nav('/');
+        const userLoggedIn = true; // 根据你的后端响应数据来判断用户是否已登录
+        const lastVisitedRoute = localStorage.getItem("mobile.lastVisitedRoute");
+        if (location.pathname === "/login") {
+          if (userLoggedIn) {
+            if (lastVisitedRoute) {
+              nav(lastVisitedRoute);
+            } else {
+              nav("/");
+            }
+          }
+        } else {
+          const routePath = location.pathname !== '/login' ? location.pathname : '/';
+          localStorage.setItem("mobile.lastVisitedRoute", routePath);
         }
+        return;
         return;
       }
       setStore({ refetchHandler: refetch });
-      // 如果不在登录页面，但是目前没有登录，那就直接跳到登录页面
-      checkRoute();
     },
-    onError: () => {
-      setStore({ refetchHandler: refetch });
-      // 如果不在登录页面，但是目前登录异常，那就直接跳到登录页面
-      checkRoute();
+    onError: (error) => {
+      if (error.message === "Unauthorized") {
+        const routePath = location.pathname!=='/login'?location.pathname:'/';
+        localStorage.setItem("mobile.lastVisitedRoute", routePath);
+    }
+    setStore({ refetchHandler: refetch });
     },
   });
   return { loading };
