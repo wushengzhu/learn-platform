@@ -10,17 +10,20 @@ import md5 from 'md5';
 import { fail, success } from '@/utils/toast';
 
 const Login = () => {
-  const [form] = Form.useForm();
   const [login] = useMutation(STUDENT_LOGIN);
   const nav = useNavigate();
-
+  const [loginForm, setLoginForm] = useState<IValue>({
+    account: "",
+    password: "",
+    tel: "",
+    avatar: "",
+  });
   const onLogin = async () => {
-    const values = await form.validateFields();
-    if (values) {
+    if (loginForm) {
       const res = await login({
         variables: {
-          ...values,
-          password: md5(values.password),
+          ...loginForm,
+          password: md5(loginForm.password),
         },
       });
       if (res.data.studentLogin.code === 200) {
@@ -33,7 +36,7 @@ const Login = () => {
     }
   };
 
-  const [isVerifyCode, setIsVerifyCode] = useState(true);
+  const [isVerifyCode, setIsVerifyCode] = useState(false);
   const [rules] = useState({
     account: [
       {
@@ -50,43 +53,83 @@ const Login = () => {
   });
   return (
     <>
-      <div className={styles['login-container']}>
-        <div className={styles['login-header']}>
-          <h1>欢迎登录</h1>
-        </div>
-        <div className={styles['login-logo']}>
-          <h1>在线兴趣学习平台</h1>
-        </div>
-        <div className={styles['form-container']}>
-          <div className={styles['form-item']}>
-            <label>
-              <img src="images/phone.png" alt="" />
-            </label>
-            <input id="phone" type="tel" placeholder="请输入手机号" />
+      <div className={styles['login-bgc']}>
+        <div className={styles['login-container']}>
+          <div className={styles['login-header']}>
+            <h1>欢迎登录</h1>
           </div>
-          <div className={styles['form-item']}>
-            <label>
-              <img src="images/code.png" alt="" />
-            </label>
-            <input id="code" type="text" placeholder="请输入验证码" />
-            <button>发送验证码</button>
+          <div className={styles['login-logo']}>
+            <h1>在线兴趣学习平台</h1>
           </div>
-        </div>
-        <div className={styles['button-area']}>
-          <button className={styles['login-btn']}>登录</button>
-          <button
-            className={styles['login-register']}
-            onClick={() => nav('/register')}
-          >
-            注册
-          </button>
-        </div>
-        <div className={styles.casual}>
-          <a href="#" onClick={() => setIsVerifyCode(false)}>
-            密码登录
-          </a>
-        </div>
-        <div className={styles['order-login']}>
+          <div className={styles['form-container']}>
+            {
+              isVerifyCode && (
+                <div>
+                  <div className={styles['form-item']}>
+                    <label>
+                      <img src="images/phone.png" alt="" />
+                    </label>
+                    <input id="phone" type="tel" placeholder="请输入手机号" />
+                  </div>
+                  <div className={styles['form-item']}>
+                    <label>
+                      <img src="images/code.png" alt="" />
+                    </label>
+                    <input id="code" type="text" placeholder="请输入验证码" />
+                    <button>发送验证码</button>
+                  </div>
+                </div>
+              )
+            }
+            {
+              !isVerifyCode && (
+                <div>
+                  <div className={styles['form-item']}>
+                    <label>
+                      <UserOutline fontSize={24} />
+                    </label>
+                    <input id="account" type="text" placeholder="账号" value={loginForm.account}
+                      onChange={(e: any) => {
+                        setLoginForm({
+                          ...loginForm,
+                          account: e.target.value,
+                        });
+                      }} />
+                  </div>
+                  <div className={styles['form-item']}>
+                    <label>
+                      <LockOutline fontSize={24} />
+                    </label>
+                    <input id="password" type="password" placeholder="密码" value={loginForm.password}
+                      onChange={(e: any) => {
+                        setLoginForm({
+                          ...loginForm,
+                          password: e.target.value,
+                        });
+                      }} />
+                  </div>
+                </div>
+              )
+            }
+          </div>
+          <div className={styles['button-area']}>
+            <button className={styles['login-btn']} onClick={(e) => {
+              e.preventDefault();
+              onLogin();
+            }}>登&nbsp;录</button>
+            <button
+              className={styles['login-register']}
+              onClick={() => nav('/register')}
+            >
+              注&nbsp;册
+            </button>
+          </div>
+          <div className={styles.casual}>
+            <a href="#" onClick={() => setIsVerifyCode(!isVerifyCode)}>
+              {isVerifyCode ? '密码登录' : '验证码登录'}
+            </a>
+          </div>
+          {/* <div className={styles['order-login']}>
           <p>使用第三方账号登录</p>
           <ul>
             <li>
@@ -100,15 +143,17 @@ const Login = () => {
               </a>
             </li>
           </ul>
-        </div>
-        <div className={styles.copyright}>
-          Copyright&nbsp;&copy;{new Date().getFullYear()}
-          &nbsp;
-          <a href="https://beian.miit.gov.cn" target="_blank">
-            粤ICP备2023094742号-1
-          </a>
+        </div> */}
+          <div className={styles.copyright}>
+            Copyright&nbsp;&copy;{new Date().getFullYear()}
+            &nbsp;
+            <a href="https://beian.miit.gov.cn" target="_blank">
+              粤ICP备2023094742号-1
+            </a>
+          </div>
         </div>
       </div>
+
     </>
   );
 };

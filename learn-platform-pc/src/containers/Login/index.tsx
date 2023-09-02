@@ -81,17 +81,21 @@ export default () => {
     const [accountLoginRequest] = useMutation(USER_LOGIN);
     const [telLoginRequest] = useMutation(TEL_LOGIN);
     const loginHandler = async (values: any) => {
+        if (Util.isNullOrWhiteSpace(values.account) || Util.isNullOrWhiteSpace(values.password)) {
+            message.error("账号或密码不能为空！");
+            return;
+        }
         const res = !isVerifyCode
             ? await accountLoginRequest({
-                  variables: Object.assign(
-                      {},
-                      { ...values },
-                      { password: md5(values.password) }
-                  ) as IValueA,
-              })
+                variables: Object.assign(
+                    {},
+                    { ...values },
+                    { password: md5(values.password) }
+                ) as IValueA,
+            })
             : await telLoginRequest({
-                  variables: values as IValueT,
-              });
+                variables: values as IValueT,
+            });
         if (
             res.data?.login?.code === 200 ||
             res.data?.userLogin?.code === 200
@@ -109,10 +113,14 @@ export default () => {
                 sessionStorage.setItem(AUTH_TOKEN, token);
             }
             message.success("登录成功！");
-            nav("/");
+            const lastVisitedRoute = localStorage.getItem("lastVisitedRoute");
+            if (lastVisitedRoute) {
+                nav(lastVisitedRoute);
+            } else {
+                nav("/");
+            }
             return;
         }
-        message.error("登录失败！");
     };
 
     return (
@@ -164,6 +172,7 @@ export default () => {
                                     <input
                                         type="text"
                                         placeholder="用户名"
+                                        required
                                         className={styles["form-input"]}
                                         value={loginForm.account}
                                         onChange={(e: any) => {
@@ -176,6 +185,7 @@ export default () => {
                                     <input
                                         type="password"
                                         placeholder="密码"
+                                        required
                                         className={styles["form-input"]}
                                         value={loginForm.password}
                                         onChange={(e: any) => {

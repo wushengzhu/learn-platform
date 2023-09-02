@@ -1,134 +1,108 @@
-body,
-html,
-div,
-a,
-span,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-ul,
-li,
-input,
-button {
-  margin: 0;
-  padding: 0;
-}
-.f-left {
-  float: left;
-}
-a,
-li {
-  list-style: none;
-}
-a {
-  text-decoration: none;
-  // color: black;
-}
 /*
 登录界面--start*/
-body {
-  background-image: url("/images/mobile.jpg");
-  background-size: cover;
-  color: #ffffff;
-  height: 100vh;
-}
 
 .form-container {
-    padding: 5%;
-  
-    .form-item {
-      border-bottom: 1px #ffffff solid;
-      margin-top: 5%;
-  
-      input {
-        outline: none;
-        border: 0;
-        background-color: transparent;
-        color: #ffffff;
-        height: 40px;
-        font-size: 18px;
-        width: 55%;
-        margin-left: 12%;
-      }
-  
-      input::-webkit-input-placeholder {
-        /* WebKit browsers */
-        color: #ffffff;
-        font-size: 16px;
-      }
-      
-      input:-moz-placeholder {
-        /* Mozilla Firefox 4 to 18 */
-        color: #ffffff;
-        font-size: 16px;
-      }
-  
-      input:-moz-placeholder {
-        /* Mozilla Firefox 4 to 18 */
-        color: #ffffff;
-        font-size: 16px;
-      }
-  
-      input:-ms-input-placeholder {
-        /* Internet Explorer 10+ */
-        color: #ffffff;
-        font-size: 16px;
-      }
-  
-      label img {
-        width: 25px;
-        position: absolute;
-        margin-top: 2%;
-      }
-  
-      button {
-        outline: none;
-        background: transparent;
-        border: 1px #00cc99 dashed;
-        color: #ffffff;
-        height: 30px;
-        border-radius: 5px;
-        float: right;
-        padding: 1%;
-        line-height: 10px;
-      }
-    }
-  }
+  padding: 5%;
 
-  .button-area {
-    text-align: center;
-    button {
+  .form-item {
+    position: relative;
+    border-bottom: 1px #ffffff solid;
+    margin-bottom: 8%;
+
+    input {
       outline: none;
       border: 0;
-      width: 90%;
-      height: 35px;
-      margin-top: 4%;
-      border-radius: 20px;
-      margin-bottom: 4%;
+      background-color: transparent;
       color: #ffffff;
+      height: 40px;
       font-size: 18px;
+      width: 55%;
+      margin-left: 12%;
     }
-  
-    .login-btn {
-      background-color: #00cc99;
+
+    input::-webkit-input-placeholder {
+      /* WebKit browsers */
+      color: #ffffff;
+      font-size: 16px;
     }
-  
-    .login-register {
+
+    input:-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    input:-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    input:-ms-input-placeholder {
+      /* Internet Explorer 10+ */
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    label img {
+      width: 25px;
+      position: absolute;
+      margin-top: 2%;
+    }
+
+    button {
+      outline: none;
       background: transparent;
-      border: 1px #ffffff solid;
+      border: 1px #00cc99 dashed;
+      color: #ffffff;
+      height: 30px;
+      border-radius: 5px;
+      float: right;
+      padding: 1%;
+      line-height: 10px;
     }
+  }
+}
+
+.button-area {
+  text-align: center;
+  button {
+    outline: none;
+    border: 0;
+    width: 90%;
+    height: 48px;
+    margin-top: 4%;
+    border-radius: 20px;
+    // margin-bottom: 4%;
+    color: #ffffff;
+    font-size: 18px;
   }
 
-  .copyright {
-    width: 100%;
-    font-size: 0.8rem;
-    color: #fff;
-    padding: 2%;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    text-align: center;
+  .login-btn {
+    background-color: #00cc99;
   }
+
+  .login-register {
+    background: transparent;
+    border: 1px #ffffff solid;
+  }
+}
+
+.copyright {
+  width: 100%;
+  font-size: 0.8rem;
+  color: #fff;
+  padding: 2%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+}
+
+.input-error {
+  position: absolute;
+  width: 100%;
+  font-size: 0.9rem;
+  text-align: center;
+  color: red;
+}
