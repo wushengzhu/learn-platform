@@ -9,6 +9,8 @@ import { DAY_FORMAT } from "@/utils/constants";
 import style from "./index.module.less";
 import { useAutoCreateSchedule, useSchedules } from "@/services/dashboard";
 import Schedule from "@/components/Schedule";
+import { Util } from "@/utils/util";
+import ResultTip from "@/components/ResultTip";
 
 const { RangePicker } = DatePicker;
 
@@ -45,39 +47,51 @@ const Home = () => {
 
     return (
         <div>
-            <PageContainer content={shop.address} header={{ title: shop.name }}>
-                <Row gutter={20}>
-                    <Col flex="auto">
-                        <Card
-                            title={`${day}的课程`}
-                            className={style.container}
-                            extra={
-                                <span>
-                                    <RangePicker
-                                        onChange={(days) =>
-                                            onRangeChangeHandler(days)
-                                        }
-                                    />
-                                    <Button
-                                        loading={loading}
-                                        type="link"
-                                        onClick={startScheduleHandler}
-                                    >
-                                        开始排课
-                                    </Button>
-                                </span>
-                            }
-                        />
-                        <Schedule day={day} />
-                    </Col>
-                    <Col flex="360px">
-                        <Calendar
-                            fullscreen={false}
-                            onChange={(d) => setDay(d.format(DAY_FORMAT))}
-                        />
-                    </Col>
-                </Row>
-            </PageContainer>
+            {Util.isNullOrWhiteSpace(store.currentShop) && (
+                <ResultTip
+                    status={"warning"}
+                    title={"暂时没有排课信息，请选择门店"}
+                    extraArea={undefined}
+                />
+            )}
+            {!Util.isNullOrWhiteSpace(store.currentShop) && (
+                <PageContainer
+                    content={shop.address}
+                    header={{ title: shop.name }}
+                >
+                    <Row gutter={20}>
+                        <Col flex="auto">
+                            <Card
+                                title={`${day}的课程`}
+                                className={style.container}
+                                extra={
+                                    <span>
+                                        <RangePicker
+                                            onChange={(days) =>
+                                                onRangeChangeHandler(days)
+                                            }
+                                        />
+                                        <Button
+                                            loading={loading}
+                                            type="link"
+                                            onClick={startScheduleHandler}
+                                        >
+                                            开始排课
+                                        </Button>
+                                    </span>
+                                }
+                            />
+                            <Schedule day={day} />
+                        </Col>
+                        <Col flex="360px">
+                            <Calendar
+                                fullscreen={false}
+                                onChange={(d) => setDay(d.format(DAY_FORMAT))}
+                            />
+                        </Col>
+                    </Row>
+                </PageContainer>
+            )}
         </div>
     );
 };

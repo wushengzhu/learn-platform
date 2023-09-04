@@ -15,6 +15,11 @@ import "dayjs/locale/zh-cn";
 import zhCN from "antd/locale/zh_CN";
 import "@/styles/index.less";
 import config from "../package.json";
+// import { socket } from "./utils/socket";
+// setInterval(() => {
+//     // 向服务器发送请求
+//     socket.send('request-memory-info');
+//   }, 5000); // 每5秒请求一次内存信息
 
 dayjs.locale("zh-cn");
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

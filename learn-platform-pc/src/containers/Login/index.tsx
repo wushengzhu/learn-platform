@@ -81,29 +81,27 @@ export default () => {
     const [accountLoginRequest] = useMutation(USER_LOGIN);
     const [telLoginRequest] = useMutation(TEL_LOGIN);
     const loginHandler = async (values: any) => {
-        if (Util.isNullOrWhiteSpace(values.account) || Util.isNullOrWhiteSpace(values.password)) {
+        if (
+            Util.isNullOrWhiteSpace(values.account) ||
+            Util.isNullOrWhiteSpace(values.password)
+        ) {
             message.error("账号或密码不能为空！");
             return;
         }
         const res = !isVerifyCode
             ? await accountLoginRequest({
-                variables: Object.assign(
-                    {},
-                    { ...values },
-                    { password: md5(values.password) }
-                ) as IValueA,
-            })
+                  variables: Object.assign(
+                      {},
+                      { ...values },
+                      { password: md5(values.password) }
+                  ) as IValueA,
+              })
             : await telLoginRequest({
-                variables: values as IValueT,
-            });
-        if (
-            res.data?.login?.code === 200 ||
-            res.data?.userLogin?.code === 200
-        ) {
+                  variables: values as IValueT,
+              });
+        if (res.data?.userLogin?.code === 200) {
             store.refetchHandler();
-            const token = res.data?.login?.data
-                ? res.data?.login?.data
-                : res.data?.userLogin?.data;
+            const token = res.data?.userLogin?.data;
             if (values.autoLogin) {
                 sessionStorage.setItem(AUTH_TOKEN, "");
                 // 是否勾选了自动登录
@@ -117,7 +115,7 @@ export default () => {
             if (lastVisitedRoute) {
                 nav(lastVisitedRoute);
             } else {
-                nav("/");
+                nav("/home");
             }
             return;
         }

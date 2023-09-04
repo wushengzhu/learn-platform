@@ -1,79 +1,142 @@
-import { useStudents } from '@/services/account';
+import { useTeachers } from "@/services/account";
 import {
-  Button,
-  Card, Empty, Pagination, Space,
-} from 'antd';
-import { IStudent } from '@/utils/types';
-import style from './index.module.less';
-import { PlusOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-import AccountEdit from '../AccountEdit';
+    Button,
+    Card,
+    Empty,
+    Input,
+    Pagination,
+    Popconfirm,
+    Result,
+    Space,
+    Tag,
+} from "antd";
+import style from "./index.module.less";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { PageContainer, ProCard } from "@ant-design/pro-components";
+import { useDeleteTeacher } from "@/services/teacher";
+import TeacherEdit from "../TeacherEdit";
 
 const Teacher = () => {
-  const {
-    loading, data, page, refetch,
-  } = useStudents();
-  const [teacherId, setTeacherId] = useState('');
-  const [showEdit, setShowEdit] = useState(false);
-  const onPageChangeHandler = (pageNum: number, pageSize: number) => {
-    refetch({
-      page: {
-        pageNum,
-        pageSize,
-      },
-    });
-  };
-  
-  const onCloseHander = () => {
-    setShowEdit(false)
-  }
+    const { data, page, refetch } = useTeachers();
+    const [delHandler, delLoading] = useDeleteTeacher();
+    const [show, setShow] = useState(false);
+    const [curId, setCurId] = useState<string>("");
 
-  return (
-    <div className={style.container}>
-      <Card
-        extra={
-          <Button
-          icon={<PlusOutlined rev={undefined} />}
-          onClick={() => {
-            setShowEdit(true)
-          }}
-          type="primary"
-        >
-          新增学员
-        </Button>
-       }
-      >
-          {
-            data&&data.length>0?data?.map((item: IStudent) => (
-              <Card
-                key={item.id}
-                hoverable
-                className={style.card}
-                cover={(
-                  <div
-                    className={style.avatar}
-                    style={{ backgroundImage: `url(${item.avatar || 'http://water-drop-assets.oss-cn-hangzhou.aliyuncs.com/images/1675623073445.jpg'} )` }}
-                  />
+    const editInfoHandler = (id?: string) => {
+        if (id) {
+            setCurId(id);
+        } else {
+            setCurId("");
+        }
+        setShow(true);
+    };
+
+    const onPageChangeHandler = (pageNum: number, pageSize: number) => {
+        refetch({
+            page: {
+                pageNum,
+                pageSize,
+            },
+        });
+    };
+
+    const onSearchHandler = (name: string) => {
+        refetch({
+            name,
+        });
+    };
+
+    const closeAndRefetchHandler = (isReload?: boolean) => {
+        setShow(false);
+        if (isReload) {
+            refetch();
+        }
+    };
+
+    const onDeleteHandler = (id: string) => {
+        delHandler(id, refetch);
+    };
+    return (
+        <div className={style.container}>
+            <PageContainer
+                header={{
+                    title: "教师管理",
+                }}
+            >
+                <Card>
+                    <Input.Search
+                        placeholder="请输入教师名字进行搜索"
+                        className={style.teacherSearch}
+                        onSearch={onSearchHandler}
+                        enterButton
+                        allowClear
+                    />
+                    <Button
+                        className={style.addButton}
+                        type="primary"
+                        onClick={() => editInfoHandler()}
+                    >
+                        新增
+                    </Button>
+                </Card>
+                {data?.length === 0 && <Result title="暂无教师数据" />}
+                {data?.map((item) => (
+                    <ProCard
+                        key={item.id}
+                        className={style.card}
+                        actions={[
+                            <EditOutlined
+                                key="edit"
+                                onClick={() => editInfoHandler(item.id)}
+                                rev={undefined}
+                            />,
+                            <Popconfirm
+                                title="提醒"
+                                description="确认要删除吗？"
+                                okButtonProps={{ loading: delLoading }}
+                                onConfirm={() => onDeleteHandler(item.id)}
+                            >
+                                <DeleteOutlined key="del" rev={undefined} />
+                            </Popconfirm>,
+                        ]}
+                    >
+                        <div
+                            className={style.avatar}
+                            style={{ backgroundImage: `url(${item.photoUrl})` }}
+                        />
+                        <div className={style.content}>
+                            <div className={style.name}>{item.name}</div>
+                            <div>
+                                {item.tags.split(",").map((it: string) => (
+                                    <Tag key={it} color="green">
+                                        {it}
+                                    </Tag>
+                                ))}
+                            </div>
+                            <div className={style.education}>
+                                {item.education}
+                            </div>
+                            <div className={style.seniority}>
+                                {item.seniority}
+                            </div>
+                        </div>
+                    </ProCard>
+                ))}
+                {/* <div className={style.page}>
+                    <Pagination
+                        pageSize={page?.pageSize}
+                        current={page?.pageNum}
+                        total={page?.total}
+                        onChange={onPageChangeHandler}
+                    />
+                </div> */}
+                {show && (
+                    <TeacherEdit id={curId} onClose={closeAndRefetchHandler} />
                 )}
-              >
-                <Card.Meta
-                  title={item.name || '无名氏'}
-                  description={<Space>{[item.account || '无账号', item.tel || '无手机号']}</Space>}
-                />
-              </Card>
-            )):(<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />)
-          }
-          <div className={style.page}>
-            <Pagination
-              pageSize={page?.pageSize?page?.pageSize:12}
-              current={page?.pageNum?page?.pageNum:1}
-              total={page?.total}
-              onChange={onPageChangeHandler}
-            />
-          </div>
-      </Card>
-      {showEdit && <AccountEdit id={teacherId} title={teacherId?'编辑':'新增'} onClose={onCloseHander}/>}
-    </div>
-  )
-}
-export default Teacher
+            </PageContainer>
+        </div>
+    );
+};
+
+export default Teacher;

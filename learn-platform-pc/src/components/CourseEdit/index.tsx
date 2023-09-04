@@ -50,8 +50,13 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
                 const res = await getCourse(id);
                 formRef.current?.setFieldsValue({
                     ...res,
-                    teachers: res.teachers ? res.teachers.map((item: ITeacher) => ({ label: item.name, value: item.id })) : [],
-                    coverUrl: res?.coverUrl ? [{ url: res.coverUrl }] : []
+                    teachers: res.teachers
+                        ? res.teachers.map((item: ITeacher) => ({
+                              label: item.name,
+                              value: item.id,
+                          }))
+                        : [],
+                    coverUrl: res?.coverUrl ? [{ url: res.coverUrl }] : [],
                 });
             } else {
                 formRef.current?.resetFields();
@@ -64,12 +69,13 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
         const values =
             await formRef.current?.validateFieldsReturnFormatValue?.();
         if (values) {
-            const params =
-            {
+            const params = {
                 ...values,
-                teachers: values.teachers ? values?.teachers?.map((item: IValue) => item.value) : '',
-                coverUrl: values.coverUrl[0].url
-            }
+                teachers: values.teachers
+                    ? values?.teachers?.map((item: IValue) => item.value)
+                    : "",
+                coverUrl: values.coverUrl[0].url,
+            };
             await handleEdit(id, params);
             setIsDrawerOpen(false);
             onClose(true);
@@ -118,7 +124,7 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
             open={isDrawerOpen}
             onClose={() => onClose()}
             footer={
-                <Space className="flex justify-end">
+                <Space style={{ display: "flex", justifyContent: "flex-end" }}>
                     <Button onClick={() => onClose()}>取消</Button>
                     <Button
                         loading={editLoading}
@@ -140,7 +146,7 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
                 <Form.Item
                     name="coverUrl"
                     label="封面图："
-                    rules={[{ required: true, message: '请上传' }]}
+                    rules={[{ required: true, message: "请上传" }]}
                 >
                     <ImageUpload listType={"picture-card"} maxCount={1} />
                 </Form.Item>
@@ -154,7 +160,7 @@ const CourseEdit = ({ title, id, width, onClose }: IDrawerParams) => {
                 <Form.Item
                     name="teachers"
                     label="任课老师："
-                    rules={[{ required: true, message: '请上传' }]}
+                    rules={[{ required: true, message: "请上传" }]}
                 >
                     <TeacherSelect />
                 </Form.Item>

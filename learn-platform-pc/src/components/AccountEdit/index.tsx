@@ -99,7 +99,7 @@ const AccountEdit = ({ title, id, width, onClose, type }: IModalParams) => {
                     name="avatar"
                     labelCol={{ span: 5 }}
                     wrapperCol={{ span: 13 }}
-                    className="flex justify-center"
+                    style={{ display: "flex", justifyContent: "center" }}
                 >
                     <ImageUpload />
                 </Form.Item>

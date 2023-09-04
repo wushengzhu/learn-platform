@@ -39,7 +39,7 @@ export const ROUTE_KEY = {
 
 export const ROUTE_CONFIG: Record<string, IRoute> = {
     [ROUTE_KEY.HOME]: {
-        path: "/",
+        path: "/home",
         name: " 首页",
         icon: <HomeOutlined rev={undefined} />,
     },
@@ -65,7 +65,7 @@ export const ROUTE_CONFIG: Record<string, IRoute> = {
         name: "商品管理",
         icon: <ShoppingCartOutlined rev={undefined} />,
     },
-    [ROUTE_KEY.SHOP]: {
+    [ROUTE_KEY.NO_SHOP]: {
         path: "noshop",
         name: "门店管理",
         hideInMenu: true,

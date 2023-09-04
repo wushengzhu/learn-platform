@@ -73,8 +73,8 @@ const Layout = () => {
                 }}
                 actionsRender={() => [
                     !isShop && <ShopSelect />,
-                    <BellOutlined rev={undefined} />,
-                    <ExpandOutlined rev={undefined} />,
+                    // <BellOutlined rev={undefined} />,
+                    // <ExpandOutlined rev={undefined} />,
                     <ShopOutlined
                         key={ROUTE_KEY.SHOP}
                         rev={undefined}
@@ -84,13 +84,14 @@ const Layout = () => {
                 avatarProps={{
                     src: store.avatar,
                     title: (
-                        <div
-                            style={{
-                                color: "#dfdfdf",
-                            }}
-                        >
+                        <div>
                             <Dropdown menu={{ items }} trigger={["click"]}>
-                                <a onClick={(e) => e.preventDefault()}>
+                                <a
+                                    onClick={(e) => e.preventDefault()}
+                                    style={{
+                                        color: "#dfdfdf",
+                                    }}
+                                >
                                     <Space>
                                         {store.name}
                                         <DownOutlined rev={undefined} />

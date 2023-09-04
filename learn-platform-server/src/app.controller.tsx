@@ -5,6 +5,7 @@ import * as ReactDOMServer from 'react-dom';
 import { HelloWorld } from './HelloWorld';
 import { AppService } from './app.service';
 import React from 'react';
+import * as os from 'os';
 
 @Controller()
 export class AppController {
@@ -68,5 +69,20 @@ export class AppController {
         </body>
       </html>
     `);
+  }
+
+  @Get('memory-info')
+  getMemoryInfo() {
+    const totalMemory = Math.round(os.totalmem() / (1024 * 1024)); // 总内存（MB）
+    const freeMemory = Math.round(os.freemem() / (1024 * 1024)); // 可用内存（MB）
+    const usedMemory = totalMemory - freeMemory; // 已使用内存（MB）
+
+    console.log(totalMemory, freeMemory, usedMemory);
+
+    return {
+      totalMemory,
+      usedMemory,
+      freeMemory,
+    };
   }
 }

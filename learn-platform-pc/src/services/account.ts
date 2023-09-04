@@ -1,9 +1,11 @@
 import { GET_STUDENT, GET_STUDENTS } from "@/graphql/student";
+import { GET_TEACHERS } from "@/graphql/teacher";
 import { GET_USER, GET_USERS, GET_USER_BYID } from "@/graphql/user";
 import { DEFAULT_PAGE_SIZE } from "@/utils/constants";
 import {
     TStudentQuery,
     TStudentsQuery,
+    TTeachersQuery,
     TUserQuery,
     TUsersQuery,
 } from "@/utils/types";
@@ -68,6 +70,25 @@ export const useStudents = (pageNum = 1, pageSize = DEFAULT_PAGE_SIZE) => {
         refetch,
         page: data?.getStudents.page,
         data: data?.getStudents.data,
+    };
+};
+
+export const useTeachers = (pageNum = 1, pageSize = DEFAULT_PAGE_SIZE) => {
+    const { loading, data, refetch } = useQuery<TTeachersQuery>(GET_TEACHERS, {
+        variables: {
+            page: {
+                pageNum,
+                pageSize,
+            },
+        },
+    });
+
+    return {
+        loading,
+        refetch,
+        pageSize,
+        page: data?.getTeachers.page,
+        data: data?.getTeachers.data,
     };
 };
 
