@@ -219,24 +219,24 @@ export class Util {
         return Array.from(new Set(arr));
     }
 
-    /**
-     * 请使用Platform的方法代替
-     * @deprecated
-     */
-    static isIE(): boolean {
-        return (
-            window.ActiveXObject !== undefined ||
-            window.ActiveXObject != null ||
-            "ActiveXObject" in window
-        );
-    }
-    /**
-     * 请使用Platform的方法代替
-     * @deprecated
-     */
-    static isEdge(): boolean {
-        return !Util.isIE() && !!window.StyleMedia;
-    }
+    // /**
+    //  * 请使用Platform的方法代替
+    //  * @deprecated
+    //  */
+    // static isIE(): boolean {
+    //     return (
+    //         window.ActiveXObject !== undefined ||
+    //         window.ActiveXObject != null ||
+    //         "ActiveXObject" in window
+    //     );
+    // }
+    // /**
+    //  * 请使用Platform的方法代替
+    //  * @deprecated
+    //  */
+    // static isEdge(): boolean {
+    //     return !Util.isIE() && !!window.StyleMedia;
+    // }
 
     static toFriendlyString(value: any) {
         if (Util.isNullOrWhiteSpace(value)) {
