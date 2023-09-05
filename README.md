@@ -1,5 +1,7 @@
 <h3 align="center">基于React+Antd+NestJs+MySql实现的全栈在线兴趣班学习平台</h3>
+
 > 本项目若普通部署，nginx配置如template.nginx.conf，
+
 > 本项目若docker部署，请在learn-platform-deploy下执行docker-compose build构建，配置请参考docker-compose.yml
 
 ## 简介
